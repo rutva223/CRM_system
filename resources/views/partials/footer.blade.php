@@ -1,48 +1,39 @@
-<footer class="content-footer footer bg-footer-theme">
-    <div
-        class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-        <div class="mb-2 mb-md-0">
-            ©
-            <script>
-                document.write(new Date().getFullYear());
-            </script>
-            , made with ❤️ by
-            <a href="https://themeselection.com" target="_blank"
-                class="footer-link fw-medium">ThemeSelection</a>
-        </div>
-        <div class="d-none d-lg-inline-block">
-            <a href="https://themeselection.com/license/" class="footer-link me-4"
-                target="_blank">License</a>
-            <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More
-                Themes</a>
 
-            <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
-                target="_blank" class="footer-link me-4">Documentation</a>
+  <!-- Required vendors -->
+  <script src="{{ asset('assets/vendor/global/global.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/chart-js/chart.bundle.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+  <!-- Apex Chart -->
+  <script src="{{ asset('assets/vendor/apexchart/apexchart.js') }}"></script>
+  <!-- Chart piety plugin files -->
+  <script src="{{ asset('assets/vendor/peity/jquery.peity.min.js') }}"></script>
 
-            <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                target="_blank" class="footer-link">Support</a>
-        </div>
-    </div>
-</footer>
- <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
+  <!--swiper-slider-->
+  <script src="{{ asset('assets/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
+  <!-- Dashboard 1 -->
+  <script src="{{ asset('assets/js/dashboard/dashboard-1.js') }}"></script>
+  <script src="{{ asset('assets/vendor/wow-master/dist/wow.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
+  <script src="{{ asset('assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}"></script>
 
-    <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
-    <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
+  <script src="{{ asset('assets/js/dlabnav-init.js') }}"></script>
+  <script src="{{ asset('assets/js/custom.min.js') }}"></script>
 
-    <!-- endbuild -->
 
-    <!-- Vendors JS -->
-    <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+  <script>
 
-    <!-- Main JS -->
-    <script src="{{ asset('assets/js/main.js') }}"></script>
+  $(function () {
+          $("#datepicker").datepicker({
+              autoclose: true,
+              todayHighlight: true
+          }).datepicker('update', new Date());
 
-    <!-- Page JS -->
-    <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
+  });
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  $(document).ready(function(){
+      $(".booking-calender .fa.fa-clock-o").removeClass(this);
+      $(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
+  });
+  $('.my-select').selectpicker();
+  </script>
