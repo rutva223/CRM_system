@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -27,4 +27,45 @@
             </div>
         </div>
     </body>
+</html> --}}
+
+
+<!DOCTYPE html>
+<html lang="en" <head>
+
+<!-- Title -->
+<title>Laravel</title>
+
+<!-- Meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="author" content="Dexignlabs">
+<meta name="robots" content="">
+
+<meta name="keywords"
+	content="admin dashboard, admin template, analytics, bootstrap, bootstrap 5 admin template, finance admin, admin, modern, responsive admin dashboard, sales dashboard, sass, ui kit, web app, bootstrap5, admin panel, Crypto Trading, Cryptocurrency, Trading Platform, Financial Insights, Efficiency, Data Visualization, User-Friendly, User Interface, Investment, Financial Management, Trading Tools, Performance Metrics, Real-Time Data, Portfolio Optimization, bitcoin, share market">
+
+<meta name="twitter:image" content="https://finlab.dexignlab.com/xhtml/social-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Mobile Specific -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- FAVICONS ICON -->
+<link rel="shortcut icon" type="image/png" href="images/favicon.png">
+<link href="{{ asset('assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+<link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
+
+</head>
+
+<body>
+	<div class="login-account">
+        @yield('content')
+    </div>
+    <script src="{{ asset('assets/vendor/global/global.min.js')}}"></script>
+	<script src="{{ asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
+	<script src="{{ asset('assets/js/custom.min.js')}}"></script>
+	<script src="{{ asset('assets/js/dlabnav-init.js')}}"></script>
+</body>
+
 </html>

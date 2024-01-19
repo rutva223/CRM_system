@@ -12,17 +12,7 @@
                 </div>
             </div>
             <ul class="navbar-nav header-right">
-                <li class="nav-item">
-                    <div class="search-coundry">
-                        <select class="form-control custom-image-select-2 image-select mt-3 mt-sm-0">
-                            <option data-thumbnail="{{ asset('assets/images/svg/albania.svg') }}" data-content="<img src='images/svg/albania.svg'/> Dash Coin">Albania</option>
-                            <option data-thumbnail="{{ asset('assets/images/svg/algeria.svg') }}" data-content="<img src='images/svg/algeria.svg'/> Ripple">Algeria</option>
-                            <option data-thumbnail="{{ asset('assets/images/svg/usflag.svg') }}" data-content="<img src='images/svg/usflag.svg'/> Ethereum">Austria</option>
-                            <option data-thumbnail="{{ asset('assets/images/svg/usflag.svg') }}" data-content="<img src='images/svg/usflag.svg'/> Ethereum">Austria</option>
-                            <option data-thumbnail="{{ asset('assets/images/svg/usflag.svg') }}" data-content="<img src='images/svg/usflag.svg'/> Ethereum">Austria</option>
-                        </select>
-                    </div>
-                </li>
+
                 <li class="nav-item dropdown notification_dropdown">
                     <a class="nav-link  menu-wallet" href="javascript:void(0);">
                         <i class="material-icons"> widgets </i>
@@ -127,76 +117,14 @@
                         <a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
                     </div>
                 </li>
-
-                <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link " href="javascript:void(0);" data-bs-toggle="dropdown">
-                        <svg width="16" height="16" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21.0966 7.93751L19.0491 7.28195L20.0133 5.42972C20.111 5.23585 20.1437 5.01761 20.1069 4.80514C20.07 4.59266 19.9654 4.39641 19.8075 4.24346L17.5 2.02703C17.3399 1.87311 17.1336 1.77126 16.9101 1.7358C16.6867 1.70034 16.4572 1.73304 16.2541 1.82932L14.3258 2.75544L13.6433 0.788743C13.5712 0.583741 13.4344 0.405421 13.2519 0.278597C13.0694 0.151774 12.8502 0.0827567 12.625 0.0811497H9.37496C9.14785 0.0805866 8.92629 0.148599 8.74161 0.275573C8.55693 0.402548 8.41847 0.582062 8.34579 0.788743L7.66329 2.75544L5.73496 1.82932C5.53312 1.73544 5.30592 1.70404 5.08472 1.73945C4.86351 1.77487 4.65919 1.87535 4.49996 2.02703L2.19246 4.24346C2.03222 4.39722 1.92619 4.59536 1.88927 4.81001C1.85234 5.02466 1.88639 5.24503 1.98663 5.44013L2.9508 7.29236L0.903296 7.94792C0.689871 8.01715 0.504224 8.14857 0.37219 8.32389C0.240156 8.4992 0.168303 8.70969 0.16663 8.92606V12.0478C0.166043 12.2659 0.23685 12.4788 0.369042 12.6561C0.501233 12.8335 0.688123 12.9665 0.903296 13.0363L2.9508 13.6919L1.98663 15.5441C1.88889 15.738 1.8562 15.9562 1.89307 16.1687C1.92994 16.3812 2.03455 16.5775 2.19246 16.7304L4.49996 18.9468C4.66004 19.1007 4.86632 19.2026 5.08979 19.2381C5.31326 19.2735 5.54268 19.2408 5.7458 19.1445L7.67413 18.2184L8.35663 20.1851C8.4293 20.3918 8.56777 20.5713 8.75245 20.6983C8.93713 20.8253 9.15868 20.8933 9.38579 20.8927H12.6358C12.8629 20.8933 13.0845 20.8253 13.2691 20.6983C13.4538 20.5713 13.5923 20.3918 13.665 20.1851L14.3475 18.2184L16.2758 19.1445C16.4763 19.2361 16.7013 19.2662 16.9203 19.2308C17.1392 19.1954 17.3416 19.0963 17.5 18.9468L19.8075 16.7304C19.9677 16.5766 20.0737 16.3785 20.1107 16.1639C20.1476 15.9492 20.1135 15.7288 20.0133 15.5337L19.0491 13.6815L21.0966 13.0259C21.3101 12.9567 21.4957 12.8253 21.6277 12.65C21.7598 12.4747 21.8316 12.2642 21.8333 12.0478V8.92606C21.8339 8.70791 21.7631 8.4951 21.6309 8.31771C21.4987 8.14032 21.3118 8.00732 21.0966 7.93751ZM19.6666 11.2986L18.3666 11.7148C18.0677 11.808 17.7934 11.9624 17.5629 12.1676C17.3323 12.3727 17.1509 12.6235 17.0314 12.9027C16.9118 13.1819 16.8569 13.4827 16.8705 13.7843C16.8841 14.0859 16.9658 14.381 17.11 14.6492L17.7275 15.8355L16.5358 16.9801L15.3333 16.3558C15.0555 16.2228 14.7512 16.1488 14.441 16.1386C14.1308 16.1285 13.8219 16.1824 13.5353 16.2969C13.2487 16.4113 12.9911 16.5836 12.7798 16.802C12.5685 17.0204 12.4086 17.2799 12.3108 17.5629L11.8775 18.8116H10.155L9.72163 17.5629C9.62466 17.2757 9.46382 17.0123 9.25027 16.7908C9.03671 16.5693 8.77556 16.3951 8.48492 16.2803C8.19427 16.1655 7.8811 16.1127 7.56712 16.1258C7.25314 16.1388 6.94587 16.2173 6.66663 16.3558L5.43163 16.9489L4.23996 15.8043L4.88996 14.6492C5.03415 14.381 5.11586 14.0859 5.12943 13.7843C5.143 13.4827 5.0881 13.1819 4.96855 12.9027C4.84899 12.6235 4.66764 12.3727 4.43707 12.1676C4.2065 11.9624 3.93223 11.808 3.6333 11.7148L2.3333 11.2986V9.67528L3.6333 9.25905C3.93223 9.16591 4.2065 9.01142 4.43707 8.80629C4.66764 8.60117 4.84899 8.35032 4.96855 8.07114C5.0881 7.79197 5.143 7.49116 5.12943 7.18957C5.11586 6.88798 5.03415 6.59284 4.88996 6.32462L4.27246 5.16958L5.46413 4.02494L6.66663 4.61807C6.94587 4.75656 7.25314 4.83505 7.56712 4.84808C7.8811 4.86112 8.19427 4.80839 8.48492 4.69355C8.77556 4.57871 9.03671 4.40452 9.25027 4.18305C9.46382 3.96158 9.62466 3.69814 9.72163 3.411L10.155 2.16231H11.845L12.2783 3.411C12.3753 3.69814 12.5361 3.96158 12.7497 4.18305C12.9632 4.40452 13.2244 4.57871 13.515 4.69355C13.8056 4.80839 14.1188 4.86112 14.4328 4.84808C14.7468 4.83505 15.054 4.75656 15.3333 4.61807L16.5683 4.02494L17.76 5.16958L17.11 6.32462C16.9715 6.59147 16.8944 6.88377 16.8839 7.18173C16.8733 7.47969 16.9295 7.77636 17.0486 8.05165C17.1678 8.32693 17.3471 8.57442 17.5745 8.77734C17.8019 8.98027 18.0721 9.1339 18.3666 9.22783L19.6666 9.64406V11.2986ZM11 6.32462C10.1429 6.32462 9.3051 6.56873 8.59249 7.02609C7.87988 7.48345 7.32446 8.13352 6.99648 8.89408C6.6685 9.65464 6.58269 10.4915 6.74989 11.299C6.91709 12.1064 7.3298 12.848 7.93583 13.4301C8.54186 14.0122 9.31398 14.4087 10.1546 14.5693C10.9952 14.7299 11.8664 14.6474 12.6583 14.3324C13.4501 14.0174 14.1268 13.4839 14.603 12.7994C15.0791 12.1149 15.3333 11.3102 15.3333 10.4869C15.3333 9.38302 14.8767 8.32432 14.0641 7.54373C13.2514 6.76315 12.1492 6.32462 11 6.32462ZM11 12.5681C10.5714 12.5681 10.1525 12.446 9.79623 12.2173C9.43992 11.9887 9.16221 11.6636 8.99822 11.2834C8.83423 10.9031 8.79132 10.4846 8.87493 10.0809C8.95853 9.67721 9.16488 9.30639 9.4679 9.01533C9.77091 8.72428 10.157 8.52606 10.5773 8.44576C10.9976 8.36546 11.4332 8.40667 11.8291 8.56419C12.225 8.72171 12.5634 8.98846 12.8015 9.3307C13.0396 9.67295 13.1666 10.0753 13.1666 10.4869C13.1666 11.0389 12.9384 11.5682 12.532 11.9585C12.1257 12.3488 11.5746 12.5681 11 12.5681Z" fill="#666666"/>
-                        </svg>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <div id="DZ_W_TimeLine02" class="widget-timeline dlab-scroll style-1 p-3 height370">
-                            <ul class="timeline">
-                                <li>
-                                    <div class="timeline-badge primary"></div>
-                                    <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                        <span>10 minutes ago</span>
-                                        <h6 class="mb-0">Youtube, a video-sharing website, goes live <strong class="text-primary">$500</strong>.</h6>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="timeline-badge info">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                        <span>20 minutes ago</span>
-                                        <h6 class="mb-0">New order placed <strong class="text-info">#XF-2356.</strong></h6>
-                                        <p class="mb-0">Quisque a consequat ante Sit amet magna at volutapt...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="timeline-badge danger">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                        <span>30 minutes ago</span>
-                                        <h6 class="mb-0">john just buy your product <strong class="text-warning">Sell $250</strong></h6>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="timeline-badge success">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                        <span>15 minutes ago</span>
-                                        <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="timeline-badge warning">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                        <span>20 minutes ago</span>
-                                        <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="timeline-badge dark">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                        <span>20 minutes ago</span>
-                                        <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <div class="dropdown header-profile2">
                         <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="header-info2 d-flex align-items-center">
                                 <div class="d-flex align-items-center sidebar-info">
                                     <div class="d-none d-md-block">
-                                        <h5 class="mb-0">Nella Vita</h5>
-                                        <p class="mb-0 text-end">Admin</p>
+                                        <h5 class="mb-0">{{ __('Welcome')}}</h5>
+                                        <p class="mb-0 text-end">{{ \Auth::user()->name ?? ''}}</p>
                                     </div>
                                 </div>
                                 <img src="{{ asset('assets/images/user.jpg') }} "alt="">
@@ -213,7 +141,7 @@
                                 </svg>
                                 <span class="ms-2">Profile </span>
                             </a>
-                            <a href="chat.html" class="dropdown-item ai-icon ">
+                            {{-- <a href="chat.html" class="dropdown-item ai-icon ">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24"/>
@@ -221,8 +149,8 @@
                                     </g>
                                 </svg>
                                 <span class="ms-2">Message </span>
-                            </a>
-                            <a href="email-inbox.html" class="dropdown-item ai-icon ">
+                            </a> --}}
+                            {{-- <a href="email-inbox.html" class="dropdown-item ai-icon ">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24"/>
@@ -231,7 +159,7 @@
                                     </g>
                                 </svg>
                                 <span class="ms-2">Notification </span>
-                            </a>
+                            </a> --}}
                             <a href="javascript:void(0);" class="dropdown-item ai-icon ">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -242,10 +170,18 @@
                                 </svg>
                                 <span class="ms-2">Settings </span>
                             </a>
-                            <a href="page-login.html" class="dropdown-item ai-icon">
+                            {{-- <a href="page-login.html" class="dropdown-item ai-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fd5353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                                 <span class="ms-2 text-danger">Logout </span>
-                            </a>
+                            </a> --}}
+                            <form method="POST" action="{{ route('logout') }}" id="form_logout">
+                                <a href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="dropdown-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fd5353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                    @csrf
+                                    <span class="ms-2 text-danger">{{ __('LogOut') }} </span>
+
+                                </a>
+                            </form>
                         </div>
                     </div>
                 </li>
