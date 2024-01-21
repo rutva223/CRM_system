@@ -19,6 +19,8 @@
 
   <script src="{{ asset('assets/js/dlabnav-init.js') }}"></script>
   <script src="{{ asset('assets/js/custom.min.js') }}"></script>
+  <script src="{{ asset('assets/js/custom.js') }}"></script>
+  <script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
 
 
   <script>
