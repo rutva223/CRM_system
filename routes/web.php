@@ -3,6 +3,8 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,18 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/cacheclear', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('route:cache');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('config:clear');
+    // dd("Done");
+    return response()->json(["message" => "Cache clear", "status" => true]);
+});
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,5 +42,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::resource('users', UserController::class);
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles', RoleController::class);
+});
+
+// Route::post('email-settings', [SystemController::class, 'saveEmailSettings'])->name('email.settings')->middleware(['auth', 'XSS']);
 
 require __DIR__.'/auth.php';
