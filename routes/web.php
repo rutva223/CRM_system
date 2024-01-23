@@ -5,6 +5,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SettingController;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,10 +48,13 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('users', UserController::class);
 
+Route::resource('setting', SettingController::class);
+Route::post('email.settings', [SettingController::class, 'SaveEmailSetting'])->name('email.settings');
+
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
 });
 
-// Route::post('email-settings', [SystemController::class, 'saveEmailSettings'])->name('email.settings')->middleware(['auth', 'XSS']);
+// Route::post('email-settings', [SettingController::class, 'saveEmailSettings'])->name('email.settings')->middleware(['auth', 'XSS']);
 
 require __DIR__.'/auth.php';

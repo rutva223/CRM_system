@@ -26,16 +26,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // dd($request->all());
-        $admin = User::where('email', $request->email)->first();
-        // dd($admin);
-        Session()->put('admin_name', $admin->name);
-        Session()->put('admin_id', $admin->id);
-        Session()->put('a_type', 'admin');
+
 
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        $user = User::where('email', $request->email)->first();
+
+        Session()->put('admin_name', $user->name);
+        Session()->put('admin_id', $user->id);
+        Session()->put('a_type', 'admin');
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

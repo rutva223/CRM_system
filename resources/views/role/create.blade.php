@@ -31,12 +31,7 @@
                         <tbody>
                         @php
                             $modules=['dashboard','user'];
-                            // if(\Auth::user()->type == 'super admin'){
-                            //     $modules[] = 'language';
-                            //     $modules[] = 'permission';
-                            // }
                         @endphp
-                        {{-- @dd($modules,$permissions) --}}
                         @foreach($modules as $module)
                             <tr>
                                 <td><input type="checkbox" class="form-check-input align-middle ischeck"  data-id="{{str_replace(' ', '', $module)}}" ></td>

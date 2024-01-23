@@ -716,49 +716,30 @@ $(document).ready(function () {
 });
 
 function loadConfirm() {
-
-    $(document).on("click", ".bs-pass-para", function() {
+    $(document).on("click", ".js-sweetalert", function () {
         var form = $(this).closest("form");
-        console.log(form);
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            type: "warning",
-            showDenyButton: true,
-            confirmButtonText: `YES, DELETE IT!`,
-            denyButtonText: `No, cancel!`,
+            text: "This action can not be undone. Do you want to continue?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
         }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
+            console.log(form);
             if (result.isConfirmed) {
-                $.ajax({
-                    type: 'POST',
-                    url: cutom_url + "/delete_data",
-                    data: {
-                        tablename: tablename,
-                        id: id,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(data) {
-
-                        if (data.status == true) {
-                            $('tr[data-select-id="' + id + '"]').remove();
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your " + tablename + " has been deleted.",
-                                icon: "success",
-                                timer: 1500,
-                                showConfirmButton: true
-                            });
-                        } else {
-                            Swal.fire("Cancelled", "Something went wrong", "error");
-                        }
-                    }
-                });
-            } else if (result.isDenied) {
-                Swal.fire("Cancelled", "Your " + tablename + " is safe :)", "error");
-
+                form.submit();
             }
         });
     });
-
 }

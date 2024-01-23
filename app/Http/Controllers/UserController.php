@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
-use Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -22,7 +22,7 @@ class UserController extends Controller
 
             return view('user.index', compact('users_data'));
         } else {
-            return redirect()->route('admin.login');
+            return redirect()->route('login');
         }
     }
 
@@ -83,7 +83,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = \Validator::make(
+        $validator = Validator::make(
             $request->all(), [
                                'name' => 'required',
                                'email' => 'required|email|unique:users,email,' . $id,

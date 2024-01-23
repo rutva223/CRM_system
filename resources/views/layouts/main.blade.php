@@ -125,10 +125,12 @@
             Content body start
         ***********************************-->
         <div class="content-body default-height">
-            <!-- row -->
             <div class="container-fluid">
-                <!-- Row -->
-                @yield('content')
+                <div class="row">
+                    <div class="col-xl-12">
+                        @yield('content')
+                    </div>
+                </div>
             </div>
         </div>
 

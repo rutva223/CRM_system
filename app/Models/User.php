@@ -53,6 +53,13 @@ class User extends Authenticatable
 
     public function creatorId()
     {
-        return $this->id;
+        if($this->type == 'company' || $this->type == 'super admin')
+        {
+            return $this->id;
+        }
+        else
+        {
+            return $this->created_by;
+        }
     }
 }
