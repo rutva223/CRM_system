@@ -8,7 +8,7 @@
                             <path d="M17.5605 15.4395L13.7527 11.6317C14.5395 10.446 15 9.02625 15 7.5C15 3.3645 11.6355 0 7.5 0C3.3645 0 0 3.3645 0 7.5C0 11.6355 3.3645 15 7.5 15C9.02625 15 10.446 14.5395 11.6317 13.7527L15.4395 17.5605C16.0245 18.1462 16.9755 18.1462 17.5605 17.5605C18.1462 16.9747 18.1462 16.0252 17.5605 15.4395V15.4395ZM2.25 7.5C2.25 4.605 4.605 2.25 7.5 2.25C10.395 2.25 12.75 4.605 12.75 7.5C12.75 10.395 10.395 12.75 7.5 12.75C4.605 12.75 2.25 10.395 2.25 7.5V7.5Z" fill="#01A3FF"/>
                         </svg>
                     </a></span>
-                    <input type="text" class="form-control" placeholder="Search here...">
+                    <input type="text" name="search" class="form-control" placeholder="Search here...">
                 </div>
             </div>
             <ul class="navbar-nav header-right">
@@ -141,7 +141,7 @@
                                 </svg>
                                 <span class="ms-2">Profile </span>
                             </a>
-                            {{-- <a href="chat.html" class="dropdown-item ai-icon ">
+                            <!-- {{-- <a href="chat.html" class="dropdown-item ai-icon ">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24"/>
@@ -149,8 +149,8 @@
                                     </g>
                                 </svg>
                                 <span class="ms-2">Message </span>
-                            </a> --}}
-                            {{-- <a href="email-inbox.html" class="dropdown-item ai-icon ">
+                            </a> --}} -->
+                            <!-- {{-- <a href="email-inbox.html" class="dropdown-item ai-icon ">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24"/>
@@ -159,7 +159,7 @@
                                     </g>
                                 </svg>
                                 <span class="ms-2">Notification </span>
-                            </a> --}}
+                            </a> --}} -->
                             <a href="javascript:void(0);" class="dropdown-item ai-icon ">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -170,10 +170,6 @@
                                 </svg>
                                 <span class="ms-2">Settings </span>
                             </a>
-                            {{-- <a href="page-login.html" class="dropdown-item ai-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fd5353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                                <span class="ms-2 text-danger">Logout </span>
-                            </a> --}}
                             <form method="POST" action="{{ route('logout') }}" id="form_logout">
                                 <a href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="dropdown-item">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fd5353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>

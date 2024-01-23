@@ -16,3 +16,20 @@
         <i class="fa-brands fa-critical-role"></i><span>Roles</span>
     </a>
 </li>
+
+<!-- <li class="{{ request()->is('setting') ? 'active' : '' }}">
+    <a href="{{ route('setting.index') }}" class="">
+        <i class="fa fa-cog"></i><span>Settings</span>
+    </a>
+</li> -->
+
+<li>
+    <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+        <i class="fa fa-cog"></i>
+        <span class="nav-text">Settings</span>
+    </a>
+    <ul aria-expanded="false">
+        <li><a href="{{ route('setting.index') }}">Email Settings</a></li>
+
+    </ul>
+</li>
