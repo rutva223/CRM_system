@@ -32,11 +32,9 @@ Route::get('/cacheclear', function () {
 });
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/dashboard',[DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [DashboardController::class,'index'])->name('start');
+Route::get('/dashboard',[DashboardController::class, 'Dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // });

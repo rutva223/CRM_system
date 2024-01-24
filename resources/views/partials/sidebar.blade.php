@@ -10,12 +10,13 @@
     </a>
 </li>
 
-
+@can('roles manage')
 <li class="{{ request()->is('roles') ? 'active' : '' }}">
     <a href="{{ route('roles.index') }}" class="">
         <i class="fa-brands fa-critical-role"></i><span>Roles</span>
     </a>
 </li>
+@endcan
 
 <!-- <li class="{{ request()->is('setting') ? 'active' : '' }}">
     <a href="{{ route('setting.index') }}" class="">
