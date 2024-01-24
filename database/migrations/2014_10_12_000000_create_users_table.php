@@ -20,9 +20,10 @@ return new class extends Migration
             $table->string('type', 20);
             $table->string('avatar', 100)->nullable();
             $table->string('lang', 100);
-            $table->integer('created_by')->default(0);
             $table->integer('plan')->nullable();
             $table->date('plan_expire_date')->nullable();
+            $table->string('theme_setting', 20)->default('light');
+            $table->integer('created_by')->default(0);
             $table->integer('is_active')->default(1);
             $table->rememberToken();
             $table->timestamps();

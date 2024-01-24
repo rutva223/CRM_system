@@ -92,7 +92,7 @@ class SettingController extends Controller
         foreach ($settings as $key => $data) {
             if (!empty($data)) {
                 Setting::updateOrCreate(
-                    ['name' => $key, 'created_by' => Session()->get('admin_id')],
+                    ['name' => $key, 'created_by' => Session()->get('user_id')],
                     ['value' => $data]
                 );
             }

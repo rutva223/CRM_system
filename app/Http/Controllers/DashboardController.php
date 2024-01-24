@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -11,7 +12,31 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        if(Auth::check())
+        {
+            return redirect('dashboard');
+        }
         return view('dashboard.user_dashboard');
+    }
+
+    public function Dashboard()
+    {
+        if(Auth::check())
+        {
+            if(Auth::user()->type == 'super admin')
+            {
+                return view('dashboard.admin_dashboard');
+
+            }
+            else
+            {
+                return view('dashboard.user_dashboard');
+            }
+        }
+        else
+        {
+            return redirect()->route('login');
+        }
     }
 
     /**

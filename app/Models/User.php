@@ -62,4 +62,8 @@ class User extends Authenticatable
             return $this->created_by;
         }
     }
+
+    public static  function CompanySetting(){
+
+    }
 }

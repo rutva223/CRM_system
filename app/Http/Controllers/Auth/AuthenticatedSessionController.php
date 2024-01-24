@@ -34,9 +34,10 @@ class AuthenticatedSessionController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        Session()->put('admin_name', $user->name);
-        Session()->put('admin_id', $user->id);
-        Session()->put('a_type', 'admin');
+        Session()->put('user_name', $user->name);
+        Session()->put('user_id', $user->id);
+        Session()->put('user_type', $user->type);
+        Session()->put('theme_setting', $user->theme_setting);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

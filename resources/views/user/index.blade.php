@@ -4,6 +4,7 @@
 {{ __('Manage User') }}
 @endsection
 
+
 @section('content')
 <div class="page-titles">
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">

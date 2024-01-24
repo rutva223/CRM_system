@@ -35,15 +35,17 @@
                 @enderror
             </div>
         </div>
-        <div class="form-group col-md-12">
-            {{ Form::label('role', __('User Role'),['class'=>'form-label']) }}
-            {!! Form::select('role', $roles, null,array('class' => 'form-control select','required'=>'required')) !!}
-            @error('role')
-            <small class="invalid-role" role="alert">
-                <strong class="text-danger">{{ $message }}</strong>
-            </small>
-            @enderror
-        </div>
+        @if (Session::has('user_type') != 'super admin')
+            <div class="form-group col-md-12">
+                {{ Form::label('role', __('User Role'),['class'=>'form-label']) }}
+                {!! Form::select('role', $roles, null,array('class' => 'form-control select','required'=>'required')) !!}
+                @error('role')
+                <small class="invalid-role" role="alert">
+                    <strong class="text-danger">{{ $message }}</strong>
+                </small>
+                @enderror
+            </div>
+        @endif
     </div>
 </div>
 

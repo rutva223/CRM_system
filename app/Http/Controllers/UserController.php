@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -16,13 +18,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Session::has('a_type')) {
+        if (Auth::user()->can('user manage')) {
 
-            $users_data = User::orderBy('id', 'desc')->get();
+            if(Session::has('user_type') == 'super admin')
+            {
+                $users_data = User::where('type','company')->get();
+            }
+            elseif(Session::has('user_type') == 'company'){
+                $id =  Session()->get('user_id');
+                $users_data = User::orderBy('id', 'desc')->where('created_by',$id)->get();
 
-            return view('user.index', compact('users_data'));
-        } else {
-            return redirect()->route('login');
+            }else{
+                return redirect()->back()->with('error', __('Permission denied.'));
+            }
+            return view('user.index', compact('$users_data'));
+
+        } else  {
+            return redirect()->back()->with('error', __('Permission denied.'));
+
         }
     }
 
@@ -31,9 +44,14 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name');
+        if (Auth::user()->can('user manage'))
+        {
+            $roles = Role::pluck('name','name');
+            return view('user.create',compact('roles'));
 
-        return view('user.create',compact('roles'));
+        }else{
+            return response()->json(['error' => __('Permission denied.')], 401);
+        }
     }
 
     /**
@@ -41,21 +59,55 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required',
-            'role' => 'required'
-        ]);
+        if(Auth::user()->can('user create'))
+        {
+            $validatorArray = [
+                'name' => 'required|max:120',
+                'email' => 'required|em ail|max:100|unique:users,email',
+            ];
+            $validator = Validator::make(
+                $request->all(), $validatorArray
+            );
+            if($validator->fails())
+            {
+                return redirect()->back()->with('error', $validator->errors()->first());
+            }
+            $user['is_enable_login']       = 0;
+            if(!empty($request->password_switch) && $request->password_switch == 'on')
+            {
+                $user['is_enable_login']   = 1;
+                $validator = Validator::make(
+                    $request->all(), ['password' => 'required|min:6']
+                );
 
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
+                if($validator->fails())
+                {
+                    return redirect()->back()->with('error', $validator->errors()->first());
+                }
+            }
+            if(Session::has('user_type') == 'super admin')
+            {
+                $roles = Role::findByName('company');
+            }
+            else
+            {
+                $roles = Role::find($request->input('roles'));
+            }
+            $userpassword       = $request->input('password');
+            $user['name']       = $request->input('name');
+            $user['email']      = $request->input('email');
+            $user['password']   = !empty($userpassword) ? Hash::make($userpassword) : null;
+            $user['lang']       =  'en';
+            $user['type']       = $roles->name;
+            $user['created_by'] = creatorId();
+            $user = User::create($user);
+            $user->assignRole($roles);
 
-        $user = User::create($input);
-        $user->assignRole($request->input('role'));
+            return redirect()->route('users.index')->with('success','User created successfully');
+        }else{
+            return redirect()->back()->with('error', __('Permission denied.'));
 
-        return redirect()->route('users.index')->with('success','User created successfully');
+        }
     }
 
     /**
@@ -63,7 +115,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return redirect()->route('users.index');
     }
 
     /**
@@ -71,11 +123,14 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
+        if(Auth::user()->can('user edit'))
+        {
+            $user = User::find($id);
+            $roles = Role::pluck('name','name')->all();
+            $userRole = $user->roles->pluck('name','name')->all();
 
-        return view('user.edit',compact('user','roles','userRole'));
+            return view('user.edit',compact('user','roles','userRole'));
+        }
     }
 
     /**
