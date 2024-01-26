@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -42,15 +43,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // user
+    Route::resource('users', UserController::class);
+
+    // settings
+    Route::resource('setting', SettingController::class);
+    Route::post('email-settings', [SettingController::class, 'SaveEmailSetting'])->name('email.settings');
+
+    // role
+    Route::resource('roles', RoleController::class);
+
+    // plan
+    Route::resource('plans', PlanController::class);
+    Route::get('plan-subscribe/{id}', [PlanController::class, 'PlanSubscripe'])->name('plan.subscribe');
 });
 
-Route::resource('users', UserController::class);
 
-Route::resource('setting', SettingController::class);
-Route::post('email.settings', [SettingController::class, 'SaveEmailSetting'])->name('email.settings');
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RoleController::class);
 });
 
 // Route::post('email-settings', [SettingController::class, 'saveEmailSettings'])->name('email.settings')->middleware(['auth', 'XSS']);

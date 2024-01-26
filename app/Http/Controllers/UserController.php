@@ -31,7 +31,7 @@ class UserController extends Controller
             }else{
                 return redirect()->back()->with('error', __('Permission denied.'));
             }
-            return view('user.index', compact('$users_data'));
+            return view('user.index', compact('users_data'));
 
         } else  {
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -64,6 +64,7 @@ class UserController extends Controller
             $validatorArray = [
                 'name' => 'required|max:120',
                 'email' => 'required|em ail|max:100|unique:users,email',
+                'password' => 'required|min:6',
             ];
             $validator = Validator::make(
                 $request->all(), $validatorArray
@@ -71,19 +72,6 @@ class UserController extends Controller
             if($validator->fails())
             {
                 return redirect()->back()->with('error', $validator->errors()->first());
-            }
-            $user['is_enable_login']       = 0;
-            if(!empty($request->password_switch) && $request->password_switch == 'on')
-            {
-                $user['is_enable_login']   = 1;
-                $validator = Validator::make(
-                    $request->all(), ['password' => 'required|min:6']
-                );
-
-                if($validator->fails())
-                {
-                    return redirect()->back()->with('error', $validator->errors()->first());
-                }
             }
             if(Session::has('user_type') == 'super admin')
             {
@@ -131,6 +119,10 @@ class UserController extends Controller
 
             return view('user.edit',compact('user','roles','userRole'));
         }
+        else
+        {
+            return response()->json(['error' => __('Permission denied.')], 401);
+        }
     }
 
     /**
@@ -138,26 +130,49 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make(
-            $request->all(), [
-                               'name' => 'required',
-                               'email' => 'required|email|unique:users,email,' . $id,
-                           ]
-        );
-        if($validator->fails())
+        if(Auth::user()->can('user edit'))
         {
-            $messages = $validator->getMessageBag();
+            $validator = Validator::make(
+                $request->all(), [
+                                'name' => 'required',
+                                'email' => 'required|email|unique:users,email,' . $id,
+                            ]
+            );
+            if($validator->fails())
+            {
+                $messages = $validator->getMessageBag();
 
-            return redirect()->back()->with('error', $messages->first());
+                return redirect()->back()->with('error', $messages->first());
+            }
+
+            $user          = User::find($id);
+            if(!empty($user))
+            {
+                if(Session::has('user_type') == 'super admin')
+                {
+                    $role = Role::findByName('company');
+                }
+                else
+                {
+                    $role = Role::find($request->input('roles'));
+                }
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->type = $role->name;
+                $user->save();
+                if(Session::has('user_type') != 'super admin')
+                {
+                    $roles[] = $request->roles;
+                    $user->roles()->sync($roles);
+                }
+                return redirect()->route('users.index')->with('success','User updated successfully');
+            }
+            return redirect()->back()->with('error', __('Something is wrong.'));
+
         }
-
-        $user          = User::find($id);
-        $user['name'] = $request->name;
-        $user['email'] = $request->email;
-        $user->assignRole($request->input('role'));
-        $user->save();
-
-        return redirect()->route('users.index')->with('success','User updated successfully');
+        else {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
     }
 
     /**
@@ -165,8 +180,30 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        User::find($id)->delete();
-        return redirect()->route('users.index')
-                        ->with('success','User deleted successfully');
+        if(Auth::user()->can('user delete'))
+        {
+            $user = User::findOrFail($id);
+            try
+            {
+                // get all table
+                $tables_in_db = \DB::select('SHOW TABLES');
+                $db = "Tables_in_".env('DB_DATABASE');
+                foreach($tables_in_db as $table)
+                {
+                    if (Schema::hasColumn($table->{$db}, 'created_by'))
+                    {
+                        \DB::table($table->{$db})->where('created_by', $user->id)->delete();
+                    }
+                }
+                $user->delete();
+            }
+            catch (\Exception $e)
+            {
+                return redirect()->back()->with('error', __($e->getMessage()));
+            }
+
+            return redirect()->route('users.index')
+                            ->with('success','User deleted successfully');
+        }
     }
 }

@@ -12,6 +12,7 @@
  <!-- Datatable -->
  <link href="{{ asset('assets/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
  <link href="{{ asset('assets/vendor/datatables/responsive/responsive.css') }}" rel="stylesheet">
+ <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
 <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
