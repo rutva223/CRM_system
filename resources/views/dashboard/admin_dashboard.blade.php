@@ -13,7 +13,6 @@
                           <li class="breadcrumb-item active" aria-current="page">Super Admin</li>
                         </ol>
                       </nav>
-                    
                 </div>
             </div>
         </div>

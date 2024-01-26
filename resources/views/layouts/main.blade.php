@@ -128,6 +128,34 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-12">
+                        @php
+                            if (isset(app()->view->getSections()['page-breadcrumb'])) {
+                                $breadcrumb = explode(',', app()->view->getSections()['page-breadcrumb']);
+                            } else {
+                                $breadcrumb = [];
+                            }
+                        @endphp
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="page-titles">
+                                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            @if (!empty($breadcrumb))
+                                                <li class="breadcrumb-item"><a
+                                                        href="{{ route('dashboard') }}">Dashboard</a></li>
+                                                @foreach ($breadcrumb as $item)
+                                                    <li class="breadcrumb-item  {{ $loop->last ? 'active' : '' }}" aria-current="page">
+                                                        {{ $item }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ol>
+                                    </nav>
+                                    <div class="text-end ">
+                                        @yield('page-action')
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @yield('content')
                     </div>
                 </div>

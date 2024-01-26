@@ -27,7 +27,7 @@
         <div class="col-md-12">
             <div class="form-group mb-3">
                 {{Form::label('password',__('Password'),['class'=>'form-label'])}}
-                {{Form::password('password',array('class'=>'form-control','placeholder'=>__('Enter User Password'),'required'=>'required','minlength'=>"8"))}}
+                {{Form::password('password',array('class'=>'form-control','placeholder'=>__('Enter User Password'),'required'=>'required','minlength'=>"6"))}}
                 @error('password')
                 <small class="invalid-password" role="alert">
                     <strong class="text-danger">{{ $message }}</strong>
@@ -37,9 +37,9 @@
         </div>
         @if (Session::has('user_type') != 'super admin')
             <div class="form-group col-md-12">
-                {{ Form::label('role', __('User Role'),['class'=>'form-label']) }}
-                {!! Form::select('role', $roles, null,array('class' => 'form-control select','required'=>'required')) !!}
-                @error('role')
+                {{ Form::label('roles', __('User Role'),['class'=>'form-label']) }}
+                {!! Form::select('roles', $roles, null,array('class' => 'form-control select','required'=>'required')) !!}
+                @error('roles')
                 <small class="invalid-role" role="alert">
                     <strong class="text-danger">{{ $message }}</strong>
                 </small>
