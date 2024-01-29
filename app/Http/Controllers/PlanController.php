@@ -18,7 +18,7 @@ class PlanController extends Controller
      */
     public function index()
     {
-        if((Auth::user()->can('plan manage')) && (Session::has('user_type') == 'super admin'))
+        if((Auth::user()->can('manage plan')) && (Session::has('user_type') == 'super admin'))
         {
             $plans = Plan::get();
             return view('plan.index',compact('plans'));
@@ -34,7 +34,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->can('plan create'))
+        if (Auth::user()->can('create plan'))
         {
             return view('plan.create');
 
@@ -48,7 +48,7 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::user()->can('plan create'))
+        if(Auth::user()->can('create plan'))
         {
             $validatorArray = [
                 'name' => 'required|max:120',
@@ -94,7 +94,7 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        if (Auth::user()->can('plan edit'))
+        if (Auth::user()->can('edit plan'))
         {
             return view('plan.edit',compact('plan'));
 
@@ -108,7 +108,7 @@ class PlanController extends Controller
      */
     public function update(Request $request, Plan $plan)
     {
-        if(Auth::user()->can('plan edit'))
+        if(Auth::user()->can('edit plan'))
         {
             $validatorArray = [
                 'name' => 'required|max:120',
