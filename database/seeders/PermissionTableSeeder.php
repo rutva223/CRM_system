@@ -20,6 +20,174 @@ class PermissionTableSeeder extends Seeder
         Artisan::call('cache:forget spatie.permission.cache');
         Artisan::call('cache:clear');
 
+        $arrPermissions = [
+            [
+                'name' => 'show dashboard',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+
+            [
+                'name' => 'manage user',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create user',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit user',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete user',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage user profile',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage reset password',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage user login',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage user logs history',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage setting',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage setting logo',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage setting theme',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage setting storage',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage plan',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create plan',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit plan',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete plan',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'orders plan',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage email template',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage language',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage user chat',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage roles',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create roles',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit roles',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete roles',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'plan purchase',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'plan subscribe',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+        ];
+
+        Permission::insert($arrPermissions);
+
         // Super Admin
         $admin = User::where('type','super admin')->first();
         if(empty($admin))
@@ -61,50 +229,48 @@ class PermissionTableSeeder extends Seeder
         }
 
         $admin_permission = [
-            'user manage',
-            'user create',
-            'user edit',
-            'user delete',
-            'user profile manage',
-            'user reset password',
-            'user login manage',
-            'user import',
-            'user logs history',
-            'setting manage',
-            'setting logo manage',
-            'setting theme manage',
-            'setting storage manage',
-            'plan manage',
-            'plan create',
-            'plan edit',
-            'plan delete',
-            'plan orders',
-            'email template manage',
-            'language manage',
+            'manage user',
+            'create user',
+            'edit user',
+            'delete user',
+            'manage user profile',
+            'manage reset password',
+            'manage user login',
+            'manage user logs history',
+            'manage setting',
+            'manage setting logo',
+            'manage setting theme',
+            'manage setting storage',
+            'manage plan',
+            'create plan',
+            'edit plan',
+            'delete plan',
+            'orders plan',
+            'manage email template',
+            'manage language',
         ];
 
-            $compnay_permission = [
-                'user manage',
-                'user create',
-                'user edit',
-                'user delete',
-                'user profile manage',
-                'user chat manage',
-                'user reset password',
-                'user login manage',
-                'user import',
-                'roles manage',
-                'roles create',
-                'roles edit',
-                'roles delete',
-                'plan manage',
-                'plan purchase',
-                'plan subscribe',
-                'plan orders',
-                'setting manage',
-                'setting logo manage',
-                'setting theme manage',
-            ];
+        $compnay_permission = [
+            'manage user',
+            'create user',
+            'edit user',
+            'delete user',
+            'manage user profile',
+            'user chat manage',
+            'manage reset password',
+            'manage user login',
+            'manage roles',
+            'create roles',
+            'edit roles',
+            'delete roles',
+            'manage plan',
+            'purchase plan',
+            'subscribe plan',
+            'orders plan',
+            'manage setting',
+            'manage setting logo',
+            'manage setting theme',
+        ];
 
 
         $superAdminRole  = Role::where('name','super admin')->first();

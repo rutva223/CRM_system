@@ -18,24 +18,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->can('user manage')) {
+        if (Auth::user()->can('manage user')) {
 
-            if(Session::has('user_type') == 'super admin')
-            {
-                $users_data = User::where('type','company')->get();
-            }
-            elseif(Session::has('user_type') == 'company'){
+            if (Session::has('user_type') == 'super admin') {
+                $users_data = User::where('type', 'company')->get();
+            } elseif (Session::has('user_type') == 'company') {
                 $id =  Session()->get('user_id');
-                $users_data = User::orderBy('id', 'desc')->where('created_by',$id)->get();
-
-            }else{
+                $users_data = User::orderBy('id', 'desc')->where('created_by', $id)->get();
+            } else {
                 return redirect()->back()->with('error', __('Permission denied.'));
             }
             return view('user.index', compact('users_data'));
+<<<<<<< Updated upstream
 
         } else  {
+=======
+        } else {
+>>>>>>> Stashed changes
             return redirect()->back()->with('error', __('Permission denied.'));
-
         }
     }
 
@@ -44,12 +44,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->can('user manage'))
-        {
-            $roles = Role::pluck('name','name');
-            return view('user.create',compact('roles'));
-
-        }else{
+        if (Auth::user()->can('create user')) {
+            $roles = Role::pluck('name', 'name');
+            return view('user.create', compact('roles'));
+        } else {
             return response()->json(['error' => __('Permission denied.')], 401);
         }
     }
@@ -59,26 +57,39 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::user()->can('user create'))
-        {
+        if (Auth::user()->can('create user')) {
             $validatorArray = [
                 'name' => 'required|max:120',
                 'email' => 'required|em ail|max:100|unique:users,email',
                 'password' => 'required|min:6',
             ];
             $validator = Validator::make(
-                $request->all(), $validatorArray
+                $request->all(),
+                $validatorArray
             );
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 return redirect()->back()->with('error', $validator->errors()->first());
             }
+<<<<<<< Updated upstream
             if(Session::has('user_type') == 'super admin')
             {
-                $roles = Role::findByName('company');
+=======
+            $user['is_enable_login']       = 0;
+            if (!empty($request->password_switch) && $request->password_switch == 'on') {
+                $user['is_enable_login']   = 1;
+                $validator = Validator::make(
+                    $request->all(),
+                    ['password' => 'required|min:6']
+                );
+
+                if ($validator->fails()) {
+                    return redirect()->back()->with('error', $validator->errors()->first());
+                }
             }
-            else
-            {
+            if (Session::has('user_type') == 'super admin') {
+>>>>>>> Stashed changes
+                $roles = Role::findByName('company');
+            } else {
                 $roles = Role::find($request->input('roles'));
             }
             $userpassword       = $request->input('password');
@@ -91,10 +102,9 @@ class UserController extends Controller
             $user = User::create($user);
             $user->assignRole($roles);
 
-            return redirect()->route('users.index')->with('success','User created successfully');
-        }else{
+            return redirect()->route('users.index')->with('success', 'User created successfully');
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
-
         }
     }
 
@@ -111,13 +121,14 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        if(Auth::user()->can('user edit'))
-        {
+        if (Auth::user()->can('edit user')) {
             $user = User::find($id);
-            $roles = Role::pluck('name','name')->all();
-            $userRole = $user->roles->pluck('name','name')->all();
+            $roles = Role::pluck('name', 'name')->all();
+            $userRole = $user->roles->pluck('name', 'name')->all();
 
-            return view('user.edit',compact('user','roles','userRole'));
+            return view('user.edit', compact('user', 'roles', 'userRole'));
+        } else {
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
         else
         {
@@ -130,6 +141,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+<<<<<<< Updated upstream
         if(Auth::user()->can('user edit'))
         {
             $validator = Validator::make(
@@ -173,13 +185,39 @@ class UserController extends Controller
         else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
-    }
+=======
+        if (Auth::user()->can('edit user')) {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+                    'email' => 'required|email|unique:users,email,' . $id,
+                ]
+            );
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
 
+                return redirect()->back()->with('error', $messages->first());
+            }
+
+            $user          = User::find($id);
+            $user['name'] = $request->name;
+            $user['email'] = $request->email;
+            $user->assignRole($request->input('role'));
+            $user->save();
+
+            return redirect()->route('users.index')->with('success', 'User updated successfully');
+        } else {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
+>>>>>>> Stashed changes
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
+<<<<<<< Updated upstream
         if(Auth::user()->can('user delete'))
         {
             $user = User::findOrFail($id);
@@ -204,6 +242,13 @@ class UserController extends Controller
 
             return redirect()->route('users.index')
                             ->with('success','User deleted successfully');
+=======
+        if (Auth::user()->can('delete user')) {
+            User::find($id)->delete();
+            return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        } else{
+            return redirect()->back()->with('error', __('Permission denied.'));
+>>>>>>> Stashed changes
         }
     }
 }

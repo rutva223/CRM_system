@@ -14,7 +14,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-        if (Session::has('a_type')) {
+        if (Session::has('user_type')) {
 
             // $settings = Utility::settings();
             $emailSettings = Setting::get();

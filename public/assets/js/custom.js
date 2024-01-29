@@ -743,3 +743,17 @@ function loadConfirm() {
         });
     });
 }
+
+$(document).ready(function () {
+    if ($(".dataTable-desc").length > 0) {
+        $(".dataTable-desc").DataTable({
+            order: [[3, 'desc']],
+        });
+    }
+
+    if ($(".datatable").length > 0) {
+        $(".datatable").DataTable();
+    }
+    loadConfirm();
+
+});

@@ -16,11 +16,11 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if (Session::has('a_type')) {
+        if (Auth::user()->can('manage roles')) {
             $roles = Role::where('created_by', '=', Auth::user()->creatorId())->get();
             return view('role.index')->with('roles', $roles);
         } else {
-            return redirect()->route('login');
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
@@ -29,8 +29,12 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::all()->pluck('name', 'id')->toArray();
-        return view('role.create', compact('permissions'));
+        if (Auth::user()->can('create roles')) {
+            $permissions = Permission::all()->pluck('name', 'id')->toArray();
+            return view('role.create', compact('permissions'));
+        } else {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
     }
 
     /**
@@ -38,33 +42,36 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(), [
-                'name' => 'required|max:100|unique:roles,name,NULL,id,created_by,' . Auth::user()->creatorId(),
-                'permissions' => 'required',
+        if (Auth::user()->can('create roles')) {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required|max:100|unique:roles,name,NULL,id,created_by,' . Auth::user()->creatorId(),
+                    'permissions' => 'required',
                 ]
-        );
+            );
 
-        if($validator->fails())
-        {
-            $messages = $validator->getMessageBag();
-            return redirect()->back()->with('error', $messages->first());
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
+                return redirect()->back()->with('error', $messages->first());
+            }
+
+            $name             = $request['name'];
+            $role             = new Role();
+            $role->name       = $name;
+            $role->created_by = Auth::user()->creatorId();
+            $permissions      = $request['permissions'];
+            $role->save();
+
+            foreach ($permissions as $permission) {
+                $p = Permission::where('id', '=', $permission)->firstOrFail();
+                $role->givePermissionTo($p);
+            }
+
+            return redirect()->back()->with('success', __('Role successfully created.'));
+        } else {
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
-
-        $name             = $request['name'];
-        $role             = new Role();
-        $role->name       = $name;
-        $role->created_by = Auth::user()->creatorId();
-        $permissions      = $request['permissions'];
-        $role->save();
-
-        foreach($permissions as $permission)
-        {
-            $p = Permission::where('id', '=', $permission)->firstOrFail();
-            $role->givePermissionTo($p);
-        }
-
-        return redirect()->back()->with('success', __('Role successfully created.'));
     }
 
     /**
@@ -80,9 +87,13 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $permissions = Permission::all()->pluck('name', 'id')->toArray();
+        if (Auth::user()->can('edit roles')) {
+            $permissions = Permission::all()->pluck('name', 'id')->toArray();
 
-        return view('role.edit', compact('role', 'permissions'));
+            return view('role.edit', compact('role', 'permissions'));
+        } else {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
     }
 
     /**
@@ -90,16 +101,16 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        // if(Auth::user()->can('edit role'))
-        // {
+        if(Auth::user()->can('edit roles'))
+        {
             $validator = Validator::make(
-                $request->all(), [
-                                'name' => 'max:100|unique:roles,name,NULL,id,created_by,',
-                                'permissions' => 'required',
-                            ]
+                $request->all(),
+                [
+                    'name' => 'max:100|unique:roles,name,NULL,id,created_by,',
+                    'permissions' => 'required',
+                ]
             );
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
 
                 return redirect()->back()->with('error', $messages->first());
@@ -111,23 +122,19 @@ class RoleController extends Controller
 
             $p_all = Permission::all();
 
-            foreach($p_all as $p)
-            {
+            foreach ($p_all as $p) {
                 $role->revokePermissionTo($p);
             }
 
-            foreach($permissions as $permission)
-            {
+            foreach ($permissions as $permission) {
                 $p = Permission::where('id', '=', $permission)->firstOrFail();
                 $role->givePermissionTo($p);
             }
 
             return redirect()->back()->with('success', __('Role successfully updated.'));
-        // }
-        // else
-        // {
-        //     return redirect()->back()->with('error', 'Permission denied.');
-        // }
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -135,8 +142,12 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        Role::find($id)->delete();
-        return redirect()->route('roles.index')
-                        ->with('success','User deleted successfully');
+        if(Auth::user()->can('delete roles')) {
+            Role::find($id)->delete();
+            return redirect()->route('roles.index')
+                ->with('success', 'User deleted successfully');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 }

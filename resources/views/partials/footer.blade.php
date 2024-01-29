@@ -10,7 +10,11 @@
 <!--swiper-slider-->
 <script src="{{ asset('assets/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
 <!-- Dashboard 1 -->
+<<<<<<< Updated upstream
 {{-- <script src="{{ asset('assets/js/dashboard/dashboard-1.js') }}"></script> --}}
+=======
+<script src="{{ asset('assets/js/dashboard/dashboard-1.js') }}"></script>
+>>>>>>> Stashed changes
 <script src="{{ asset('assets/vendor/wow-master/dist/wow.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
 <script src="{{ asset('assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
@@ -21,6 +25,7 @@
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
 
+<<<<<<< Updated upstream
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
   @if(Session::has('success'))
@@ -36,8 +41,21 @@
         toastr.error("{{ Session::get('error') }}");
   @endif
 </script>
+=======
+<!-- Datatable -->
+<script src="{{ asset('assets/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/datatables/responsive/responsive.js') }}"></script>
+<script src="{{ asset('assets/js/plugins-init/datatables.init.js') }}"></script>
+>>>>>>> Stashed changes
 
+<script>
+    $(function() {
+        $("#datepicker").datepicker({
+            autoclose: true,
+            todayHighlight: true
+        }).datepicker('update', new Date());
 
+<<<<<<< Updated upstream
 <script>
     $(function() {
         $("#datepicker").datepicker({
@@ -47,6 +65,10 @@
 
     });
 
+=======
+    });
+
+>>>>>>> Stashed changes
     $(document).ready(function() {
         $(".booking-calender .fa.fa-clock-o").removeClass(this);
         $(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
