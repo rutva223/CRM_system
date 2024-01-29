@@ -50,6 +50,8 @@ Route::middleware('auth')->group(function () {
     // settings
     Route::resource('setting', SettingController::class);
     Route::post('email-settings', [SettingController::class, 'SaveEmailSetting'])->name('email.settings');
+    Route::post('theme-setting', [SettingController::class, 'ThemeSetting'])->name('theme.setting');
+
 
     // role
     Route::resource('roles', RoleController::class);
@@ -57,12 +59,10 @@ Route::middleware('auth')->group(function () {
     // plan
     Route::resource('plans', PlanController::class);
     Route::get('plan-subscribe/{id}', [PlanController::class, 'PlanSubscripe'])->name('plan.subscribe');
+
+
 });
 
-
-
-Route::group(['middleware' => ['auth']], function() {
-});
 
 // Route::post('email-settings', [SettingController::class, 'saveEmailSettings'])->name('email.settings')->middleware(['auth', 'XSS']);
 
