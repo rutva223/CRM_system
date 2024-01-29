@@ -9,12 +9,12 @@
 @endsection
 
 @section('page-action')
-    {{-- @can('plan create') --}}
+    @can('create plan')
     <a data-size="md" data-url="{{ route('plans.create') }}" data-ajax-popup="true" data-bs-toggle="tooltip"
         data-title="Add New Plan" class="btn btn-sm btn-primary">
         <i class="fa fa-plus text-white"></i>
     </a>
-    {{-- @endcan --}}
+    @endcan
 @endsection
 @section('content')
     <div class="row">
@@ -25,7 +25,7 @@
                     <div class="card-header border-0">
                         <h2 class="card-title">{{ $plan->name }} </h2>
                         @if ($plan->is_free_plan == 0)
-                            @can('plan edit')
+                            @can('edit plan')
                                 <div>
                                     <a href="#" data-size="md" data-url="{{ route('plans.edit', $plan->id) }}"
                                         data-ajax-popup="true" data-bs-toggle="tooltip" data-title="Plan Update"
