@@ -1,5 +1,5 @@
 @php
-    $theme = Session::get('merchant_theme');
+    $theme = Session::get('crm_theme_setting');
     if ($theme == 'light') {
         $path = asset('assets/images/logo.png');
     } elseif ($theme == 'dark') {
@@ -18,11 +18,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="ZaroPay Bootstrap 4.5.0 Admin Template">
     <meta name="author" content="WrapTheme, design by: ThemeMakker.com">
-    @include('partials.head_links')
+    @include('partials.head_links',['theme'=>'theme'])
 </head>
-{{-- <body data-theme-version="{{ $theme }}"> --}}
-
-<body>
+<body data-theme-version="{{ $theme }}">
 
 
     <!--*******************
@@ -127,38 +125,34 @@
         <div class="content-body default-height">
             <div class="container-fluid">
                 <div class="row">
+                    @php
+                        if (isset(app()->view->getSections()['page-breadcrumb'])) {
+                            $breadcrumb = explode(',', app()->view->getSections()['page-breadcrumb']);
+                        } else {
+                            $breadcrumb = [];
+                        }
+                    @endphp
                     <div class="col-xl-12">
-                        @php
-                            if (isset(app()->view->getSections()['page-breadcrumb'])) {
-                                $breadcrumb = explode(',', app()->view->getSections()['page-breadcrumb']);
-                            } else {
-                                $breadcrumb = [];
-                            }
-                        @endphp
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="page-titles">
-                                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            @if (!empty($breadcrumb))
-                                                <li class="breadcrumb-item"><a
-                                                        href="{{ route('dashboard') }}">Dashboard</a></li>
-                                                @foreach ($breadcrumb as $item)
-                                                    <li class="breadcrumb-item  {{ $loop->last ? 'active' : '' }}" aria-current="page">
-                                                        {{ $item }}</li>
-                                                @endforeach
-                                            @endif
-                                        </ol>
-                                    </nav>
-                                    <div class="text-end ">
-                                        @yield('page-action')
-                                    </div>
-                                </div>
+                        <div class="page-titles">
+                            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    @if (!empty($breadcrumb))
+                                        <li class="breadcrumb-item"><a
+                                                href="{{ route('dashboard') }}">Dashboard</a></li>
+                                        @foreach ($breadcrumb as $item)
+                                            <li class="breadcrumb-item  {{ $loop->last ? 'active' : '' }}" aria-current="page">
+                                                {{ $item }}</li>
+                                        @endforeach
+                                    @endif
+                                </ol>
+                            </nav>
+                            <div class="text-end ">
+                                @yield('page-action')
                             </div>
                         </div>
-                        @yield('content')
                     </div>
                 </div>
+                @yield('content')
             </div>
         </div>
 

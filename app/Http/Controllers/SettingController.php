@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
+use App\Models\User;
 use App\Models\Utility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -98,5 +99,22 @@ class SettingController extends Controller
             }
         }
         return redirect()->back()->with('success', __('Save Email Setting successfully.'));
+    }
+
+    public function ThemeSetting(Request $request)
+    {
+        $id = Session::get('user_id');
+        $user = User::where('id', $id)->first();
+        session()->forget('crm_theme_setting');
+        if ($user->theme_setting == 'dark') {
+            Session()->put('crm_theme_setting', 'light');
+            $user->theme_setting = 'light';
+            $user->save();
+        } elseif ($user->theme_setting	== 'light') {
+            Session()->put('crm_theme_setting', 'dark');
+            $user->theme_setting = 'dark';
+            $user->save();
+        }
+        return response()->json(['status' => true, 'theme' => $user->theme_setting]);
     }
 }

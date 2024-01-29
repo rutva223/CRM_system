@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +15,7 @@ class DashboardController extends Controller
     {
         if(Auth::check())
         {
+
             return redirect('dashboard');
         }else{
             return redirect('login');
@@ -24,6 +26,7 @@ class DashboardController extends Controller
     {
         if(Auth::check())
         {
+            
             if(Auth::user()->type == 'super admin')
             {
                 return view('dashboard.admin_dashboard');

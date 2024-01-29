@@ -18,11 +18,10 @@
                         <i class="material-icons"> widgets </i>
                     </a>
                 </li>
-                <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link bell dz-theme-mode" href="javascript:void(0);">
-                        <i id="icon-light" class="fas fa-sun"></i>
-                        <i id="icon-dark" class="fas fa-moon"></i>
-
+                <li class="nav-item dropdown notification_dropdown" id="theme_changes" style="cursor: pointer">
+                    <a class="nav-link ">
+                        <i id="icon-light" class="fas fa-sun {{ $theme == 'light' ? 'd-none' : '' }} "></i>
+                        <i id="icon-dark" class="fas fa-moon {{ $theme == 'dark' ? 'd-none' : '' }} "></i>
                     </a>
                 </li>
                 <li class="nav-item dropdown notification_dropdown">

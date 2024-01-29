@@ -37,8 +37,8 @@ class AuthenticatedSessionController extends Controller
         Session()->put('user_name', $user->name);
         Session()->put('user_id', $user->id);
         Session()->put('user_type', $user->type);
-        Session()->put('theme_setting', $user->theme_setting);
-
+        Session()->put('crm_theme_setting', $user->theme_setting);
+        setcookie('ThemeSetting', $user->theme_setting);
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
