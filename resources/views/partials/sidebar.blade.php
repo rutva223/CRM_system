@@ -15,21 +15,12 @@
         </a>
     </li>
 
-<<<<<<< Updated upstream
-@can('roles manage')
-    <li class="{{ request()->is('roles') ? 'active' : '' }}">
-        <a href="{{ route('roles.index') }}" class="">
-            <i class="fa-brands fa-critical-role"></i><span>Roles</span>
-        </a>
-    </li>
-=======
 @can('manage roles')
 <li class="{{ request()->is('roles') ? 'active' : '' }}">
     <a href="{{ route('roles.index') }}" class="">
         <i class="fa-brands fa-critical-role"></i><span>Roles</span>
     </a>
 </li>
->>>>>>> Stashed changes
 @endcan
 
 <!-- <li class="{{ request()->is('setting') ? 'active' : '' }}">
