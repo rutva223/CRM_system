@@ -20,9 +20,9 @@ class UserController extends Controller
     {
         if (Auth::user()->can('manage user')) {
 
-            if (Session::has('user_type') == 'super admin') {
+            if (Session::get('user_type') == 'super admin') {
                 $users_data = User::where('type', 'company')->get();
-            } elseif (Session::has('user_type') == 'company') {
+            } elseif (Session::get('user_type') == 'company') {
                 $id =  Session()->get('user_id');
                 $users_data = User::orderBy('id', 'desc')->where('created_by', $id)->get();
             } else {
@@ -54,7 +54,7 @@ class UserController extends Controller
     {
         if (Auth::user()->can('create user')) {
             $id =  Session()->get('user_id');
-            if(Session::has('user_type') != 'super admin'){
+            if(Session::get('user_type') != 'super admin'){
                 $canUse=  PlanCheck($id);
                 if($canUse == false)
                 {
@@ -85,7 +85,7 @@ class UserController extends Controller
                     return redirect()->back()->with('error', $validator->errors()->first());
                 }
             }
-            if (Session::has('user_type') == 'super admin') {
+            if (Session::get('user_type') == 'super admin') {
                 $roles = Role::findByName('company');
             } else {
                 $roles = Role::find($request->input('roles'));

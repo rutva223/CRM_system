@@ -25,7 +25,6 @@ class SettingController extends Controller
             return redirect()->route('login');
         }
     }
-
     /**
      * Show the form for creating a new resource.
      */

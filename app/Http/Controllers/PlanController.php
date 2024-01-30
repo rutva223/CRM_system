@@ -18,7 +18,7 @@ class PlanController extends Controller
      */
     public function index()
     {
-        if((Auth::user()->can('manage plan')) && (Session::has('user_type') == 'super admin'))
+        if((Auth::user()->can('manage plan')) && (Session::get('user_type') == 'super admin'))
         {
             $plans = Plan::get();
             return view('plan.index',compact('plans'));
@@ -147,7 +147,7 @@ class PlanController extends Controller
 
     public function PlanSubscripe($id)
     {
-        if(Session::has('user_type') == 'super admin')
+        if(Session::get('user_type') == 'super admin')
         {
             if($id)
             {
