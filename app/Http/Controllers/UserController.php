@@ -53,6 +53,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->can('create user')) {
+            $id =  Session()->get('user_id');
+            if(Session::has('user_type') != 'super admin'){
+                $canUse=  PlanCheck($id);
+                if($canUse == false)
+                {
+                    return redirect()->back()->with('error','You have maxed out the total number of User allowed on your current plan');
+                }
+            }
             $validatorArray = [
                 'name' => 'required|max:120',
                 'email' => 'required|em ail|max:100|unique:users,email',

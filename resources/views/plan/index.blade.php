@@ -70,12 +70,12 @@
                                 </div>
                                 <div class=" col-xl-12 col-sm-12 mb-3">
                                     <div class="text-center mt-2">
-                                        @can('plan subscribe')
+                                        @can('subscribe plan')
                                             <div class="card-footer">
                                                 @if (Auth::user()->plan == $plan->id)
                                                     <div class="input-group">
                                                         <a
-                                                            class="form-control text-primary rounded text-center">{{ Auth::user()->plan_expire_date ?? '' }}</a>
+                                                            class="form-control text-primary rounded text-center">{{$plan->duration == 'Lifetime' ? "Unlimited" : Auth::user()->plan_expire_date ?? '' }}</a>
                                                     </div>
                                                 @else
                                                     <div class="input-group">

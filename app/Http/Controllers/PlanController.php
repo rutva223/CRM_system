@@ -184,11 +184,38 @@ class PlanController extends Controller
                 // for days
                 // $this->plan_expire_date = Carbon::now()->addDays($duration)->isoFormat('YYYY-MM-DD');
             }
+            $users = User::where('created_by',$user->id)->where('is_active',1)->get();
+            $total_users =  $users->count();
+            if($plan->max_user > 0)
+            {
+                if($total_users > $plan->max_user){
+                        $count_user = $total_users - $plan->max_user;
+                        $usersToDisable = User::orderBy('created_at', 'desc')->where('created_by',$user->id)->where('is_active',1)->take($count_user)->get();
+                        foreach($usersToDisable as $item){
+                            $item->is_active = 0;
+                            $item->save();
+                        }
+                }else{
+                    $count_user =  $plan->max_user - $total_users ;
+                    $users = User::where('created_by',$user->id)->where('is_active',0)->take($count_user)->get();
+                    foreach($users as $item){
+                        $item->is_active = 1;
+                        $item->save();
+                    }
+                }
+            }elseif($plan->max_user == -1){
+                $users = User::where('created_by',$user->id)->get();
+                foreach($users as $item){
+                    $item->is_active = 1;
+                    $item->save();
+                }
+            }
             $user->plan = $plan->id;
+            $user->total_user = $plan->max_user;
             $user->save();
             return redirect()->back()->with('success', __('Plan Subscribe successfully!'));
 
-        }else  {
+        } else  {
             return redirect()->back()->with('error', __('Permission denied.'));
 
         }

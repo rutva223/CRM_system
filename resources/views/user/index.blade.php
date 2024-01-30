@@ -14,6 +14,8 @@
 @endsection
 
 @section('content')
+<script src="{{ asset('assets/js/custom.js') }}"></script>
+
     <div class="card">
         <div class="card-header">
             <h4 class="card-title"><i class="fa-solid fa-file-lines me-1"></i>User List</h4>
