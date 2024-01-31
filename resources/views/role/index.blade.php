@@ -3,16 +3,11 @@
 @section('title')
 {{ __('Manage Role') }}
 @endsection
-
+@section('page-breadcrumb')
+    Role
+@endsection
 @section('content')
-<div class="page-titles">
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Role</li>
-        </ol>
-    </nav>
-</div>
+
 
 <div class="filter cm-content-box box-primary">
     <div class="content-title SlideToolHeader">
@@ -30,7 +25,8 @@
     <div class="cm-content-body form excerpt">
         <div class="card-body pb-4">
             <div class="table-responsive">
-                <table class="datatable">
+                <table class="display" id="example" >
+
                     <thead>
                         <tr>
                             <th>{{__('Role')}} </th>
