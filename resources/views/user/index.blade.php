@@ -14,7 +14,6 @@
 @endsection
 
 @section('content')
-<script src="{{ asset('assets/js/custom.js') }}"></script>
 
     <div class="card">
         <div class="card-header">
