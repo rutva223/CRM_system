@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LeadController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('plans', PlanController::class);
     Route::get('plan-subscribe/{id}', [PlanController::class, 'PlanSubscripe'])->name('plan.subscribe');
 
+    // lead
+    Route::resource('leads', LeadController::class);
 
 });
 

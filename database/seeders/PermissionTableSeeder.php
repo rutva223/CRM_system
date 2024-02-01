@@ -184,6 +184,30 @@ class PermissionTableSeeder extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
+            [
+                'name' => 'manage leads',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create leads',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit leads',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete leads',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
         ];
 
         Permission::insert($arrPermissions);
@@ -270,6 +294,10 @@ class PermissionTableSeeder extends Seeder
             'manage setting',
             'manage setting logo',
             'manage setting theme',
+            'manage leads',
+            'edit leads',
+            'create leads',
+            'delete leads',
         ];
 
 

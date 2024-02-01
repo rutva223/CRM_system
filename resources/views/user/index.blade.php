@@ -4,7 +4,7 @@
     {{ __('Manage User') }}
 @endsection
 @section('page-breadcrumb')
-    {{ 'User' }}
+    {{ __   ('User') }}
 @endsection
 @section('page-action')
         <a href="#" data-size="md" data-url="{{ route('users.create') }}" data-ajax-popup="true"
