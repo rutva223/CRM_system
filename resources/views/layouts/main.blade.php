@@ -1,5 +1,5 @@
 @php
-    $theme = Session::get('crm_theme_setting');
+    $theme = Session::get('crm_theme_setting') ?? 'light';
     if ($theme == 'light') {
         $path = asset('assets/images/logo.png');
     } elseif ($theme == 'dark') {
@@ -18,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="ZaroPay Bootstrap 4.5.0 Admin Template">
     <meta name="author" content="WrapTheme, design by: ThemeMakker.com">
-    @include('partials.head_links',['theme'=>'theme'])
+    @include('partials.head_links',['theme'=>$theme])
 </head>
 <body data-theme-version="{{ $theme }}">
 
@@ -98,7 +98,7 @@
             Header start
         ***********************************-->
         <div class="header">
-            @include('partials.header')
+            @include('partials.header',['theme'=>$theme])
         </div>
         <!--**********************************
             Header end ti-comment-alt
