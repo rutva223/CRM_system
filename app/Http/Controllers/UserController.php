@@ -41,8 +41,7 @@ class UserController extends Controller
     public function create()
     {
         if (Auth::user()->can('create user')) {
-            $id = Session::get('user_id') ?? Auth::user()->id;
-            $roles = Role::where('created_by',$id)->pluck('name', 'id');
+            $roles = Role::pluck('name', 'name');
             return view('user.create', compact('roles'));
         } else {
             return response()->json(['error' => __('Permission denied.')], 401);

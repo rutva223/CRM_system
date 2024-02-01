@@ -23,11 +23,13 @@
 </li>
 @endcan
 
-<!-- <li class="{{ request()->is('setting') ? 'active' : '' }}">
-    <a href="{{ route('setting.index') }}" class="">
-        <i class="fa fa-cog"></i><span>Settings</span>
+@can('manage leads')
+<li class="{{ request()->is('leads') ? 'active' : '' }}">
+    <a href="{{ route('leads.index') }}" class="">
+        <i class="fa-brands fa-critical-role"></i><span>Leads</span>
     </a>
-</li> -->
+</li>
+@endcan
 
 <li>
     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">

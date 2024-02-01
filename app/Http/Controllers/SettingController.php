@@ -18,7 +18,7 @@ class SettingController extends Controller
         if (Session::has('user_type')) {
 
             // $settings = Utility::settings();
-            $emailSettings = Setting::get();
+            $emailSettings = Setting::pluck('value', 'name');
 
             return view('setting.index',compact('emailSettings'));
         } else {
