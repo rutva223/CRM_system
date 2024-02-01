@@ -39,6 +39,10 @@
             <div class="form-group col-md-12">
                 {{ Form::label('roles', __('User Role'),['class'=>'form-label']) }}
                 {!! Form::select('roles', $roles, null,array('class' => 'form-control select','required'=>'required')) !!}
+                <div class=" text-xs">
+                    {{ __('Please create role here. ') }}
+                    <a class="text-primary" href="{{ route('roles.index') }}"><b>{{ __('Create role') }}</b></a>
+                </div>
                 @error('roles')
                 <small class="invalid-role" role="alert">
                     <strong class="text-danger">{{ $message }}</strong>
