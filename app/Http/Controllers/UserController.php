@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -40,7 +41,8 @@ class UserController extends Controller
     public function create()
     {
         if (Auth::user()->can('create user')) {
-            $roles = Role::pluck('name', 'name');
+            $id = Session::get('user_id') ?? Auth::user()->id;
+            $roles = Role::where('created_by',$id)->pluck('name', 'id');
             return view('user.create', compact('roles'));
         } else {
             return response()->json(['error' => __('Permission denied.')], 401);
@@ -121,10 +123,10 @@ class UserController extends Controller
     {
         if (Auth::user()->can('edit user')) {
             $user = User::find($id);
-            $roles = Role::pluck('name', 'name')->all();
-            $userRole = $user->roles->pluck('name', 'name')->all();
+            $user_id = Session::get('user_id') ?? Auth::user()->id;
+            $roles = Role::where('created_by',$user_id)->pluck('name', 'id');
 
-            return view('user.edit', compact('user', 'roles', 'userRole'));
+            return view('user.edit', compact('user', 'roles'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }

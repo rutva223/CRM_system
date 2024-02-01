@@ -16,9 +16,9 @@
         </div>
         @if (Session::get('user_type') != 'super admin')
             <div class="form-group col-md-12">
-                {{ Form::label('role', __('User Role'),['class'=>'form-label']) }}
-                {!! Form::select('role', $roles, null,array('class' => 'form-control select','required'=>'required')) !!}
-                @error('role')
+                {{ Form::label('roles', __('User Role'),['class'=>'form-label']) }}
+                {!! Form::select('roles', $roles, null,array('class' => 'form-control select','required'=>'required')) !!}
+                @error('roles')
                 <small class="invalid-role" role="alert">
                     <strong class="text-danger">{{ $message }}</strong>
                 </small>
