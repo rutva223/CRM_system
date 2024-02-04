@@ -11,6 +11,11 @@
         data-bs-toggle="tooltip" data-title="{{ __('Add New Lead') }}" class="btn btn-sm btn-primary">
         <i class="fa fa-plus text-white"></i>
     </a>
+
+    <a href="{{ route('leads.grid') }}" data-size="md" data-url="#!" data-ajax-popup="true"
+        data-bs-toggle="tooltip" data-title="{{ __('Grid View') }}" class="btn btn-sm btn-primary">
+        <i class="fa fa-th text-white"></i>
+    </a>
 @endsection
 
 @section('content')
@@ -28,6 +33,7 @@
                         <th>Title</th>
                         <th>User Name</th>
                         <th>Description</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -38,12 +44,9 @@
                             <td>{{ $lead->title }}</td>
                             <td>{{ $lead->name }}</td>
                             <td>
-                                <a href="javaScript:void(0)"
-                                onclick="openDetails('{{ $lead->description }}')"
-                                title="Click for view title">
-                                {{ substr(strip_tags($lead->description), 0, 20) }}..
-                            </a>
+                                <a href="javaScript:void(0)" onclick="openDetails('{{ $lead->description }}')" title="Click for view title"> {{ substr(strip_tags($lead->description), 0, 20) }}.. </a>
                             </td>
+                            <td>{{ $lead->status }}</td>
                             <td >
                                 <div class="d-flex">
                                     <a href="#!" data-size="md" data-url="{{ route('leads.edit', $lead->id) }}"

@@ -18,7 +18,8 @@
 <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
 <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
-<script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+
+<link href="{{ asset('assets/css/dragula.min.css') }}" rel="stylesheet" />
 
 
 

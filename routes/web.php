@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::get('plan-subscribe/{id}', [PlanController::class, 'PlanSubscripe'])->name('plan.subscribe');
 
     // lead
+    Route::get('leads/grid', [LeadController::class, 'GridView'])->name('leads.grid');
     Route::resource('leads', LeadController::class);
 
 });

@@ -2,7 +2,7 @@
 
 <div class="modal-body">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="form-group mb-3">
                 {{Form::label('title',__('Title'),['class'=>'form-label']) }}
                 {{Form::text('title',null,array('class'=>'form-control','placeholder'=>__('Enter User Title'),'required'=>'required'))}}
@@ -13,7 +13,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="form-group mb-3">
                 {{Form::label('user_id',__('Assign To'),['class'=>'form-label'])}}
                 {{Form::select('user_id', $user, null, array('class'=>'form-control','placeholder'=>__('Select User'),'required'=>'required'))}}
