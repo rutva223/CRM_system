@@ -22,6 +22,11 @@
 <script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+
+<script src="{{ asset('assets/js/plugins/dropzone-amd-module.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/dragula.min.js') }}"></script>
+
 <script>
     @if (Session::has('success'))
         toastr.success("{{ Session::get('success') }}");

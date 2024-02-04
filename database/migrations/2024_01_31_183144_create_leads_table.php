@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->integer('user_id');
+            $table->integer('status')->default(0)->comment('0 for Draft, 1 for Open, 2 for Revised, 3 for Sent');
             $table->longText('description');
             $table->timestamps();
         });

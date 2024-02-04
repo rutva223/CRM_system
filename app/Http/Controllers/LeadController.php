@@ -131,12 +131,21 @@ class LeadController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
-        if(Auth::user()->can('delete lead'))
+        if(Auth::user()->can('delete leads'))
         {
-            // $lead = Lead::find($lead)->delete();
+            $lead = Lead::find($id)->delete();
+            return redirect()->back()->with('success', __('Lead deleted successfully!'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
+    }
+
+    public function GridView() {
+        $leads = Lead::leftjoin('users', 'users.id', '=', 'leads.user_id')
+                ->select('leads.*', 'users.name')
+                ->orderBy('id', 'desc')
+                ->get();
+
+            return view('lead.grid',compact('leads'));
     }
 }

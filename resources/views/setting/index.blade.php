@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-danger light">Cancel</button>
+                    <button type="button" class="btn btn-danger light">Cancel</button>
                     <button type="submit" class="btn me-2 btn-primary">Submit</button>
                 {{Form::close()}}
             </div>
