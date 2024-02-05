@@ -11,24 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('type', 20);
-            $table->string('avatar', 100)->nullable();
-            $table->string('lang', 100);
-            $table->integer('plan')->nullable();
-            $table->integer('total_user')->default(0);
-            $table->date('plan_expire_date')->nullable();
-            $table->string('theme_setting', 20)->default('light');
-            $table->integer('created_by')->default(0);
-            $table->integer('is_active')->default(1);
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('users'))
+        {
+            Schema::create('users', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name');
+                $table->string('email')->unique();
+                $table->timestamp('email_verified_at')->nullable();
+                $table->string('password');
+                $table->string('type', 20);
+                $table->string('avatar', 100)->nullable();
+                $table->string('lang', 100);
+                $table->integer('plan')->nullable();
+                $table->integer('total_user')->default(0);
+                $table->date('plan_expire_date')->nullable();
+                $table->string('theme_setting', 20)->default('light');
+                $table->integer('created_by')->default(0);
+                $table->integer('is_active')->default(1);
+                $table->rememberToken();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

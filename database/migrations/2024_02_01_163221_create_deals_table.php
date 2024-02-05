@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasTable('plans'))
-        {
-            Schema::create('plans', function (Blueprint $table) {
-                $table->bigIncrements('id');
+        if (!Schema::hasTable('deals')) {
+            Schema::create('deals', function (Blueprint $table) {
+                $table->id();
                 $table->string('name', 100);
-                $table->string('price');
-                $table->string('max_user', 100)->default(0);
-                $table->string('duration');
-                $table->string('description');
-                $table->integer('is_free_plan')->default(0);
+                $table->decimal('price'); // Use decimal for currency or price
+                $table->integer('user_id');
+                $table->decimal('phone'); // Use decimal for numeric values
+                $table->integer('created_by');
                 $table->timestamps();
             });
         }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists('deals');
     }
 };
