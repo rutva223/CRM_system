@@ -9,19 +9,26 @@
         <i class="fa fa-users"></i><span class="nav-text ">Users</span>
     </a>
 </li>
-    <li class="{{ request()->is('plans') ? 'active' : '' }}">
-        <a href="{{ route('plans.index') }}" class="">
-            <i class="fa fa-users"></i><span class="nav-text ">Plans</span>
+@can('manage roles')
+    <li class="{{ request()->is('roles') ? 'active' : '' }}">
+        <a href="{{ route('roles.index') }}" class="">
+            <i class="fa-brands fa-critical-role"></i><span class="nav-text ">Roles</span>
         </a>
     </li>
-
-@can('manage roles')
-<li class="{{ request()->is('roles') ? 'active' : '' }}">
-    <a href="{{ route('roles.index') }}" class="">
-        <i class="fa-brands fa-critical-role"></i><span class="nav-text ">Roles</span>
+@endcan
+{{-- @can('manage deal') --}}
+<li class="{{ request()->is('deals') ? 'active' : '' }}">
+    <a href="{{ route('deals.index') }}" class="">
+        <i class="fa fa-users"></i><span class="nav-text ">Deal</span>
     </a>
 </li>
-@endcan
+{{-- @endcan --}}
+<li class="{{ request()->is('plans') ? 'active' : '' }}">
+    <a href="{{ route('plans.index') }}" class="">
+        <i class="fa fa-users"></i><span class="nav-text ">Plans</span>
+    </a>
+</li>
+
 
 @can('manage leads')
 <li class="{{ request()->is('leads') ? 'active' : '' }}">

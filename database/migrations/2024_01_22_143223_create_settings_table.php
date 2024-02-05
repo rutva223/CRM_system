@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('settings', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('value')->nullable();
-            $table->integer('created_by');
-            $table->timestamps();
-            $table->unique(['name', 'created_by']);
-        });
+        if(!Schema::hasTable('settings'))
+        {
+            Schema::create('settings', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name');
+                $table->string('value')->nullable();
+                $table->integer('created_by');
+                $table->timestamps();
+                $table->unique(['name', 'created_by']);
+            });
+        }
     }
 
     /**
