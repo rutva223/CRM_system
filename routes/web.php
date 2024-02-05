@@ -1,11 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\LeadController;
-=======
 use App\Http\Controllers\DealController;
->>>>>>> Stashed changes
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
