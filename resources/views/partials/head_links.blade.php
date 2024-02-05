@@ -8,6 +8,7 @@
 <link href="{{ asset('assets/vendor/datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
 <!--swiper-slider-->
 <link rel="stylesheet" href="{{ asset('assets/vendor/swiper/css/swiper-bundle.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/vendor/metismenu/css/metisMenu.min.css') }}">
 <!-- Style css -->
  <!-- Datatable -->
  <link href="{{ asset('assets/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
@@ -20,6 +21,7 @@
 <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
 
 <link href="{{ asset('assets/css/dragula.min.css') }}" rel="stylesheet" />
+<script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
 
 
 

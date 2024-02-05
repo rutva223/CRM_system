@@ -572,3 +572,13 @@
     </div>
 </div>
 @endsection
+
+@push('after-scripts')
+<script src="{{ asset('assets/vendor/apexchart/apexchart.js') }}"></script>
+<script src="{{ asset('assets/js/dashboard/dashboard-1.js') }}"></script>
+
+@endpush
+
+
+
+

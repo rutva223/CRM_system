@@ -6,6 +6,7 @@
     {{ __('Deal Manage') }}
 @endsection
 @section('content')
+
     <div class="row ">
         <!--column-->
         <div class="col-xl-12">
