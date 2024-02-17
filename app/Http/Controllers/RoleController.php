@@ -46,7 +46,7 @@ class RoleController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'name' => 'required|max:100|unique:roles,name,NULL,id,created_by,' . Auth::user()->creatorId(),
+                    'name' => 'required|max:100|unique:roles,name,NULL,id,created_by,' . creatorId(),
                     'permissions' => 'required',
                 ]
             );
@@ -59,7 +59,7 @@ class RoleController extends Controller
             $name             = $request['name'];
             $role             = new Role();
             $role->name       = $name;
-            $role->created_by = Auth::user()->creatorId();
+            $role->created_by = creatorId();
             $permissions      = $request['permissions'];
             $role->save();
 

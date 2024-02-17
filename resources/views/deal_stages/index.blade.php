@@ -46,7 +46,7 @@
 @endsection
 
 @section('page-action')
-    @can('dealstages create')
+    @can('create dealstages')
         <a class="btn btn-sm btn-primary btn-icon" data-bs-toggle="tooltip" data-bs-placement="top"
             title="{{ __('Create Deal Stage') }}" data-ajax-popup="true" data-size="md" data-title="{{ __('Create Deal Stage') }}"
             data-url="{{ route('deal-stages.create') }}"><i class="ti ti-plus text-white"></i></a>

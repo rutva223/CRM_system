@@ -50,5 +50,5 @@
 @endsection
 
 @push('after-scripts')
-
+<script src="{{ asset('assets/js/required.js') }}"></script>
 @endpush

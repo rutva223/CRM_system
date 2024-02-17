@@ -3,8 +3,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                {{Form::label('name',__('Name'),['class'=>'form-label'])}}
-                {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter Role Name')))}}
+                {{Form::label('name',__('Name'),['class'=>'form-label required'])}}
+                {{Form::text('name',null,array('class'=>'form-control','required'=>'required','placeholder'=>__('Enter Role Name')))}}
                 @error('name')
                 <small class="invalid-name" role="alert">
                     <strong class="text-danger">{{ $message }}</strong>
@@ -124,7 +124,7 @@
 
 <div class="modal-footer">
     <input type="button" value="{{__('Cancel')}}" class="btn  btn-light" data-bs-dismiss="modal">
-    <input type="submit" value="{{__('Create')}}" class="btn  btn-primary">
+    <input type="submit" value="{{__('Create')}}" class="btn  btn-primary" id="createButton" disabled>
 </div>
 {{Form::close()}}
 
@@ -138,4 +138,45 @@
             $('.isscheck_' + ischeck).prop('checked', this.checked);
         });
     });
+    $(document).ready(function() {
+    // Function to check if all required fields are filled
+    function checkRequiredFields() {
+        var allFieldsFilled = true;
+        $('.form-control[required]').each(function() {
+            if ($(this).val() === '') {
+                allFieldsFilled = false;
+                return false; // Exit the loop early if a required field is empty
+            }
+        });
+
+        // Check if at least one permission is selected
+        var atLeastOnePermissionSelected = $('.isscheck:checked').length > 0;
+
+        return allFieldsFilled && atLeastOnePermissionSelected;
+    }
+
+    // Function to enable or disable the Create button based on required field completion
+    function toggleCreateButton() {
+        var allFieldsFilled = checkRequiredFields();
+        $('#createButton').prop('disabled', !allFieldsFilled);
+    }
+
+    // Call the toggleCreateButton function when any form field changes
+    $('.form-control, .isscheck').on('input', function() {
+        toggleCreateButton();
+    });
+
+    // Trigger input event on page load to check initial state
+    toggleCreateButton();
+
+    // Function to trigger input event after permissions are selected automatically
+    function triggerInputEvent() {
+        $('.form-control, .isscheck').trigger('input');
+    }
+
+    // Trigger input event after permissions are selected automatically
+    triggerInputEvent();
+});
+
+
 </script>
