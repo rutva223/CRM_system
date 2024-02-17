@@ -18,7 +18,7 @@
                     content.</p>
             </div> --}}
             <h6 class="login-title"><span>Login</span></h6>
-            <div class="row mb-5">
+            {{-- <div class="row mb-5">
                 <div class="col-xl-6 col-sm-6">
                     <a href="javascript:void(0);" class="btn btn-outline-danger d-block social-btn">
                         <svg width="16" height="16" viewBox="0 0 28 28" fill="none"
@@ -55,7 +55,7 @@
                         </svg>
                         <span class="ms-1 ">Sign in with Apple</span></a>
                 </div>
-            </div>
+            </div> --}}
             {{ Form::open(['route' => 'login', 'method' => 'post', 'id' => 'loginForm']) }}
                 @csrf
                 <div class="mb-4">

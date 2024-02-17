@@ -23,7 +23,7 @@ return new class extends Migration
                 $table->string('avatar', 100)->nullable();
                 $table->string('lang', 100);
                 $table->integer('plan')->nullable();
-                $table->integer('total_user')->default(0);
+                $table->integer('total_user')->default(5);
                 $table->date('plan_expire_date')->nullable();
                 $table->string('theme_setting', 20)->default('light');
                 $table->string('default_pipeline')->nullable();

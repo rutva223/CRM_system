@@ -98,7 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/deals/{id}/clients', [DealController::class, 'clientEdit'])->name('deals.clients.edit');
     Route::delete('/deals/{id}/clients/{uid}', [DealController::class, 'clientDestroy'])->name('deals.clients.destroy');
 
-
+    
     Route::post('/deals/change-pipeline', [DealController::class, 'changePipeline'])->name('deals.change.pipeline');
     Route::post('/deals/order', [DealController::class, 'order'])->name('deals.order');
     Route::post('deal/import/export', [DealController::class, 'fileImportExport'])->name('deal.file.import');

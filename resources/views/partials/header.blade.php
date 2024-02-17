@@ -48,7 +48,7 @@
                                 <li>
                                     <div class="timeline-panel">
                                         <div class="media me-2">
-                                            <img alt="image" width="50" src="{{ asset('assets/images/avatar/1.jpg') }}">
+                                            <img alt="image" width="50" src="{{ asset('assets/images/avatar/1.png') }}">
                                         </div>
                                         <div class="media-body">
                                             <h6 class="mb-1">Dr sultads Send you Photo</h6>
@@ -81,7 +81,7 @@
                                  <li>
                                     <div class="timeline-panel">
                                         <div class="media me-2">
-                                            <img alt="image" width="50" src="{{ asset('assets/images/avatar/1.jpg') }}">
+                                            <img alt="image" width="50" src="{{ asset('assets/images/avatar/1.png') }}">
                                         </div>
                                         <div class="media-body">
                                             <h6 class="mb-1">Dr sultads Send you Photo</h6>
@@ -159,7 +159,7 @@
                                 </svg>
                                 <span class="ms-2">Notification </span>
                             </a> --}} -->
-                            <a href="javascript:void(0);" class="dropdown-item ai-icon ">
+                            <a href="{{ route('setting.index')}}" class="dropdown-item ai-icon ">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24"/>

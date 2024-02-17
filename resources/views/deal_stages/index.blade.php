@@ -42,7 +42,6 @@
 @endpush
 
 @section('page-breadcrumb')
-    {{ __('Setup') }},
     {{ __('Deal Stages') }}
 @endsection
 

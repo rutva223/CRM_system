@@ -32036,7 +32036,8 @@ button:focus {
 }
 
 .btn.tp-btn.btn-danger {
-    color: #fd5353;
+    background-color: #ee9f9f;
+    color: #f73c3c;
 }
 
 .btn.tp-btn.btn-danger g [fill] {
@@ -32044,8 +32045,8 @@ button:focus {
 }
 
 .btn.tp-btn.btn-danger:hover {
-    background-color: #fd5353;
-    border-color: #fd5353;
+    background-color: #e44b4b;
+    border-color: #e44b4b;
     color: #fff;
 }
 
@@ -37542,7 +37543,7 @@ table.dataTable>tfoot>tr>td {
 }
 
 .login-account .account-info-area {
-    background-color: var(--primary);
+    /* background-color: var(--primary); */
     border-radius: 2.5rem;
     display: flex;
     align-items: center;
@@ -40053,7 +40054,7 @@ a.btn.dlab-load-more {
 
 .draggable.card {
     transition: none;
-    cursor: grab;
+    /* cursor: grab; */
 }
 
 .box-2 {
@@ -42892,9 +42893,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: white;
 }
 
-.nav-pills .nav-link.active, .nav-pills:hover .show > .nav-link {
-    background-color: var(--primary) !important;
-}
+
 
 .contact-button{
     margin-top: 0px;

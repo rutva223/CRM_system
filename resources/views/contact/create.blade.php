@@ -6,7 +6,14 @@
 @section('page-breadcrumb')
     {{ __(' Add Contact Information') }}
 @endsection
+@push('css')
+<style>
+    .nav-pills .nav-link.active, .nav-pills:hover .show > .nav-link {
+    background-color: var(--primary) !important;
+}
+</style>
 
+@endpush
 @section('content')
     <div class="page-header">
         <div class="page-block">

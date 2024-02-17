@@ -1,6 +1,6 @@
-<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon_io/apple-touch-icon.png') }}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon_io/favicon-32x32.png') }}">
-<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon_io/favicon-16x16.png') }}">
+{{-- <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/apple-touch-icon.png') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicon-32x32.png') }}"> --}}
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
 <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}">
 <link href="{{ asset('assets/vendor/wow-master/css/libs/animate.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
@@ -23,7 +23,7 @@
 
 <link href="{{ asset('assets/css/dragula.min.css') }}" rel="stylesheet" />
 <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
-
+@stack('css')
 
 
 <style>

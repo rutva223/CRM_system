@@ -72,19 +72,31 @@
                                     <div class="text-center mt-2">
                                         @can('subscribe plan')
                                             <div class="card-footer">
-                                                @if (Auth::user()->plan == $plan->id)
+                                                {{-- @if (Auth::user()->plan == $plan->id) --}}
                                                     <div class="input-group">
                                                         <a class="form-control text-primary rounded text-center">{{$plan->duration == 'Lifetime' ? "Unlimited" : Auth::user()->plan_expire_date ?? '' }}</a>
                                                     </div>
-                                                @else
+                                                {{-- @else --}}
                                                     @if ($plan->duration != 'Lifetime')
                                                         <div class="input-group">
                                                             <a href="{{ route('plan.subscribe', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}"
                                                                 class="form-control text-primary rounded text-center">Subscription</a>
                                                         </div>
                                                     @endif
-                                                @endif
+                                                {{-- @endif --}}
                                             </div>
+
+                                            {{-- @if (\Auth::user()->type == 'company' && \Auth::user()->plan == $plan->id)
+                                                @if (empty(\Auth::user()->plan_expire_date))
+                                                    <p class="mb-0">{{ __('Lifetime') }}</p>
+                                                @else
+                                                    <p class="mb-0">
+                                                        {{ __('Expire on ') }}
+                                                        {{ date('d M Y', strtotime(\Auth::user()->plan_expire_date)) }}
+                                                    </p>
+                                                @endif
+                                            @endif --}}
+
                                         @endcan
                                     </div>
                                 </div>

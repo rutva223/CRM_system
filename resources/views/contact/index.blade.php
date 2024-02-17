@@ -11,7 +11,14 @@
         <i class="fa fa-plus text-white"></i>
     </a>
 @endsection
+@push('css')
+<style>
+    .contact_list{
+        width: fit-content;
+    }
+</style>
 
+@endpush
 @section('content')
 <div class="col-xl-12">
    <div class="row">
