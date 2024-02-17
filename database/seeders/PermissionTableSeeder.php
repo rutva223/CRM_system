@@ -20,197 +20,6 @@ class PermissionTableSeeder extends Seeder
         Artisan::call('cache:forget spatie.permission.cache');
         Artisan::call('cache:clear');
 
-        $arrPermissions = [
-            [
-                'name' => 'show dashboard',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-
-            [
-                'name' => 'manage user',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'create user',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'edit user',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'delete user',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage user profile',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage reset password',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage user login',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage user logs history',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage setting',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage setting logo',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage setting theme',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage setting storage',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage plan',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'create plan',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'edit plan',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'delete plan',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'orders plan',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage email template',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage language',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage user chat',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage roles',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'create roles',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'edit roles',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'delete roles',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'purchase plan',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'subscribe plan',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage leads',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'create leads',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'edit leads',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'delete leads',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-        ];
-
-        Permission::insert($arrPermissions);
 
         // Super Admin
         $admin = User::where('type','super admin')->first();
@@ -272,6 +81,10 @@ class PermissionTableSeeder extends Seeder
             'orders plan',
             'manage email template',
             'manage language',
+            'manage coupons',
+            'edit coupons',
+            'create coupons',
+            'delete coupons',
         ];
 
         $compnay_permission = [
@@ -298,6 +111,43 @@ class PermissionTableSeeder extends Seeder
             'edit leads',
             'create leads',
             'delete leads',
+            'report deal',
+            'manage deal',
+            'create deal',
+            'edit deal',
+            'delete deal',
+            'show deal',
+            'move deal',
+            'import deal',
+            'create deal task',
+            'edit deal task',
+            'delete deal task',
+            'show deal task',
+            'create deal call',
+            'edit deal call',
+            'delete deal call',
+            'deal email create',
+            'manage pipeline',
+            'create pipeline',
+            'edit pipeline',
+            'delete pipeline',
+            'manage dealstages',
+            'create dealstages',
+            'edit dealstages',
+            'delete dealstages',
+            'manage labels',
+            'create labels',
+            'edit labels',
+            'delete labels',
+            'manage source',
+            'create source',
+            'edit source',
+            'delete source',
+            'manage contacts',
+            'edit contacts',
+            'create contacts',
+            'delete contacts',
+
         ];
 
 

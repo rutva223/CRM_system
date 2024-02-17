@@ -26,6 +26,7 @@ return new class extends Migration
                 $table->integer('total_user')->default(0);
                 $table->date('plan_expire_date')->nullable();
                 $table->string('theme_setting', 20)->default('light');
+                $table->string('default_pipeline')->nullable();
                 $table->integer('created_by')->default(0);
                 $table->integer('is_active')->default(1);
                 $table->rememberToken();

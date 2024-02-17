@@ -24,14 +24,25 @@
                 @enderror
             </div>
         </div>
-        <div class="form-group col-md-12">
-            {{ Form::label('client', __('Clients'),['class'=>'form-label']) }}
-            {!! Form::select('client', $client, null,array('class' => 'form-control select','required'=>'required')) !!}
-            <div class=" text-xs">
-                {{ __('Please create client here.') }}
-                <a class="text-primary" href="{{ route('client.index') }}"><b>{{ __('Create Client') }}</b></a>
+        {{-- <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <select class="multi-select" style="width:100%;" name="states[]" multiple="multiple">
+                        <option value="AL">Alabama</option>
+                        <option value="WY">Wyoming</option>
+                        <option value="UI">dlf</option>
+                    </select>
+                </div>
             </div>
-            @error('client')
+        </div> --}}
+        <div class="form-group col-md-12">
+            {{ Form::label('user', __('Users'),['class'=>'form-label']) }}
+            {!! Form::select('user', $users, null,array('class' => 'form-control select','required'=>'required')) !!}
+            <div class=" text-xs">
+                {{ __('Please create user here.') }}
+                <a class="text-primary" href="{{ route('users.index') }}"><b>{{ __('Create User') }}</b></a>
+            </div>
+            @error('user')
             <small class="invalid-role" role="alert">
                 <strong class="text-danger">{{ $message }}</strong>
             </small>
@@ -46,4 +57,10 @@
 </div>
 
 {{Form::close()}}
+<script>
+            $('.multi-select').select2();
+</script>
+
+
+
 
