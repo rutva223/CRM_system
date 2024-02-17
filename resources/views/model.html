@@ -1,0 +1,98 @@
+<style>
+    .btn-position {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+    }
+
+   
+
+    /*  form-control  */
+
+    .form-control {
+        border-radius: 0;
+        box-shadow: none
+    }
+
+    .form-control:focus {
+        box-shadow: none
+    }
+
+
+    /*  Button  */
+
+    .btn {
+        border-radius: 0
+    }
+
+</style>
+<div class="container">
+    <h2>&nbsp;</h2>
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg btn-position" data-toggle="modal" data-target="#myModal">Click
+        Me</button>
+
+    <!-- Modal -->
+    <div class="modal right fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Student Information</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-sm-6 form-group">
+                            <input type="text" class="form-control" placeholder="First Name" name="First Name">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <input type="text" class="form-control" placeholder="Last Name" name="Last Name">
+                        </div>
+
+                        <div class="col-sm-12 form-group">
+
+                            <select class="form-control" style="color:#999">
+                                <option>Select College</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 form-group">
+                            <textarea class="form-control" rows="5" placeholder="Address"></textarea>
+                        </div>
+                        <div class="col-sm-12 form-group">
+                            <input type="text" class="form-control" placeholder="Text" name="text">
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-default close-btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script>
+    wow = new WOW({
+        boxClass: 'wow', // default
+        animateClass: 'animated', // default
+        offset: 0, // default
+        mobile: true, // default
+        live: true // default
+    })
+    wow.init();
+
+</script>

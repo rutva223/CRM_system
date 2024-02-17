@@ -1,35 +1,83 @@
-
-{{ Form::model($user, array('route' => array('users.update', $user->id), 'method' => 'PUT')) }}
+{{ Form::model($deal, ['route' => ['deals.update', $deal->id], 'method' => 'PUT']) }}
 <div class="modal-body">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                {{Form::label('name',__('Name'),['class' => 'col-form-label']) }}
-                {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter User Name'),'required'=>'required'))}}
+    <div class="tab-content tab-bordered">
+        <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
+            <div class="row">
+                <div class="col-6 form-group">
+                    {{ Form::label('name', __('Deal Name'), ['class' => 'col-form-label']) }}
+                    {{ Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) }}
+                </div>
+                <div class="col-6 form-group">
+                    {{ Form::label('price', __('Price'), ['class' => 'col-form-label']) }}
+                    {{ Form::number('price', null, ['class' => 'form-control']) }}
+                </div>
+                <div class="col-6 form-group">
+                    {{ Form::label('pipeline_id', __('Pipeline'), ['class' => 'col-form-label']) }}
+                    {{ Form::select('pipeline_id', $pipelines, null, ['class' => 'form-control', 'required' => 'required']) }}
+                </div>
+                <div class="col-6 form-group">
+                    {{ Form::label('stage_id', __('Stage'), ['class' => 'col-form-label']) }}
+                    {{ Form::select('stage_id', ['' => __('Select Stage')], null, ['class' => 'form-control', 'required' => 'required']) }}
+                </div>
+                <div class="col-12 form-group">
+                    {{ Form::label('sources', __('Sources'), ['class' => 'col-form-label']) }}
+                    {{ Form::select('sources[]', $sources, null, ['class' => 'form-control choices', 'id' => 'choices-multiple', 'multiple' => '', 'required' => 'required']) }}
+                </div>
+                <div class="col-12 form-group">
+                    {{ Form::label('products', __('Products'), ['class' => 'col-form-label']) }}
+                    {{ Form::select('products[]', $products, null, ['class' => 'form-control choices', 'id' => 'choices-multiple1', 'multiple' => '', 'required' => 'required']) }}
+                </div>
+                <div class="col-12 form-group">
+                    {{ Form::label('phone', __('Phone No'), ['class' => 'col-form-label']) }}
+                    {{ Form::text('phone', null, ['class' => 'form-control', 'required' => 'required']) }}
+                </div>
+                <div class="col-12 form-group">
+                    {{ Form::label('notes', __('Notes'), ['class' => 'col-form-label']) }}
+                    {{ Form::textarea('notes', null, ['class' => 'tox-target pc-tinymce-2']) }}
+                </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                {{Form::label('email',__('Email'),['class' => 'col-form-label'])}}
-                {{Form::text('email',null,array('class'=>'form-control','placeholder'=>__('Enter User Email'),'required'=>'required'))}}
-            </div>
-        </div>
-        @if (Session::get('user_type') != 'super admin')
-            <div class="form-group col-md-12">
-                {{ Form::label('roles', __('User Role'),['class'=>'form-label']) }}
-                {!! Form::select('roles', $roles, null,array('class' => 'form-control select','required'=>'required')) !!}
-                @error('roles')
-                <small class="invalid-role" role="alert">
-                    <strong class="text-danger">{{ $message }}</strong>
-                </small>
-                @enderror
-            </div>
-        @endif
+
     </div>
 </div>
-
 <div class="modal-footer">
-    <button type="button" class="btn  btn-light" data-bs-dismiss="modal">{{__('Close')}}</button>
-    <button type="submit" class="btn  btn-primary">{{__('Update')}}</button>
+    <button type="button" class="btn  btn-light" data-bs-dismiss="modal">{{ __('Close') }}</button>
+    <button type="submit" class="btn  btn-primary">{{ __('Update') }}</button>
 </div>
+
 {{ Form::close() }}
+
+
+<script>
+    var stage_id = '{{ $deal->stage_id }}';
+
+    $(document).ready(function() {
+        $("#commonModal select[name=pipeline_id]").trigger('change');
+    });
+
+    $(document).on("change", "#commonModal select[name=pipeline_id]", function() {
+        $.ajax({
+            url: '{{ route('stages.json') }}',
+            data: {
+                pipeline_id: $(this).val(),
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            success: function(data) {
+                $('#stage_id').empty();
+                $("#stage_id").append(
+                    '<option value="" selected="selected">{{ __('Select Stage') }}</option>');
+                $.each(data, function(key, data) {
+                    var select = '';
+                    if (key == '{{ $deal->stage_id }}') {
+                        select = 'selected';
+                    }
+                    $("#stage_id").append('<option value="' + key + '" ' + select + '>' +
+                        data + '</option>');
+                });
+                $("#stage_id").val(stage_id);
+
+            }
+        })
+    });
+</script>

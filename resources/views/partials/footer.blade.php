@@ -15,6 +15,7 @@
 <script src="{{ asset('assets/vendor/metismenu/js/metisMenu.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
 <script src="{{ asset('assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}"></script>
 
 <script src="{{ asset('assets/js/dlabnav-init.js') }}"></script>

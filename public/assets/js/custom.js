@@ -1,5 +1,6 @@
 
 $(function () {
+    $('.multi-select').select2();
     loadConfirm();
 });
 

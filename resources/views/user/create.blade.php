@@ -1,3 +1,6 @@
+<style>
+
+</style>
 {{Form::open(array('url'=>'users','method'=>'post'))}}
 
 <div class="modal-body">

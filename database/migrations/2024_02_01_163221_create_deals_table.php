@@ -11,14 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('deals')) {
+        if(!Schema::hasTable('deals'))
+        {
             Schema::create('deals', function (Blueprint $table) {
                 $table->id();
-                $table->string('name', 100);
-                $table->decimal('price'); // Use decimal for currency or price
-                $table->integer('user_id');
-                $table->decimal('phone'); // Use decimal for numeric values
+                $table->string('name');
+                $table->float('price')->nullable();
+                $table->integer('pipeline_id');
+                $table->integer('stage_id');
+                $table->string('sources')->nullable();
+                $table->string('products')->nullable();
+                $table->text('notes')->nullable();
+                $table->string('labels')->nullable();
+                $table->string('status')->nullable();
+                $table->integer('order')->default(0);
+                $table->string('phone')->nullable();
                 $table->integer('created_by');
+                $table->integer('is_active')->default(1);
                 $table->timestamps();
             });
         }
