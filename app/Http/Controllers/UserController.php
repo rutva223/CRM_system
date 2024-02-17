@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
@@ -41,7 +43,8 @@ class UserController extends Controller
     public function create()
     {
         if (Auth::user()->can('create user')) {
-            $roles = Role::pluck('name', 'name');
+            $user_id = Session::get('user_id') ?? Auth::user()->id;
+            $roles = Role::where('created_by',$user_id)->pluck('name', 'id');
             return view('user.create', compact('roles'));
         } else {
             return response()->json(['error' => __('Permission denied.')], 401);
@@ -96,8 +99,8 @@ class UserController extends Controller
             $user['email']      = $request->input('email');
             $user['password']   = !empty($userpassword) ? Hash::make($userpassword) : null;
             $user['lang']       =  'en';
-            $user['type']       = $roles->name;
-            $user['created_by'] = creatorId();
+            $user['type']       = $roles->name ?? $request->roles;
+            $user['created_by'] = $id;
             $user = User::create($user);
             $user->assignRole($roles);
 
@@ -172,15 +175,17 @@ class UserController extends Controller
             try
             {
                 // get all table
-                $tables_in_db = \DB::select('SHOW TABLES');
+                $tables_in_db = DB::select('SHOW TABLES');
                 $db = "Tables_in_".env('DB_DATABASE');
                 foreach($tables_in_db as $table)
                 {
                     if (Schema::hasColumn($table->{$db}, 'created_by'))
                     {
-                        \DB::table($table->{$db})->where('created_by', $user->id)->delete();
+                        DB::table($table->{$db})->where('created_by', $user->id)->delete();
                     }
                 }
+                $contact = Contact::where('user_id',$id)->get();
+                $contact->delete();
                 $user->delete();
             }
             catch (\Exception $e)

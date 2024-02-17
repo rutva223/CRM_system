@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\DealController;
@@ -9,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\StripePaymentController;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Artisan;
 
@@ -65,9 +68,18 @@ Route::middleware('auth')->group(function () {
     // lead
     Route::get('leads/grid', [LeadController::class, 'GridView'])->name('leads.grid');
     Route::resource('leads', LeadController::class);
+
     // deal
     Route::resource('deals', DealController::class);
 
+    // contacts
+    Route::resource('contacts', ContactController::class);
+
+    // contacts
+    Route::resource('coupons', CouponController::class);
+
+    //payment
+    Route::post('/stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
 
 });
 
