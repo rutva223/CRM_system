@@ -74,14 +74,15 @@
                                             <div class="card-footer">
                                                 @if (Auth::user()->plan == $plan->id)
                                                     <div class="input-group">
-                                                        <a
-                                                            class="form-control text-primary rounded text-center">{{$plan->duration == 'Lifetime' ? "Unlimited" : Auth::user()->plan_expire_date ?? '' }}</a>
+                                                        <a class="form-control text-primary rounded text-center">{{$plan->duration == 'Lifetime' ? "Unlimited" : Auth::user()->plan_expire_date ?? '' }}</a>
                                                     </div>
                                                 @else
-                                                    <div class="input-group">
-                                                        <a href="{{ route('plan.subscribe', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}"
-                                                            class="form-control text-primary rounded text-center">Subscription</a>
-                                                    </div>
+                                                    @if ($plan->duration != 'Lifetime')
+                                                        <div class="input-group">
+                                                            <a href="{{ route('plan.subscribe', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}"
+                                                                class="form-control text-primary rounded text-center">Subscription</a>
+                                                        </div>
+                                                    @endif
                                                 @endif
                                             </div>
                                         @endcan

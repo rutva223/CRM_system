@@ -6,6 +6,10 @@
 @section('page-breadcrumb')
     {{ __   ('Lead') }}
 @endsection
+@php
+    $statusClass = App\Models\Lead::lead_title();
+    // dd($statusClass);
+@endphp
 @section('page-action')
     <a href="#" data-size="md" data-url="{{ route('leads.create') }}" data-ajax-popup="true"
         data-bs-toggle="tooltip" data-title="{{ __('Add New Lead') }}" class="btn btn-sm btn-primary">
@@ -20,13 +24,29 @@
 
 @section('content')
 
-<div class="card">
-    {{-- <div class="card overflow-hidden mt-0">
-        <div class="container-kanban">
+    <div class="row kanban-bx gx-0">
+        <!--column-->
+        @foreach ($statusClass as $class)
+            <div class="col-xl-3 col-md-6">
+                <div class="kanbanPreview-bx">
+                    <div class="draggable-zone dropzoneContainer">
+                        <div class="sub-card align-items-center d-flex justify-content-between mb-2">
+                            <div>
+                                <h3 class="card-title">{{ $class }}</h3>
+                            </div>
+                            <div class="ms-2">
+                                <div class="btn sharp btn-primary tp-btn sharp-sm">
+                                    2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
 
-        </div>
-    </div> --}}
-</div>
+        <!--/column-->
+    </div>
 
 @endsection
 

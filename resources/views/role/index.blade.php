@@ -36,12 +36,12 @@
                         <td>{{ $role->name }}</td>
                         <td class="Permission">
                             @for($j=0;$j<count($role->permissions()->pluck('name'));$j++)
-                                <span class="badge rounded-pill bg-primary">{{$role->permissions()->pluck('name')[$j]}}</span>
+                                <span class="badge rounded-pill bg-primary mb-2">{{$role->permissions()->pluck('name')[$j]}}</span>
                                 @endfor
                         </td>
                         <td>
                             <div class="d-flex">
-                                <a href="#!" data-size="md" data-url="{{ route('roles.edit', $role->id) }}" data-ajax-popup="true" class="btn btn-primary shadow btn-sm sharp me-1 text-white" data-title="{{ __('Edit Role') }}">
+                                <a href="#!" data-size="lg" data-url="{{ route('roles.edit', $role->id) }}" data-ajax-popup="true" class="btn btn-primary shadow btn-sm sharp me-1 text-white" data-title="{{ __('Edit Role') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id]]) !!}

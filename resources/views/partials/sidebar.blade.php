@@ -23,6 +23,17 @@
     </a>
 </li>
 {{-- @endcan --}}
+
+@if(Auth::user()->type == 'super admin')
+{{-- @can('manage coupon') --}}
+<li class="{{ request()->is('coupons') ? 'active' : '' }}">
+    <a href="{{ route('coupons.index') }}" class="">
+        <i class="fa fa-users"></i><span class="nav-text ">Coupon</span>
+    </a>
+</li>
+{{-- @endcan --}}
+@endif
+
 <li class="{{ request()->is('plans') ? 'active' : '' }}">
     <a href="{{ route('plans.index') }}" class="">
         <i class="fa fa-users"></i><span class="nav-text ">Plans</span>
@@ -34,6 +45,14 @@
 <li class="{{ request()->is('leads') ? 'active' : '' }}">
     <a href="{{ route('leads.index') }}" class="">
         <i class="fa-brands fa-critical-role"></i><span>Leads</span>
+    </a>
+</li>
+@endcan
+
+@can('manage contacts')
+<li class="{{ request()->is('contacts') ? 'active' : '' }}">
+    <a href="{{ route('contacts.index') }}" class="">
+        <i class="fa-brands fa-critical-role"></i><span>Contacts</span>
     </a>
 </li>
 @endcan
