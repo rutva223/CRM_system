@@ -222,7 +222,7 @@
                                     Add new card
                                 </a>
                             </div>
-                            <div class="card draggable-handle draggable" id="task-list-{{ $stage->id }}"
+                            <div class="draggable" id="task-list-{{ $stage->id }}"
                                 data-id="{{ $stage->id }}">
                                 @foreach ($deals as $deal)
                                     <div class="card draggable-handle draggable" data-id="{{ $deal->id }}">
@@ -275,31 +275,17 @@
                                                         </svg>
                                                     </li>
                                                 </ul>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    <div class="dropdown">
-                                                        <div class="btn-link" data-bs-toggle="dropdown">
-                                                            <svg width="20" height="20" viewBox="0 0 24 24"
-                                                                fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <circle cx="3.5" cy="11.5" r="2.5"
-                                                                    transform="rotate(-90 3.5 11.5)" fill="#717579" />
-                                                                <circle cx="11.5" cy="11.5" r="2.5"
-                                                                    transform="rotate(-90 11.5 11.5)" fill="#717579" />
-                                                                <circle cx="19.5" cy="11.5" r="2.5"
-                                                                    transform="rotate(-90 19.5 11.5)" fill="#717579" />
-                                                            </svg>
-                                                        </div>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="javascript:void(0)">Delete</a>
-                                                            <a href="#!" data-size="md"
-                                                            data-url="{{ URL::to('pipelines/' . $pipeline->id . '/edit') }}"
-                                                            data-ajax-popup="true"
-                                                            class="dropdown-item"
-                                                            data-title="{{ __('Edit Deal') }}">
-                                                            Edit
-                                                        </a>
-                                                        </div>
-                                                    </div>
+                                                <div class="col-4 d-flex justify-content-end">
+                                                    <a href="{{ URL::to('pipelines/' . $pipeline->id . '/edit') }}" class="btn-link btn sharp tp-btn btn-primary" aria-expanded="false">
+                                                            <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $pipeline->id]]) !!}
+                                                    <a href="javascript:;" class="btn-link btn sharp tp-btn btn-danger" aria-expanded="false" title="Delete data">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                    {!! Form::close() !!}
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>

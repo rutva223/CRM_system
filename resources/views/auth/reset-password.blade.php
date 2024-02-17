@@ -1,42 +1,3 @@
-{{-- <x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
-
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout> --}}
 
 @extends('layouts.guest')
 
@@ -59,7 +20,7 @@
                     <p>Forgot Password page allows users to enter login credentials for authentication and access to secure content.</p>
                 </div> --}}
                 <h6 class="login-title"><span>Forgot Password</span></h6>
-                <div class="row mb-5">
+                {{-- <div class="row mb-5">
                     <div class="col-xl-6 col-sm-6">
                         <a href="javascript:void(0);" class="btn btn-outline-danger d-block social-btn">
                             <svg width="16" height="16" viewBox="0 0 28 28" fill="none"
@@ -95,7 +56,7 @@
                             </svg>
                             <span class="ms-1 ">Sign in with Apple</span></a>
                     </div>
-                </div>
+                </div> --}}
                 {{ Form::open(['route' => 'password.store', 'method' => 'post', 'id' => 'loginForm']) }}
                 <input type="hidden" name="token" value="{{ $request->route('token') }}">
                 @csrf

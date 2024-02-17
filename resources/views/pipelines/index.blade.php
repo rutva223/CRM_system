@@ -12,7 +12,6 @@
     @endcan
 @endsection
 @section('page-breadcrumb')
-    {{ __('Setup') }},
     {{ __('Pipelines') }}
 @endsection
 @section('content')
