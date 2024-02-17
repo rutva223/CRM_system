@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group mb-3">
-                {{Form::label('name',__('Name'),['class'=>'form-label']) }}
+                {{Form::label('name',__('Name'),['class'=>'form-label required']) }}
                 {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter User Name'),'required'=>'required'))}}
                 @error('name')
                 <small class="invalid-name" role="alert">
@@ -15,7 +15,7 @@
         </div>
         <div class="col-md-12">
             <div class="form-group mb-3">
-                {{Form::label('price',__('Price'),['class'=>'form-label'])}}
+                {{Form::label('price',__('Price'),['class'=>'form-label required'])}}
                 {{Form::number('price',null,array('class'=>'form-control','placeholder'=>__('Enter User Email'),'required'=>'required'))}}
                 @error('price')
                 <small class="invalid-email" role="alert">
@@ -36,7 +36,7 @@
             </div>
         </div> --}}
         <div class="form-group col-md-12">
-            {{ Form::label('user', __('Users'),['class'=>'form-label']) }}
+            {{ Form::label('user', __('Users'),['class'=>'form-label required']) }}
             {!! Form::select('user', $users, null,array('class' => 'form-control select','required'=>'required')) !!}
             <div class=" text-xs">
                 {{ __('Please create user here.') }}
@@ -53,13 +53,15 @@
 
 <div class="modal-footer">
     <input type="button" value="{{__('Cancel')}}" class="btn btn-light" data-bs-dismiss="modal">
-    <input type="submit" value="{{__('Create')}}" class="btn btn-primary">
+    <input type="submit" value="{{__('Create')}}" class="btn btn-primary" id="createButton" disabled>
 </div>
 
 {{Form::close()}}
 <script>
             $('.multi-select').select2();
+
 </script>
+<script src="{{ asset('assets/js/required.js') }}"></script>
 
 
 

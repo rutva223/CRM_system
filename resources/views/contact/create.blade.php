@@ -50,55 +50,55 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        {{Form::label('user_id',__('User'),['class'=>'form-label'])}}
+                                        {{Form::label('user_id',__('User'),['class'=>'form-label required'])}}
                                         {{Form::select('user_id', $user, null, array('class'=>'form-control user_id','placeholder'=>__('Select User'),'required' => 'required'))}}
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="f_name" class="text-label form-label">First Name</label>
+                                    <label for="f_name" class="text-label form-label required">First Name</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="f_name" placeholder="Enter First Name.." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="l_name" class="text-label form-label">Last Name</label>
+                                    <label for="l_name" class="text-label form-label required">Last Name</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="l_name" placeholder="Enter Last Name.." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="phone_no" class="text-label form-label">Phone No.</label>
+                                    <label for="phone_no" class="text-label form-label required">Phone No.</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" name="phone_no" placeholder="Enter Phone Number.." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="assistants_name" class="text-label form-label">Assistants Names</label>
+                                    <label for="assistants_name" class="text-label form-label required">Assistants Names</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="assistants_name" placeholder="Enter Assistants Name.." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="assistants_mail" class="text-label form-label">Assistants Mail</label>
+                                    <label for="assistants_mail" class="text-label form-label required">Assistants Mail</label>
                                     <div class="input-group">
                                         <input type="email" class="form-control" name="assistants_mail" placeholder="Enter Assistants Mails.." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="assistants_phone" class="text-label form-label">Assistants Phone</label>
+                                    <label for="assistants_phone" class="text-label form-label required">Assistants Phone</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" name="assistants_phone" placeholder="Enter Assistants Phone.." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="department_name" class="text-label form-label">Department Name</label>
+                                    <label for="department_name" class="text-label form-label required">Department Name</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="department_name" placeholder="Enter Department Name.." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="dob" class="text-label form-label">Date Of Birth</label>
+                                    <label for="dob" class="text-label form-label required">Date Of Birth</label>
                                     <div class="input-group">
                                         <input type="date" class="form-control" name="dob" required>
                                     </div>
@@ -199,7 +199,7 @@
         <div class="card">
             <div class="card-body" style="text-align: center;">
                 <button type="button" class="btn btn-danger light">Cancel</button>
-                <button type="submit" class="btn me-2 btn-primary">Submit</button>
+                <button type="submit" class="btn me-2 btn-primary" id="createButton" disabled>Submit</button>
             </div>
         </div>
         {{Form::close()}}
@@ -207,7 +207,7 @@
 @endsection
 
 @push('after-scripts')
-
+<script src="{{ asset('assets/js/required.js') }}"></script>
 <script>
     $(document).ready(function () {
         // Add a click event listener to the "Copy" button

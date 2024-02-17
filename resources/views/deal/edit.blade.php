@@ -4,31 +4,31 @@
         <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
             <div class="row">
                 <div class="col-6 form-group">
-                    {{ Form::label('name', __('Deal Name'), ['class' => 'col-form-label']) }}
+                    {{ Form::label('name', __('Deal Name'), ['class' => 'col-form-label required']) }}
                     {{ Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) }}
                 </div>
                 <div class="col-6 form-group">
-                    {{ Form::label('price', __('Price'), ['class' => 'col-form-label']) }}
+                    {{ Form::label('price', __('Price'), ['class' => 'col-form-label required']) }}
                     {{ Form::number('price', null, ['class' => 'form-control']) }}
                 </div>
                 <div class="col-6 form-group">
-                    {{ Form::label('pipeline_id', __('Pipeline'), ['class' => 'col-form-label']) }}
+                    {{ Form::label('pipeline_id', __('Pipeline'), ['class' => 'col-form-label required']) }}
                     {{ Form::select('pipeline_id', $pipelines, null, ['class' => 'form-control', 'required' => 'required']) }}
                 </div>
                 <div class="col-6 form-group">
-                    {{ Form::label('stage_id', __('Stage'), ['class' => 'col-form-label']) }}
+                    {{ Form::label('stage_id', __('Stage'), ['class' => 'col-form-label required']) }}
                     {{ Form::select('stage_id', ['' => __('Select Stage')], null, ['class' => 'form-control', 'required' => 'required']) }}
                 </div>
                 <div class="col-12 form-group">
-                    {{ Form::label('sources', __('Sources'), ['class' => 'col-form-label']) }}
+                    {{ Form::label('sources', __('Sources'), ['class' => 'col-form-label required']) }}
                     {{ Form::select('sources[]', $sources, null, ['class' => 'form-control choices', 'id' => 'choices-multiple', 'multiple' => '', 'required' => 'required']) }}
                 </div>
                 <div class="col-12 form-group">
-                    {{ Form::label('products', __('Products'), ['class' => 'col-form-label']) }}
+                    {{ Form::label('products', __('Products'), ['class' => 'col-form-label required']) }}
                     {{ Form::select('products[]', $products, null, ['class' => 'form-control choices', 'id' => 'choices-multiple1', 'multiple' => '', 'required' => 'required']) }}
                 </div>
                 <div class="col-12 form-group">
-                    {{ Form::label('phone', __('Phone No'), ['class' => 'col-form-label']) }}
+                    {{ Form::label('phone', __('Phone No'), ['class' => 'col-form-label required']) }}
                     {{ Form::text('phone', null, ['class' => 'form-control', 'required' => 'required']) }}
                 </div>
                 <div class="col-12 form-group">
@@ -42,12 +42,12 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn  btn-light" data-bs-dismiss="modal">{{ __('Close') }}</button>
-    <button type="submit" class="btn  btn-primary">{{ __('Update') }}</button>
+    <button type="submit" class="btn  btn-primary" id="updateButton">{{ __('Update') }}</button>
 </div>
 
 {{ Form::close() }}
 
-
+<script src="{{ asset('assets/js/required.js') }}"></script>
 <script>
     var stage_id = '{{ $deal->stage_id }}';
 
