@@ -66,16 +66,16 @@ Route::middleware('auth')->group(function () {
 
     // plan
     Route::resource('plans', PlanController::class);
-    Route::get('plan-subscribe/{id}', [PlanController::class, 'PlanSubscripe'])->name('plan.subscribe');
+    // Route::get('plan-subscribe/{id}', [PlanController::class, 'PlanSubscripe'])->name('plan.subscribe');
+
+    Route::post('/stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+    Route::post('/webhook-stripe', [StripePaymentController::class, 'webhookStripe'])->name('webhook.stripe');
 
     // contacts
     Route::resource('contacts', ContactController::class);
 
     // contacts
     Route::resource('coupons', CouponController::class);
-
-    //payment
-    Route::post('/stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
 
     // lead
     Route::get('leads/grid', [LeadController::class, 'GridView'])->name('leads.grid');
@@ -98,7 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/deals/{id}/clients', [DealController::class, 'clientEdit'])->name('deals.clients.edit');
     Route::delete('/deals/{id}/clients/{uid}', [DealController::class, 'clientDestroy'])->name('deals.clients.destroy');
 
-    
+
     Route::post('/deals/change-pipeline', [DealController::class, 'changePipeline'])->name('deals.change.pipeline');
     Route::post('/deals/order', [DealController::class, 'order'])->name('deals.order');
     Route::post('deal/import/export', [DealController::class, 'fileImportExport'])->name('deal.file.import');
@@ -114,12 +114,9 @@ Route::middleware('auth')->group(function () {
 
     // contacts
     Route::resource('coupons', CouponController::class);
-
-    //payment
-    Route::post('/stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
-
 });
 
+// Route::post('/beauty-spa-pay-with-stripe/{slug?}', [StripePaymentController::class,'BeautySpaPayWithStripe'])->name('beauty.spa.pay.with.stripe');
 
 // Route::post('email-settings', [SettingController::class, 'saveEmailSettings'])->name('email.settings')->middleware(['auth', 'XSS']);
 

@@ -60,11 +60,11 @@
     @endcan
 @endif --}}
 
-<li class="{{ request()->is('plans') ? 'active' : '' }}">
+{{-- <li class="{{ request()->is('plans') ? 'active' : '' }}">
     <a href="{{ route('plans.index') }}" class="">
         <i class="fa fa-check-square-o"></i><span class="nav-text">Plans</span>
     </a>
-</li>
+</li> --}}
 
 
 {{-- @can('manage leads')

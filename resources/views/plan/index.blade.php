@@ -10,10 +10,10 @@
 
 @section('page-action')
     @can('create plan')
-    <a data-size="md" data-url="{{ route('plans.create') }}" data-ajax-popup="true" data-bs-toggle="tooltip"
-        data-title="Add New Plan" class="btn btn-sm btn-primary">
-        <i class="fa fa-plus text-white"></i>
-    </a>
+        <a data-size="lg" data-url="{{ route('plans.create') }}" data-ajax-popup="true" data-bs-toggle="tooltip"
+            data-title="Add New Plan" class="btn btn-sm btn-primary">
+            <i class="fa fa-plus text-white"></i>
+        </a>
     @endcan
 @endsection
 @section('content')
@@ -27,10 +27,10 @@
                         @if ($plan->is_free_plan == 0)
                             @can('edit plan')
                                 <div>
-                                    <a href="#" data-size="md" data-url="{{ route('plans.edit', $plan->id) }}"
+                                    <a href="#" data-size="lg" data-url="{{ route('plans.edit', $plan->id) }}"
                                         data-ajax-popup="true" data-bs-toggle="tooltip" data-title="Plan Update"
-                                        class="btn btn-sm btn-primary">
-                                        <i class="fa fa-edit text-white"></i>
+                                        class="btn-link btn sharp tp-btn btn-primary">
+                                        <i class="fa fa-edit"></i>
                                     </a>
                                 </div>
                             @endcan
@@ -38,7 +38,7 @@
 
                     </div>
                     <div class="card-body text-center pt-0 pb-2">
-                        <div class="p-5">
+                        <div class="">
                             <div class="author-profile">
                                 <div class="author-info">
                                     <h1>{{ $plan->price }}$</h1>
@@ -62,6 +62,24 @@
                                             <h6 class="mb-0">{{ $plan->max_user }}</h6>
                                         </div>
                                     </div>
+                                    <div class="text-start mt-2">
+                                        <div class="color-picker">
+                                            <p class="mb-0  text-gray ">
+                                                <i class="fa fa-user me-2"></i>
+                                                Maximum Customer
+                                            </p>
+                                            <h6 class="mb-0">{{ $plan->max_customer }}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="text-start mt-2">
+                                        <div class="color-picker">
+                                            <p class="mb-0  text-gray ">
+                                                <i class="fa fa-user me-2"></i>
+                                                Maximum Vendor
+                                            </p>
+                                            <h6 class="mb-0">{{ $plan->max_vendor }}</h6>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class=" col-xl-12 col-sm-12 mb-3">
                                     <div class="text-center mt-2">
@@ -72,18 +90,27 @@
                                     <div class="text-center mt-2">
                                         @can('subscribe plan')
                                             <div class="card-footer">
-                                                {{-- @if (Auth::user()->plan == $plan->id) --}}
+                                                @if (Auth::user()->plan == $plan->id)
                                                     <div class="input-group">
-                                                        <a class="form-control text-primary rounded text-center">{{$plan->duration == 'Lifetime' ? "Unlimited" : Auth::user()->plan_expire_date ?? '' }}</a>
+                                                        <a class="form-control text-primary rounded text-center">{{ $plan->duration == 'Lifetime' ? 'Unlimited' : Auth::user()->plan_expire_date ?? '' }}</a>
                                                     </div>
-                                                {{-- @else --}}
+                                                @else
                                                     @if ($plan->duration != 'Lifetime')
                                                         <div class="input-group">
-                                                            <a href="{{ route('plan.subscribe', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}"
-                                                                class="form-control text-primary rounded text-center">Subscription</a>
+                                                            <form role="form" action="{{ route('stripe.post', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}"
+                                                            method="post" class="require-validation" id="stripe-payment-form">
+                                                            @csrf
+                                                                <input type="hidden" name="plan_id" id="plan_id"
+                                                                    value="{{ \Illuminate\Support\Facades\Crypt::encrypt($plan->id) }}">
+                                                                <button class="btn btn-primary btn-sm rounded-pill"
+                                                                    type="submit">
+                                                                    <i class="mdi mdi-cash-multiple mr-1"></i>
+                                                                    {{ __('Pay Now') }}
+                                                                </button>
+                                                            </form>
                                                         </div>
                                                     @endif
-                                                {{-- @endif --}}
+                                                @endif
                                             </div>
 
                                             {{-- @if (\Auth::user()->type == 'company' && \Auth::user()->plan == $plan->id)
@@ -96,7 +123,6 @@
                                                     </p>
                                                 @endif
                                             @endif --}}
-
                                         @endcan
                                     </div>
                                 </div>
