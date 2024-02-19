@@ -8,9 +8,10 @@
 @endsection
 @push('css')
 <style>
-    .nav-pills .nav-link.active, .nav-pills:hover .show > .nav-link {
-    background-color: var(--primary) !important;
-}
+    .nav-pills .nav-link.active, .nav-pills:hover .show > .nav-link
+    {
+        background-color: var(--primary) !important;
+    }
 </style>
 
 @endpush
@@ -166,7 +167,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-secondary mb-3" id="copyBilling">Copy Billing Address</button>
+                            <button type="button" class="btn btn-primary mb-3" id="copyBilling">Copy Billing Address</button>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="text-label form-label">shipping City</label>

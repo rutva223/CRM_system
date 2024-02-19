@@ -12,17 +12,13 @@
     </a>
 @endsection
 @push('css')
-<style>
-    .contact_list{
-        width: fit-content;
-    }
-</style>
+
 
 @endpush
 @section('content')
 <div class="col-xl-12">
    <div class="row">
-        @foreach ($contacts as $c)
+        @forelse ($contacts as $c)
             <div class="col-xl-3 col-md-6">
                 <div class="card contact_list">
                     <div class="card-body">
@@ -44,11 +40,13 @@
                     </div>
                 </div>
             </div>
-        @endforeach
+        @empty
+            @include('layouts.nodatafound')
+        @endforelse
    </div>
 </div>
 @endsection
 
 @push('after-scripts')
-<script src="{{ asset('assets/js/required.js') }}"></script>
+    <script src="{{ asset('assets/js/required.js') }}"></script>
 @endpush
