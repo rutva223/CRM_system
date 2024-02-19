@@ -54,6 +54,8 @@ class PlanController extends Controller
                 'name' => 'required|max:120',
                 'price' => 'required',
                 'max_user' => 'required',
+                'max_customer' => 'required',
+                'max_vendor' => 'required',
                 'duration' => 'required',
                 'description' => 'required',
             ];
@@ -69,6 +71,8 @@ class PlanController extends Controller
             $plan->name = $request->name;
             $plan->price = $request->price;
             $plan->max_user = $request->max_user;
+            $plan->max_customer = $request->max_customer;
+            $plan->max_vendor = $request->max_vendor;
             $plan->duration = $request->duration;
             $plan->description = $request->description;
             $plan->save();
@@ -114,6 +118,8 @@ class PlanController extends Controller
                 'name' => 'required|max:120',
                 'price' => 'required',
                 'max_user' => 'required',
+                'max_customer' => 'required',
+                'max_vendor' => 'required',
                 'duration' => 'required',
                 'description' => 'required',
             ];
@@ -127,6 +133,8 @@ class PlanController extends Controller
             $plan->name = $request->name;
             $plan->price = $request->price;
             $plan->max_user = $request->max_user;
+            $plan->max_customer = $request->max_customer;
+            $plan->max_vendor = $request->max_vendor;
             $plan->duration = $request->duration;
             $plan->description = $request->description;
             $plan->save();

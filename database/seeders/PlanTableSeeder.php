@@ -20,6 +20,8 @@ class PlanTableSeeder extends Seeder
             $new_pan->name = "Basic";
             $new_pan->price = 0;
             $new_pan->max_user = 5;
+            $new_pan->max_customer = 5;
+            $new_pan->max_vendor = 5;
             $new_pan->duration = 'Lifetime';
             $new_pan->description = 'Free Plan';
             $new_pan->is_free_plan = 1;

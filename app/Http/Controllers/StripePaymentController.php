@@ -25,24 +25,23 @@ class StripePaymentController extends Controller
             try
             {
                 $price = $plan->price;
-
-                if (!empty($request->coupon))
-                {
-                    $coupons = Coupon::where('code', strtoupper($request->coupon))->where('is_active', '1')->first();
-                    if (!empty($coupons)) {
-                        $usedCoupun     = $coupons->used_coupon();
-                        $discount_value = ($plan->price / 100) * $coupons->discount;
-                        $price          = $plan->price - $discount_value;
-
-                        if ($usedCoupun >= $coupons->limit) {
-                            return redirect()->back()->with('error', __('This coupon code has expired.'));
-                        }
-                    } else {
-                        return redirect()->back()->with('error', __('This coupon code is invalid or has expired.'));
-                    }
-                }
-
                 $orderID = strtoupper(str_replace('.', '', uniqid('', true)));
+
+                // if (!empty($request->coupon))
+                // {
+                //     $coupons = Coupon::where('code', strtoupper($request->coupon))->where('is_active', '1')->first();
+                //     if (!empty($coupons)) {
+                //         $usedCoupun     = $coupons->used_coupon();
+                //         $discount_value = ($plan->price / 100) * $coupons->discount;
+                //         $price          = $plan->price - $discount_value;
+
+                //         if ($usedCoupun >= $coupons->limit) {
+                //             return redirect()->back()->with('error', __('This coupon code has expired.'));
+                //         }
+                //     } else {
+                //         return redirect()->back()->with('error', __('This coupon code is invalid or has expired.'));
+                //     }
+                // }
 
                 if ($price > 0.0) {
                     // Stripe\Stripe::setApiKey($this->stripe_secret);
@@ -57,6 +56,7 @@ class StripePaymentController extends Controller
                             "metadata" => ["order_id" => $orderID],
                         ]
                     );
+                    dd($data);
                 }
                 else
                 {

@@ -18,6 +18,8 @@ return new class extends Migration
                 $table->string('name', 100);
                 $table->string('price');
                 $table->string('max_user', 100)->default(0);
+                $table->string('max_customer', 100)->default(0);
+                $table->string('max_vendor', 100)->default(0);
                 $table->string('duration');
                 $table->string('description');
                 $table->integer('is_free_plan')->default(0);

@@ -23,6 +23,20 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
+                {{Form::label('max_customer',__('Maximum Customer'),['class' => 'col-form-label required'])}}
+                {{Form::number('max_customer',null,array('class'=>'form-control','placeholder'=>__('Enter Maximum Customer'),'required'=>'required'))}}
+                <span>-1 for Unlimited</span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{Form::label('max_vendor',__('Maximum Vendor'),['class' => 'col-form-label required'])}}
+                {{Form::number('max_vendor',null,array('class'=>'form-control','placeholder'=>__('Enter Maximum Vendor'),'required'=>'required'))}}
+                <span>-1 for Unlimited</span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
                 {{Form::label('duration',__('Plan Duration'),['class' => 'col-form-label required'])}}
                 <select class="form-control" data-toggle="select" required="required" id="duration" name="duration">
                     <option value="Lifetime" {{ $plan->duration == 'Lifetime' ? 'selected': '' }}>Lifetime</option>
