@@ -13,30 +13,57 @@
                 @enderror
             </div>
         </div>
+        <div class="form-group col-md-12 mb-3">
+            {{ Form::label('pipeline', __('Pipeline'),['class'=>'form-label required']) }}
+            <select name="pipeline" id="pipeline" class="form-control select" required>
+                @foreach ($pipeline as $id=>$name)
+                    <option value="{{ $id }}"  {{ $id == $select_pipeline ? 'selected' : '' }}>{{ $name }}</option>
+                @endforeach
+            </select>
+        </div>
         <div class="col-md-12">
             <div class="form-group mb-3">
-                {{Form::label('price',__('Price'),['class'=>'form-label required'])}}
-                {{Form::number('price',null,array('class'=>'form-control','placeholder'=>__('Enter User Email'),'required'=>'required'))}}
-                @error('price')
+                {{Form::label('amount',__('Amount'),['class'=>'form-label required'])}}
+                {{Form::number('amount',null,array('class'=>'form-control','placeholder'=>__('Enter deal amount'),'required'=>'required'))}}
+                @error('amount')
                 <small class="invalid-email" role="alert">
                     <strong class="text-danger">{{ $message }}</strong>
                 </small>
                 @enderror
             </div>
         </div>
-        {{-- <div class="col-xl-6">
-            <div class="card">
-                <div class="card-body">
-                    <select class="multi-select" style="width:100%;" name="states[]" multiple="multiple">
-                        <option value="AL">Alabama</option>
-                        <option value="WY">Wyoming</option>
-                        <option value="UI">dlf</option>
-                    </select>
-                </div>
+        <div class="col-md-12">
+            <div class="form-group mb-3">
+                {{Form::label('close_date',__('Deal Close Date'),['class'=>'form-label required'])}}
+                {{Form::date('close_date',null,array('class'=>'form-control','required'=>'required'))}}
+                @error('close_date')
+                <small class="invalid-email" role="alert">
+                    <strong class="text-danger">{{ $message }}</strong>
+                </small>
+                @enderror
             </div>
-        </div> --}}
-        <div class="form-group col-md-12">
-            {{ Form::label('user', __('Users'),['class'=>'form-label required']) }}
+        </div>
+        <div class="form-group col-md-12 mb-3">
+            {{ Form::label('stage_id', __('Deal Stage'),['class'=>'form-label required']) }}
+            <select name="stage_id" id="stage_id" class="form-control select" required>
+                <option value="">Select Deal Stage</option>
+                @foreach ($deal_stage as $id=>$name)
+                    <option value="{{ $id }}"  {{ $name == $select_stage ? 'selected' : '' }}>{{ $name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-md-12 mb-3">
+            {{ Form::label('priority', __('Priority'),['class'=>'form-label required']) }}
+            <select name="priority" id="priority" class="form-control select" required>
+                <option value="">Select Deal Stage</option>
+                @foreach ($priority as $id=>$name)
+                    <option value="{{ $id }}">{{ $name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group col-md-12 mb-3">
+            {{ Form::label('user', __('Owner'),['class'=>'form-label required']) }}
             {!! Form::select('user', $users, null,array('class' => 'form-control select','required'=>'required')) !!}
             <div class=" text-xs">
                 {{ __('Please create user here.') }}

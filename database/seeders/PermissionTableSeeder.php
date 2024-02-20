@@ -147,6 +147,10 @@ class PermissionTableSeeder extends Seeder
             'edit contacts',
             'create contacts',
             'delete contacts',
+            'manage dealtype',
+            'edit dealtype',
+            'create dealtype',
+            'delete dealtype',
 
         ];
 

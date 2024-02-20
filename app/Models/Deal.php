@@ -31,6 +31,11 @@ class Deal extends Model
         'Loss' => 'Loss',
     ];
 
+    public static $priority = [
+        'Low' => 'Low',
+        'High' => 'High',
+        'Medium' => 'Medium',
+    ];
     public static function getDealSummary($deals)
     {
         $total = 0;
