@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($coupons as $index => $coupon)
+                        @forelse ($coupons as $index => $coupon)
                             <tr>
                                 <td>{{ ++$index }}</td>
                                 <td>{{ $coupon->name }}</td>
@@ -58,7 +58,9 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            @include('layouts.nodatafound')
+                        @endforelse
                     </tbody>
                 </table>
             </div>

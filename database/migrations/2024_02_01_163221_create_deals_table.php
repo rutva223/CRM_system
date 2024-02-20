@@ -16,10 +16,12 @@ return new class extends Migration
             Schema::create('deals', function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
-                $table->float('price')->nullable();
+                $table->float('amount')->nullable();
                 $table->integer('pipeline_id');
                 $table->integer('stage_id');
                 $table->string('sources')->nullable();
+                $table->string('close_date')->nullable();
+                $table->string('priority')->default('Medium');
                 $table->string('products')->nullable();
                 $table->text('notes')->nullable();
                 $table->string('labels')->nullable();

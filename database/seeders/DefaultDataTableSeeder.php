@@ -23,11 +23,13 @@ class DefaultDataTableSeeder extends Seeder
             'Sales',
         ];
         $stages = [
-            'Initial Contact',
-            'Qualification',
-            'Meeting',
-            'Proposal',
-            'Close',
+            'Appointment scheduled',
+            'Qualified to buy',
+            'Presentation scheduled',
+            'Decision maker bought-In',
+            'Contract sent',
+            'Closed won',
+            'Closed lost',
         ];
         if ($id) {
             $company = User::where('id', $id)->where('type', 'company')->first();
@@ -84,5 +86,6 @@ class DefaultDataTableSeeder extends Seeder
                 }
             }
         }
+
     }
 }

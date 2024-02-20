@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\DealController;
 use App\Http\Controllers\DealStageController;
+use App\Http\Controllers\DealTypeController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\PlanController;
@@ -97,14 +98,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/deals/{id}/sources', [DealController::class, 'sourceEdit'])->name('deals.sources.edit');
     Route::get('/deals/{id}/clients', [DealController::class, 'clientEdit'])->name('deals.clients.edit');
     Route::delete('/deals/{id}/clients/{uid}', [DealController::class, 'clientDestroy'])->name('deals.clients.destroy');
-
-
     Route::post('/deals/change-pipeline', [DealController::class, 'changePipeline'])->name('deals.change.pipeline');
     Route::post('/deals/order', [DealController::class, 'order'])->name('deals.order');
     Route::post('deal/import/export', [DealController::class, 'fileImportExport'])->name('deal.file.import');
 
 
+
     // labels
+    Route::resource('dealtypes', DealTypeController::class);
     Route::resource('labels', LabelController::class);
     Route::resource('pipelines', PipelineController::class);
 

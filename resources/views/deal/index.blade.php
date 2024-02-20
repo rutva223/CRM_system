@@ -112,83 +112,8 @@
 </div>
 @endsection
 @section('content')
-    <div class="col-xl-6">
-        <div class="card">
-            <div class="card-body">
-                <select class="multi-select" style="width:100%;" name="states[]" multiple="multiple">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                    <option value="UI">dlf</option>
-                </select>
-            </div>
-        </div>
-    </div>
+
     @if ($pipeline)
-        <div class="row">
-            <div class="col-xl-3 col-6">
-                <div class="card comp-card">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h6 class="m-b-20">{{ __('Total Deals') }}</h6>
-                                <h3 class="text-primary">{{ $cnt_deal['total'] }}</h3>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-rocket bg-success text-white"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-6">
-                <div class="card comp-card">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h6 class="m-b-20">{{ __('This Month Total Deals') }}</h6>
-                                <h3 class="text-info">{{ $cnt_deal['this_month'] }}</h3>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-rocket bg-info text-white"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-6">
-                <div class="card comp-card">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h6 class="m-b-20">{{ __('This Week Total Deals') }}</h6>
-                                <h3 class="text-warning">{{ $cnt_deal['this_week'] }}</h3>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-rocket bg-warning text-white"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-6">
-                <div class="card comp-card">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h6 class="m-b-20">{{ __('Last 30 Days Total Deals') }}</h6>
-                                <h3 class="text-danger">{{ $cnt_deal['last_30days'] }}</h3>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-rocket bg-danger text-white"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         @php
             $stages = $pipeline->dealStages;
@@ -209,7 +134,7 @@
                                 </div>
                             </div>
                             <div class="plus-bx">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><svg width="18"
+                                <a href="#" data-title="{{ __('Create Deal') }}" data-url="{{ route('deals.create',['stage'=>$stage->name]) }}" data-size="md" data-bs-toggle="modal" data-ajax-popup="true"><svg width="18"
                                         height="18" viewBox="0 0 18 18" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path

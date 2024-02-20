@@ -7,6 +7,7 @@ use App\Models\DealStage;
 use App\Models\EntitiesUser;
 use App\Models\Pipeline;
 use App\Models\ClientDeal;
+use App\Models\DealType;
 use App\Models\Source;
 use App\Models\User;
 use App\Models\UserDeal;
@@ -73,12 +74,20 @@ class DealController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+
         if (Auth::user()->can('create deal')) {
             $id = Session::get('user_id') ?? Auth::user()->id;
             $users = User::where('created_by',$id)->get()->pluck('name','id');
-            return view('deal.create',compact('users'));
+            $deal_stage= DealStage::where('created_by',$id)->get()->pluck('name','id');
+            $pipeline= Pipeline::where('created_by',$id)->get()->pluck('name','id');
+            $dealtype= DealType::where('created_by',$id)->get()->pluck('name','id');
+            $priority= Deal::$priority;
+            $select_stage = $request->stage;
+            $user =  User::where('id',$id)->first();
+            $select_pipeline =$user->default_pipeline;
+            return view('deal.create',compact('users','deal_stage','select_stage','pipeline','select_pipeline','dealtype','priority'));
         } else {
             return response()->json(['error' => __('Permission denied.')], 401);
         }
@@ -95,8 +104,9 @@ class DealController extends Controller
                 $request->all(),
                 [
                     'name' => 'required',
-                    'price' => 'min:0',
                     'user' => 'required',
+                    'pipeline' => 'required',
+                    'stage_id' => 'required',
                 ]
             );
 
@@ -130,15 +140,16 @@ class DealController extends Controller
             } else {
                 $deal       = new Deal();
                 $deal->name = $request->name;
-                if (empty($request->price)) {
-                    $deal->price = 0;
+                if (empty($request->amount)) {
+                    $deal->amount = 0;
                 } else {
-                    $deal->price = $request->price;
+                    $deal->amount = $request->amount;
                 }
-                $deal->pipeline_id = $pipeline->id;
-                $deal->stage_id    = $stage->id;
+                $deal->pipeline_id = $request->pipeline ?? $pipeline->id;
+                $deal->stage_id    = $request->stage_id ?? $stage->id;
+                $deal->close_date    = $request->close_date ;
+                $deal->priority     = $request->priority ?? 'Medium' ;
                 $deal->status      = 'Active';
-                $deal->phone       = $request->phone;
                 $deal->created_by  = creatorId();
                 $deal->save();
 
