@@ -13,6 +13,7 @@ class Contact extends Model
         'user_id',
         'f_name',
         'l_name',
+        'email',
         'phone_no',
         'assistants_name',
         'assistants_mail',
@@ -35,4 +36,9 @@ class Contact extends Model
         'shipping_zip',
         'shipping_country',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

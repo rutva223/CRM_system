@@ -6,9 +6,11 @@ use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 use Symfony\Component\Mime\Part\TextPart;
 
 class ContactController extends Controller
@@ -19,10 +21,8 @@ class ContactController extends Controller
     public function index()
     {
         if('manage contacts') {
-            $contacts = Contact::leftjoin('users', 'users.id', '=', 'contacts.user_id')
-                ->select('contacts.*', 'users.name','users.email','users.avatar')
-                ->orderBy('id', 'desc')
-                ->get();
+            $contacts = Contact::orderBy('id', 'desc')
+                        ->get();
 
             return view('contact.index',compact('contacts'));
         } else {
@@ -36,10 +36,8 @@ class ContactController extends Controller
     public function create()
     {
         if('create contacts') {
-            $contact = Contact::pluck('user_id')->toArray();
-            $user = User::whereNotIn('type', ['company', 'super admin'])->whereNotIn('id', $contact)->pluck('name', 'id');
 
-            return view('contact.create',compact('user'));
+            return view('contact.create');
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -50,11 +48,11 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+
         if(Auth::user()->can('create contacts'))
         {
             $validatorArray = [
-                'user_id' => 'required',
+                'email' => 'required|email',
                 'f_name' => 'required|max:120',
                 'l_name' => 'required|max:120',
                 'phone_no' => 'required|digits_between:10,12',
@@ -71,12 +69,24 @@ class ContactController extends Controller
             if($validator->fails()) {
                 return redirect()->back()->with('error', $validator->errors()->first());
             }
+            $created_by =  Session()->get('user_id') ?? creatorId();
+            $role = Role::where('name','client')->where('created_by',$created_by)->first();
+
+            $user               = new User();
+            $user->name         = $request->f_name.' '.$request->l_name;
+            $user->email        = $request->email;
+            $user->password     = Hash::make(123456);
+            $user->lang         = 'en';
+            $user->type         = $role->name;
+            $user->created_by   = $created_by;
+            $user->save();
+            $user->assignRole($role);
 
             $contacts = new Contact();
-
-            $contacts->user_id = $request->user_id;
+            $contacts->user_id = $user->id;
             $contacts->f_name = $request->f_name;
             $contacts->l_name = $request->l_name;
+            $contacts->email = $request->email;
             $contacts->phone_no = $request->phone_no;
             $contacts->assistants_name = $request->assistants_name;
             $contacts->assistants_mail = $request->assistants_mail;
@@ -95,19 +105,19 @@ class ContactController extends Controller
             $contacts->shipping_state = $request->shipping_state ?? null;
             $contacts->shipping_country = $request->shipping_country ?? null;
             $contacts->shipping_zip = $request->shipping_zip ?? null;
+            $contacts->created_by = $created_by;
 
             $contacts->save();
 
             try {
-                if ($request->has('send_mail') && $request->input('send_mail') == '1') {
-                    $user = User::where('id',$request->user_id)->first();
+                if ($request->has('send_mail') && $request->input('send_mail') == 'on') {
 
                     $details = [
                         'title' => 'Success',
                     ];
                     $from_email = env('MAIL_FROM_ADDRESS');
                     $fromName = env('MAIL_USERNAME');
-                    $to_client_email = $user->email;
+                    $to_client_email = $request->email;
 
                     Mail::send("email.contact_info", compact('contacts', 'details'), function ($message) use ($from_email, $to_client_email, $fromName) {
                         $message->to($to_client_email);
@@ -143,14 +153,10 @@ class ContactController extends Controller
     {
         if('edit contacts') {
 
-            $contact = Contact::leftjoin('users', 'users.id', '=', 'contacts.user_id')
-                ->select('contacts.*', 'users.name','users.email','users.avatar')
-                ->orderBy('id', 'desc')
-                ->find($id);
+            $contact = Contact::orderBy('id', 'desc')
+                        ->find($id);
 
-            $user = User::whereNotIn('type', ['company', 'super admin'])->pluck('name', 'id');
-
-            return view('contact.edit',compact('user','contact'));
+            return view('contact.edit',compact('contact'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -165,7 +171,7 @@ class ContactController extends Controller
         if(Auth::user()->can('create contacts'))
         {
             $validatorArray = [
-                'user_id' => 'required',
+                'email' => 'required|email',
                 'f_name' => 'required|max:120',
                 'l_name' => 'required|max:120',
                 'phone_no' => 'required|digits_between:10,12',
@@ -183,8 +189,11 @@ class ContactController extends Controller
             }
 
             $contacts = Contact::findOrFail($id);
-
-            $contacts->user_id = $request->user_id;
+            $created_by =  Session()->get('user_id') ?? creatorId();
+            $user = User::where('id',$contacts->user_id)->where('created_by',$created_by)->first();
+            $user->name = $request->f_name.' '.$request->l_name;
+            $user->email = $request->email;
+            $user->save();
             $contacts->f_name = $request->f_name;
             $contacts->l_name = $request->l_name;
             $contacts->phone_no = $request->phone_no;
@@ -209,9 +218,8 @@ class ContactController extends Controller
             $contacts->save();
 
             try {
-                if ($request->has('send_mail') && $request->input('send_mail') == '1') {
-                    $user = User::where('id',$request->user_id)->first();
-                    $contacts = Contact::findOrFail($id);
+                if ($request->has('send_mail') && $request->input('send_mail') == 'on') {
+                    $user = User::where('id',$contacts->user_id)->first();
 
                     $details = [
                         'title' => 'Success',
@@ -232,7 +240,7 @@ class ContactController extends Controller
                 Log::info("Contact Data not work ERROR cache: {$th->getMessage()}");
             }
 
-            return redirect()->route('contacts.index')->with('success', __('contact create successfully!'));
+            return redirect()->route('contacts.index')->with('success', __('Contact Updated Successfully!'));
 
         }else{
             return redirect()->back()->with('error', __('Permission denied.'));

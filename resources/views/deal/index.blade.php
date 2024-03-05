@@ -33,7 +33,7 @@
 
                                 var order = [];
                                 $("#" + target.id + " > div").each(function() {
-                                    order[$(this).index()] = $(this).attr('data-id');
+                                    order.push($(this).attr('data-id'));
                                 });
 
                                 var id = $(el).attr('data-id');
@@ -150,6 +150,17 @@
                             <div class="draggable" id="task-list-{{ $stage->id }}"
                                 data-id="{{ $stage->id }}">
                                 @foreach ($deals as $deal)
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a  data-url="{{ URL::to('deals/' . $deal->id . '/edit') }}"  data-ajax-popup="true" data-size="md"
+                                        class="btn-link btn sharp tp-btn btn-primary"  data-title="{{ __('Edit Deal') }}" aria-expanded="false">
+                                            <i class="fa fa-edit"></i>
+                                    </a>
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['deals.destroy', $deal->id]]) !!}
+                                    <a href="javascript:;" class="btn-link btn sharp tp-btn btn-danger js-sweetalert" aria-expanded="false" title="Delete data">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                    {!! Form::close() !!}
+                                </div>
                                     <div class="card draggable-handle draggable" data-id="{{ $deal->id }}">
                                         <div class="card-body">
                                             <div class=" kanban-user">
@@ -200,16 +211,7 @@
                                                         </svg>
                                                     </li>
                                                 </ul>
-                                                <div class="col-4 d-flex justify-content-end">
-                                                    <a href="{{ URL::to('pipelines/' . $pipeline->id . '/edit') }}" class="btn-link btn sharp tp-btn btn-primary" aria-expanded="false">
-                                                            <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $pipeline->id]]) !!}
-                                                    <a href="javascript:;" class="btn-link btn sharp tp-btn btn-danger" aria-expanded="false" title="Delete data">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                    {!! Form::close() !!}
-                                                </div>
+
 
                                             </div>
                                         </div>

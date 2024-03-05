@@ -48,12 +48,6 @@
                     <div class="card-body">
                         <div class="basic-form">
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <div class="form-group">
-                                        {{Form::label('user_id',__('User'),['class'=>'form-label required'])}}
-                                        {{Form::select('user_id', $user, null, array('class'=>'form-control user_id','placeholder'=>__('Select User'),'required' => 'required'))}}
-                                    </div>
-                                </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label for="f_name" class="text-label form-label required">First Name</label>
@@ -65,6 +59,12 @@
                                     <label for="l_name" class="text-label form-label required">Last Name</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="l_name" placeholder="Enter Last Name.." required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="text-label form-label required">Email</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="email" placeholder="Enter Email.." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -126,6 +126,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

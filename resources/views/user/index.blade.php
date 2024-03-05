@@ -40,9 +40,7 @@
                                 <td>{{ $user->type }}</td>
                                 <td >
                                     <div class="d-flex">
-                                        <a href="#!" data-size="md" data-url="{{ route('users.edit', $user->id) }}"
-                                            data-ajax-popup="true" class="btn btn-primary shadow btn-sm sharp me-1 text-white"
-                                            data-title="{{ __('Edit User') }}">
+                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary shadow btn-sm sharp me-1 text-white">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) !!}
