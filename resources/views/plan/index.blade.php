@@ -92,20 +92,20 @@
                                             <div class="card-footer">
                                                 @if (Auth::user()->plan == $plan->id)
                                                     <div class="input-group">
-                                                        <a class="form-control text-primary rounded text-center">{{ $plan->duration == 'Lifetime' ? 'Unlimited' : Auth::user()->plan_expire_date ?? '' }}</a>
+                                                        <a
+                                                            class="form-control text-primary rounded text-center">{{ $plan->duration == 'Lifetime' ? 'Unlimited' : Auth::user()->plan_expire_date ?? '' }}</a>
                                                     </div>
                                                 @else
                                                     @if ($plan->duration != 'Lifetime')
-                                                        <div class="input-group">
-                                                            <form role="form" action="{{ route('stripe.post', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}"
-                                                            method="post" class="require-validation" id="stripe-payment-form">
-                                                            @csrf
+                                                        <div class="">
+                                                            <form role="form"
+                                                                action="{{ route('stripe.post') }}" method="post" id="stripe-payment-form">
+                                                                @csrf
                                                                 <input type="hidden" name="plan_id" id="plan_id"
                                                                     value="{{ \Illuminate\Support\Facades\Crypt::encrypt($plan->id) }}">
-                                                                <button class="btn btn-primary btn-sm rounded-pill"
+                                                                <button class="form-control text-primary rounded text-center"
                                                                     type="submit">
-                                                                    <i class="mdi mdi-cash-multiple mr-1"></i>
-                                                                    {{ __('Pay Now') }}
+                                                                    {{ __('Subscribe') }}
                                                                 </button>
                                                             </form>
                                                         </div>

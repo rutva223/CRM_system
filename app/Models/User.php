@@ -73,16 +73,16 @@ class User extends Authenticatable
 
     public function assignPlan($planID)
     {
-        if($planID)
-        {
-            try {
-                $id       = Crypt::decrypt($planID);
-            } catch (\Throwable $th) {
-                return redirect()->back()->with('error', __('Plan Not Found.'));
-            }
+        // if($planID)
+        // {
+        //     try {
+        //         $id       = Crypt::decrypt($planID);
+        //     } catch (\Throwable $th) {
+        //         return redirect()->back()->with('error', __('Plan Not Found.'));
+        //     }
 
-        }
-        $plan = Plan::find($id);
+        // }
+        $plan = Plan::find($planID);
         $duration = $plan->duration;
         $user = User::find(Auth::user()->id);
         if(!empty($duration))
@@ -105,11 +105,9 @@ class User extends Authenticatable
         }else
         {
             $user->plan_expire_date = null;
-            // for days
-            // $this->plan_expire_date = Carbon::now()->addDays($duration)->isoFormat('YYYY-MM-DD');
         }
 
-        $users = User::where('created_by',$user->id)->where('is_active',1)->get();
+        $users = User::where('created_by',$user->id)->where('is_active',1)->where('type','!=','vendor')->where('type','!=','customer')->get();
         $total_users =  $users->count();
         if($plan->max_user > 0)
         {
@@ -121,7 +119,7 @@ class User extends Authenticatable
                         $item->save();
                     }
             }else{
-                $count_user =  $plan->max_user - $total_users ;
+                $count_user =  $plan->max_user - $total_users;
                 $users = User::where('created_by',$user->id)->where('is_active',0)->take($count_user)->get();
                 foreach($users as $item){
                     $item->is_active = 1;
@@ -135,8 +133,65 @@ class User extends Authenticatable
                 $item->save();
             }
         }
+
+        $cus_users = User::where('created_by',$user->id)->where('is_active',1)->where('type','customer')->get();
+        $total_users =  $cus_users->count();
+
+        if($plan->max_customer > 0)
+        {
+            if($total_users > $plan->max_customer){
+                    $count_user = $total_users - $plan->max_customer;
+                    $usersToDisable = User::orderBy('created_at', 'desc')->where('created_by',$user->id)->where('is_active',1)->take($count_user)->get();
+                    foreach($usersToDisable as $item){
+                        $item->is_active = 0;
+                        $item->save();
+                    }
+            }else{
+                $count_user =  $plan->max_customer - $total_users;
+                $users = User::where('created_by',$user->id)->where('is_active',0)->take($count_user)->get();
+                foreach($users as $item){
+                    $item->is_active = 1;
+                    $item->save();
+                }
+            }
+        }elseif($plan->max_customer == -1){
+            $users = User::where('created_by',$user->id)->get();
+            foreach($users as $item){
+                $item->is_active = 1;
+                $item->save();
+            }
+        }
+
+        $vendor_users = User::where('created_by',$user->id)->where('is_active',1)->where('type','vendor')->get();
+        $total_users =  $vendor_users->count();
+
+        if($plan->max_vendor > 0)
+        {
+            if($total_users > $plan->max_vendor){
+                    $count_user = $total_users - $plan->max_vendor;
+                    $usersToDisable = User::orderBy('created_at', 'desc')->where('created_by',$user->id)->where('is_active',1)->take($count_user)->get();
+                    foreach($usersToDisable as $item){
+                        $item->is_active = 0;
+                        $item->save();
+                    }
+            }else{
+                $count_user =  $plan->max_vendor - $total_users;
+                $users = User::where('created_by',$user->id)->where('is_active',0)->take($count_user)->get();
+                foreach($users as $item){
+                    $item->is_active = 1;
+                    $item->save();
+                }
+            }
+        }elseif($plan->max_vendor == -1){
+            $users = User::where('created_by',$user->id)->get();
+            foreach($users as $item){
+                $item->is_active = 1;
+                $item->save();
+            }
+        }
+
         $user->plan = $plan->id;
-        $user->total_user = $plan->max_user;
+        // $user->total_user = $plan->max_user;
         $user->save();
     }
 

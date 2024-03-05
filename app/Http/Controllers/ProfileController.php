@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -28,11 +29,13 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $data = $request->validated();
+        $image = $request->file('avatar');
 
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $avatarPath = $avatar->store('avatars', 'public'); // assuming 'public' disk for public storage
-            $data['avatar'] = $avatarPath;
+        if ($image != null) {
+            if ($request->hasFile('avatar')) {
+                $upload_image = UploadImageFolder('avatars', $image);
+                $data['avatar'] = $upload_image;
+            }
         }
 
         $user->fill($data);
@@ -42,6 +45,7 @@ class ProfileController extends Controller
         }
 
         $user->save();
+        Session::put('password_updated', true);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

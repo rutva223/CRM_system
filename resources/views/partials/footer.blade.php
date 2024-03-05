@@ -9,6 +9,9 @@
 <script src="{{ asset('assets/vendor/wow-master/dist/wow.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/peity/jquery.peity.min.js') }}"></script>
 
+<script src="{{ asset('assets/js/letter.avatar.js') }}"></script>
+<script src="{{ asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
+
 <!--swiper-slider-->
 <script src="{{ asset('assets/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/wow-master/dist/wow.min.js') }}"></script>
@@ -27,20 +30,31 @@
 <script src="{{ asset('assets/js/plugins/dropzone-amd-module.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/dragula.min.js') }}"></script>
 
-<script>
-    @if (Session::has('success'))
-        toastr.success("{{ Session::get('success') }}");
-    @endif
-    @if (Session::has('info'))
-        toastr.info("{{ Session::get('info') }}");
-    @endif
-    @if (Session::has('warning'))
-        toastr.warning("{{ Session::get('warning') }}");
-    @endif
-    @if (Session::has('error'))
-        toastr.error("{{ Session::get('error') }}");
-    @endif
-</script>
+{{-- like dropdown --}}
+<script src="{{ asset('assets/js/dashboard/cms.js') }}"></script>
+
+@if (Session::has('success'))
+    <div id="toast" class="show">
+        <div id="desc">{{ session('success') }}</div>
+    </div>
+@endif
+@if (Session::has('info'))
+    <div id="toast" class="show">
+        <div id="desc">{{ session('info') }}</div>
+    </div>
+@endif
+@if (Session::has('warning'))
+    <div id="toast" class="show">
+        <div id="desc">{{ session('warning') }}</div>
+    </div>
+@endif
+@if (Session::has('error'))
+    <div id="toast" class="show">
+        <div id="desc">{{ session('error') }}</div>
+    </div>
+@endif
+
+
 <!-- Datatable -->
 <script src="{{ asset('assets/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/datatables/responsive/responsive.js') }}"></script>
@@ -48,6 +62,29 @@
 
 
 <script>
+    $(document).ready(function() {
+        // Function to show the toast
+        function showToast() {
+            var x = document.getElementById("toast");
+            x.classList.add("show");
+            setTimeout(function() {
+                hideToast();
+            }, 5000);
+        }
+
+        // Function to hide the toast
+        function hideToast() {
+            var x = document.getElementById("toast");
+            x.classList.remove("show");
+        }
+
+        showToast();
+
+        $("#desc").click(function() {
+            hideToast();
+        });
+    });
+
     $(function() {
         $("#datepicker").datepicker({
             autoclose: true,
@@ -62,6 +99,7 @@
     $('.my-select').selectpicker();
 
 </script>
+
 <script>
     $("#theme_changes").click(function() {
         var body = $("body");
