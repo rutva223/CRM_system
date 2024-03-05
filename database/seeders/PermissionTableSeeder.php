@@ -31,8 +31,8 @@ class PermissionTableSeeder extends Seeder
             $admin->password = Hash::make('1234');
             $admin->email_verified_at = date('Y-m-d H:i:s');
             $admin->type = 'super admin';
-            $admin->avatar = 'uploads/users-avatar/avatar.png';
-            $admin->theme_setting = 0;
+            // $admin->avatar = 'uploads/users-avatar/avatar.png';
+            $admin->theme_setting = 'light';
             $admin->lang = 'en';
             $admin->created_by = 0;
             $admin->save();
@@ -126,6 +126,9 @@ class PermissionTableSeeder extends Seeder
             'create deal call',
             'edit deal call',
             'delete deal call',
+            'create deal meeting',
+            'edit deal meeting',
+            'delete deal meeting',
             'deal email create',
             'manage pipeline',
             'create pipeline',
@@ -151,6 +154,10 @@ class PermissionTableSeeder extends Seeder
             'edit dealtype',
             'create dealtype',
             'delete dealtype',
+            'manage dealcontact',
+            'edit dealcontact',
+            'create dealcontact',
+            'delete dealcontact',
 
         ];
 
@@ -201,13 +208,15 @@ class PermissionTableSeeder extends Seeder
         if(empty($user))
         {
             $company = new User();
-            $company->name = 'Rajodiya infotech';
+            $company->name = 'Company';
             $company->email = 'company@example.com';
             $company->password = Hash::make('1234');
             $company->email_verified_at = date('Y-m-d H:i:s');
             $company->type = 'company';
-            $company->avatar = 'uploads/users-avatar/avatar.png';
-            $company->theme_setting = 0;
+            // $company->avatar = 'uploads/users-avatar/avatar.png';
+            $company->theme_setting = 'light';
+            $company->plan = 1;
+            $company->plan_expire_date = 2030-02-29;
             $company->lang = 'en';
             $company->created_by = $admin->id;
             $company->save();

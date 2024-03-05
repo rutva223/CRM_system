@@ -51,14 +51,6 @@
                         <div class="basic-form">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <div class="form-group">
-                                        {{Form::label('user_id',__('User'),['class'=>'form-label required'])}}
-                                        {{Form::text('user_id_display', $contact->name, array('class'=>'form-control user_id','placeholder'=>__('Select User'),'required' => 'required','readonly'))}}
-                                        {{ Form::hidden('user_id', $contact->user_id) }}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
                                     <label for="f_name" class="text-label form-label required">First Name</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="f_name" value="{{ $contact->f_name }}" placeholder="Enter First Name.." required>
@@ -68,6 +60,12 @@
                                     <label for="l_name" class="text-label form-label required">Last Name</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="l_name" value="{{ $contact->l_name }}" placeholder="Enter Last Name.." required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="text-label form-label required">Email</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="email" value="{{ $contact->email }}" placeholder="Enter Email.." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -123,7 +121,7 @@
                                     <div class="input-group">
                                         <div class="col-xl-4 col-xxl-6 col-6">
                                             <div class="form-check custom-checkbox mb-3">
-                                                <input type="checkbox" name="send_mail" id="send_mail" class="form-check-input" value="1" {{ $contact->send_mail ? 'checked' : '' }}>
+                                                <input type="checkbox" name="send_mail" id="send_mail" class="form-check-input" value="on" {{ $contact->send_mail=='on' ? 'checked' : '' }}>
                                                 <label class="form-check-label">Send Mail</label>
                                             </div>
                                         </div>

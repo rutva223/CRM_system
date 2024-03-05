@@ -139,44 +139,59 @@
         });
     });
     $(document).ready(function() {
-    // Function to check if all required fields are filled
-    function checkRequiredFields() {
-        var allFieldsFilled = true;
-        $('.form-control[required]').each(function() {
-            if ($(this).val() === '') {
-                allFieldsFilled = false;
-                return false; // Exit the loop early if a required field is empty
-            }
+        $("#checkall").click(function() {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+            toggleCreateButton();
         });
 
-        // Check if at least one permission is selected
-        var atLeastOnePermissionSelected = $('.isscheck:checked').length > 0;
+        // Function to handle checkbox click event
+        $(".ischeck").click(function() {
+            var ischeck = $(this).data('id');
+            var isChecked = $(this).prop('checked');
+            $('.isscheck_' + ischeck).prop('checked', isChecked);
+            toggleCreateButton();
+        });
 
-        return allFieldsFilled && atLeastOnePermissionSelected;
-    }
+        // Function to check if all required fields are filled
+        function checkRequiredFields() {
+            var allFieldsFilled = true;
+            $('.form-control[required]').each(function() {
+                if ($(this).val() === '') {
+                    allFieldsFilled = false;
+                    return false; // Exit the loop early if a required field is empty
+                }
+            });
 
-    // Function to enable or disable the Create button based on required field completion
-    function toggleCreateButton() {
-        var allFieldsFilled = checkRequiredFields();
-        $('#createButton').prop('disabled', !allFieldsFilled);
-    }
+            // Check if at least one permission is selected
+            var atLeastOnePermissionSelected = $('.isscheck:checked').length > 0;
 
-    // Call the toggleCreateButton function when any form field changes
-    $('.form-control, .isscheck').on('input', function() {
+            return allFieldsFilled && atLeastOnePermissionSelected;
+        }
+
+        // Function to enable or disable the Create button based on required field completion
+        function toggleCreateButton() {
+            var allFieldsFilled = checkRequiredFields();
+            $('#createButton').prop('disabled', !allFieldsFilled);
+            $('#updateButton').prop('disabled', !allFieldsFilled);
+        }
+
+        // Call the toggleCreateButton function when any form field changes
+        $('.form-control, .isscheck').on('input', function() {
+            toggleCreateButton();
+        });
+
+        // Trigger input event on page load to check initial state
         toggleCreateButton();
+
+        // Function to trigger input event after permissions are selected automatically
+        function triggerInputEvent() {
+            $('.form-control, .isscheck').trigger('input');
+        }
+
+        // Trigger input event after permissions are selected automatically
+        triggerInputEvent();
     });
 
-    // Trigger input event on page load to check initial state
-    toggleCreateButton();
-
-    // Function to trigger input event after permissions are selected automatically
-    function triggerInputEvent() {
-        $('.form-control, .isscheck').trigger('input');
-    }
-
-    // Trigger input event after permissions are selected automatically
-    triggerInputEvent();
-});
 
 
 </script>

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DealCall extends Model
+class DealMeeting extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -17,7 +17,12 @@ class DealCall extends Model
         'description',
         'call_result',
     ];
-    public function getDealCallUser()
+    public static $status = [
+        1 => 'Pending',
+        2 => 'Complete',
+        3 => 'Expired',
+    ];
+    public function getDealMeetingUser()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }

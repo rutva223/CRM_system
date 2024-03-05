@@ -3,37 +3,34 @@
     <div class="tab-content tab-bordered">
         <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
             <div class="row">
-                <div class="col-6 form-group">
+                <div class="col-12 form-group">
                     {{ Form::label('name', __('Deal Name'), ['class' => 'col-form-label required']) }}
                     {{ Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) }}
                 </div>
-                <div class="col-6 form-group">
-                    {{ Form::label('price', __('Price'), ['class' => 'col-form-label required']) }}
-                    {{ Form::number('price', null, ['class' => 'form-control']) }}
-                </div>
-                <div class="col-6 form-group">
+                <div class="col-12 form-group">
                     {{ Form::label('pipeline_id', __('Pipeline'), ['class' => 'col-form-label required']) }}
                     {{ Form::select('pipeline_id', $pipelines, null, ['class' => 'form-control', 'required' => 'required']) }}
                 </div>
-                <div class="col-6 form-group">
+                <div class="col-12 form-group">
+                    {{ Form::label('amount', __('Amount'), ['class' => 'col-form-label required']) }}
+                    {{ Form::number('amount', null, ['class' => 'form-control', 'required' => 'required']) }}
+                </div>
+                <div class="col-12 form-group">
                     {{ Form::label('stage_id', __('Stage'), ['class' => 'col-form-label required']) }}
                     {{ Form::select('stage_id', ['' => __('Select Stage')], null, ['class' => 'form-control', 'required' => 'required']) }}
                 </div>
-                <div class="col-12 form-group">
-                    {{ Form::label('sources', __('Sources'), ['class' => 'col-form-label required']) }}
-                    {{ Form::select('sources[]', $sources, null, ['class' => 'form-control choices', 'id' => 'choices-multiple', 'multiple' => '', 'required' => 'required']) }}
-                </div>
-                <div class="col-12 form-group">
-                    {{ Form::label('products', __('Products'), ['class' => 'col-form-label required']) }}
-                    {{ Form::select('products[]', $products, null, ['class' => 'form-control choices', 'id' => 'choices-multiple1', 'multiple' => '', 'required' => 'required']) }}
-                </div>
-                <div class="col-12 form-group">
-                    {{ Form::label('phone', __('Phone No'), ['class' => 'col-form-label required']) }}
-                    {{ Form::text('phone', null, ['class' => 'form-control', 'required' => 'required']) }}
+                <div class="form-group col-md-12 ">
+                    {{ Form::label('priority', __('Priority'),['class'=>'col-form-label required']) }}
+                    <select name="priority" id="priority" class="form-control select" required>
+                        <option value="">Select Deal Stage</option>
+                        @foreach ($priority as $id=>$name)
+                            <option value="{{ $id }}" {{ $name == $deal->priority ? 'selected': '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-12 form-group">
                     {{ Form::label('notes', __('Notes'), ['class' => 'col-form-label']) }}
-                    {{ Form::textarea('notes', null, ['class' => 'tox-target pc-tinymce-2']) }}
+                    {{ Form::textarea('notes', null, ['class' => 'form-control','rows'=>"7"]) }}
                 </div>
             </div>
         </div>
@@ -54,7 +51,6 @@
     $(document).ready(function() {
         $("#commonModal select[name=pipeline_id]").trigger('change');
     });
-
     $(document).on("change", "#commonModal select[name=pipeline_id]", function() {
         $.ajax({
             url: '{{ route('stages.json') }}',
@@ -80,4 +76,5 @@
             }
         })
     });
+
 </script>

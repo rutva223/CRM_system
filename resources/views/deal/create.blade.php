@@ -14,8 +14,8 @@
             </div>
         </div>
         <div class="form-group col-md-12 mb-3">
-            {{ Form::label('pipeline', __('Pipeline'),['class'=>'form-label required']) }}
-            <select name="pipeline" id="pipeline" class="form-control select" required>
+            {{ Form::label('pipeline_id', __('Pipeline'),['class'=>'form-label required']) }}
+            <select name="pipeline_id" id="pipeline_id" class="form-control select" required>
                 @foreach ($pipeline as $id=>$name)
                     <option value="{{ $id }}"  {{ $id == $select_pipeline ? 'selected' : '' }}>{{ $name }}</option>
                 @endforeach

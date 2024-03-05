@@ -61,6 +61,10 @@ class Deal extends Model
     {
         return $this->hasMany(DealTask::class, 'deal_id', 'id');
     }
+    public function contacts()
+    {
+        return $this->hasMany(DealContact::class, 'deal_id', 'id');
+    }
 
     public function complete_tasks()
     {
@@ -123,6 +127,10 @@ class Deal extends Model
     public function calls()
     {
         return $this->hasMany(DealCall::class, 'deal_id', 'id');
+    }
+    public function meetings()
+    {
+        return $this->hasMany(DealMeeting::class, 'deal_id', 'id');
     }
     public function activities()
     {

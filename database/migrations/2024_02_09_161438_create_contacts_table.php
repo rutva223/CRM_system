@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('f_name');
             $table->string('l_name');
+            $table->string('email')->unique();
             $table->string('phone_no');
             $table->string('assistants_name');
             $table->string('assistants_mail');
@@ -35,6 +36,7 @@ return new class extends Migration
             $table->string('shipping_state')->nullable();
             $table->integer('shipping_zip')->nullable();
             $table->string('shipping_country')->nullable();
+            $table->integer('created_by');
             $table->timestamps();
         });
     }
