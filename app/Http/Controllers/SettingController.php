@@ -18,9 +18,9 @@ class SettingController extends Controller
         if (Session::has('user_type')) {
 
             // $settings = Utility::settings();
-            $emailSettings = Setting::pluck('value', 'name');
+            $Settings = Setting::pluck('value', 'name');
 
-            return view('setting.index',compact('emailSettings'));
+            return view('setting.index',compact('Settings'));
         } else {
             return redirect()->route('login');
         }
@@ -75,7 +75,6 @@ class SettingController extends Controller
 
     public function SaveEmailSetting(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'mail_mailer' => 'required|string|max:255',
             'mail_host' => 'required|string|max:255',
@@ -97,6 +96,9 @@ class SettingController extends Controller
                 );
             }
         }
+        // Set session variable to indicate email setting tab
+        session()->flash('active_tab', 'email_setting');
+
         return redirect()->back()->with('success', __('Save Email Setting successfully.'));
     }
 
@@ -115,5 +117,27 @@ class SettingController extends Controller
             $user->save();
         }
         return response()->json(['status' => true, 'theme' => $user->theme_setting]);
+    }
+
+    public function PaymentSetting(Request $request) {
+        $request->validate([
+            'stripe_currency' => 'required',
+            'stripe_key' => 'required',
+            'stripe_secret_key' => 'required',
+        ]);
+
+        $settings = $request->all();
+        unset($settings['_token']);
+        foreach ($settings as $key => $data) {
+            if (!empty($data)) {
+                Setting::updateOrCreate(
+                    ['name' => $key, 'created_by' => Session()->get('user_id')],
+                    ['value' => $data]
+                );
+            }
+        }
+        // Set session variable to indicate payment setting tab
+        session()->flash('active_tab', 'payment_setting');
+        return redirect()->back()->with('success', __('Save Payment Setting successfully.'));
     }
 }

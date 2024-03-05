@@ -143,6 +143,8 @@ class CreateUserSeeder extends Seeder
                 'created_by' => $superAdmin->id,
             ]
         );
+        $company->assignPlan(1);
+
         $company->assignRole($companyRole);
     }
 }

@@ -44,7 +44,7 @@ class UserController extends Controller
     {
         if (Auth::user()->can('create user')) {
             $user_id = Session::get('user_id') ?? Auth::user()->id;
-            $roles = Role::where('created_by',$user_id)->pluck('name', 'id');
+            $roles = Role::where('created_by', $user_id)->pluck('name', 'id');
             return view('user.create', compact('roles'));
         } else {
             return response()->json(['error' => __('Permission denied.')], 401);
@@ -57,12 +57,17 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->can('create user')) {
+            if (Session::get('user_type') == 'super admin') {
+                $roles = Role::findByName('company');
+            } else {
+                $roles = Role::find($request->input('roles'));
+            }
+
             $id =  Session()->get('user_id');
-            if(Session::get('user_type') != 'super admin'){
-                $canUse=  PlanCheck($id);
-                if($canUse == false)
-                {
-                    return redirect()->back()->with('error','You have maxed out the total number of User allowed on your current plan');
+            if (Session::get('user_type') != 'super admin') {
+                $canUse = PlanCheck($id, $roles->name);
+                if ($canUse == false) {
+                    return redirect()->back()->with('error', 'You have maxed out the total number of User allowed on your current plan');
                 }
             }
             $validatorArray = [
@@ -89,11 +94,7 @@ class UserController extends Controller
                     return redirect()->back()->with('error', $validator->errors()->first());
                 }
             }
-            if (Session::get('user_type') == 'super admin') {
-                $roles = Role::findByName('company');
-            } else {
-                $roles = Role::find($request->input('roles'));
-            }
+
             $userpassword       = $request->input('password');
             $user['name']       = $request->input('name');
             $user['email']      = $request->input('email');
@@ -126,7 +127,7 @@ class UserController extends Controller
         if (Auth::user()->can('edit user')) {
             $user = User::find($id);
             $user_id = Session::get('user_id') ?? Auth::user()->id;
-            $roles = Role::where('created_by',$user_id)->pluck('name', 'id');
+            $roles = Role::where('created_by', $user_id)->pluck('name', 'id');
 
             return view('user.edit', compact('user', 'roles'));
         } else {
@@ -169,32 +170,67 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        if(Auth::user()->can('delete user'))
-        {
+        if (Auth::user()->can('delete user')) {
             $user = User::findOrFail($id);
-            try
-            {
+            try {
                 // get all table
                 $tables_in_db = DB::select('SHOW TABLES');
-                $db = "Tables_in_".env('DB_DATABASE');
-                foreach($tables_in_db as $table)
-                {
-                    if (Schema::hasColumn($table->{$db}, 'created_by'))
-                    {
+                $db = "Tables_in_" . env('DB_DATABASE');
+                foreach ($tables_in_db as $table) {
+                    if (Schema::hasColumn($table->{$db}, 'created_by')) {
                         DB::table($table->{$db})->where('created_by', $user->id)->delete();
                     }
                 }
-                $contact = Contact::where('user_id',$id)->get();
+                $contact = Contact::where('user_id', $id)->get();
                 $contact->delete();
                 $user->delete();
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 return redirect()->back()->with('error', __($e->getMessage()));
             }
 
-            return redirect()->route('users.index')
-                            ->with('success','User deleted successfully');
+            return redirect()->route('users.index')->with('success', 'User deleted successfully');
         }
+    }
+
+    public function updatePassword(Request $request)
+    {
+        // if(\Auth::user()->can('change password account'))
+        // {
+            if (Auth::Check()) {
+                $validatorArray = [
+                    'current_password' => 'required',
+                    'password' => 'required|min:6',
+                    'password_confirmation' => 'required|same:password',
+                ];
+                $validator = Validator::make(
+                    $request->all(),
+                    $validatorArray
+                );
+                if ($validator->fails()) {
+                    return redirect()->back()->with('error', $validator->errors()->first());
+                }
+
+                $objUser          = Auth::user();
+                $request_data     = $request->All();
+                $current_password = $objUser->password;
+
+                if (Hash::check($request_data['current_password'], $current_password)) {
+                    $user_id            = Auth::User()->id;
+                    $obj_user           = User::find($user_id);
+                    $obj_user->password = Hash::make($request_data['password']);;
+                    $obj_user->save();
+
+                    return redirect()->back()->with('success', __('Password updated successfully.'));
+                } else {
+                    return redirect()->back()->with('error', __('Please enter correct current password.'));
+                }
+            } else {
+                return redirect()->back()->with('error', __('Something is wrong.'));
+            }
+        // }
+        // else
+        // {
+        //     return redirect()->back()->with('error', __('Permission denied.'));
+        // }
     }
 }
