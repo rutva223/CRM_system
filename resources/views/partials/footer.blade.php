@@ -63,7 +63,6 @@
 
 <script>
     $(document).ready(function() {
-        // Function to show the toast
         function showToast() {
             var x = document.getElementById("toast");
             x.classList.add("show");

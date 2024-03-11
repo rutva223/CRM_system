@@ -29,7 +29,7 @@
                     </thead>
                     <tbody>
                         @php
-                        $modules =['dashboard','user','roles','plan','leads','contacts','setting'];
+                        $modules =['dashboard','user','roles','plan','leads','contacts','setting','deal','lead','deal task','deal call','deal meeting','pipeline','dealstages','labels','source','dealtype','dealcontact'];
                         @endphp
                         @foreach($modules as $module)
                         <tr>
@@ -74,6 +74,14 @@
                                     <div class="col-md-3 custom-control custom-checkbox">
                                         {{Form::checkbox('permissions[]',$key,false, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
                                         {{Form::label('permission'.$key,'Show',['class'=>'form-check-label'])}}<br>
+                                    </div>
+                                    @endif
+                                    @endif
+                                    @if(in_array('move '.$module,(array) $permissions))
+                                    @if($key = array_search('move '.$module,$permissions))
+                                    <div class="col-md-3 custom-control custom-checkbox">
+                                        {{Form::checkbox('permissions[]',$key,false, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
+                                        {{Form::label('permission'.$key,'Move',['class'=>'form-check-label'])}}<br>
                                     </div>
                                     @endif
                                     @endif
