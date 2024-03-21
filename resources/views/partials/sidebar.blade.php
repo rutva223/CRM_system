@@ -23,6 +23,13 @@
     </a>
 </li>
 @endcan
+@can('manage product')
+    <li class="{{ request()->is('products') ? 'active' : '' }}">
+        <a href="{{ route('products.index') }}" class="">
+            <i class="fa fa-list-check"></i><span class="nav-text ">Product & Service</span>
+        </a>
+    </li>
+@endcan
 @can('manage deal')
     <li class="{{ (Request::route()->getName() == 'deal-stages.index' || Request::route()->getName() == 'labels.index' || Request::route()->getName() == 'dealtypes.index' || Request::route()->getName() == 'pipelines.index') ? ' active mm-active' : '' }}" >
         <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
@@ -44,6 +51,26 @@
         </ul>
     </li>
 @endif
+<li class="{{ (Request::route()->getName() == 'branch.index' ||Request::route()->getName() == 'branch.index' || Request::route()->getName() == 'department.index' || Request::route()->getName() == 'designation.index') ? ' active mm-active' : '' }}" >
+    <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+        <i class="fa fa-store"></i>
+        <span class="nav-text">HRM</span>
+    </a>
+    <ul aria-expanded="false">
+        @can('manage branch')
+            <li><a href="{{ route('branch.index') }}">Employee</a></li>
+        @endcan
+        @can('manage branch')
+            <li><a href="{{ route('branch.index') }}">Branch</a></li>
+        @endcan
+        @can('manage department')
+            <li><a href="{{ route('department.index') }}">Department</a></li>
+        @endcan
+        @can('manage department')
+            <li><a href="{{ route('department.index') }}">Department</a></li>
+        @endcan
+    </ul>
+</li>
 {{-- @if(Auth::user()->type == 'super admin')
     @can('manage coupon')
         <li class="{{ request()->is('coupons') ? 'active' : '' }}">

@@ -13,8 +13,5 @@ class ClientDeal extends Model
         'client_id', 'deal_id'
     ];
 
-    protected static function newFactory()
-    {
-        return \Modules\Lead\Database\factories\ClientDealFactory::new();
-    }
+   
 }

@@ -7,7 +7,7 @@
     {{ __   ('Lead') }}
 @endsection
 @section('page-action')
-    <a href="#" data-size="md" data-url="{{ route('leads.create') }}" data-ajax-popup="true"
+    <a href="#" data-size="lg" data-url="{{ route('leads.create') }}" data-ajax-popup="true"
         data-bs-toggle="tooltip" data-title="{{ __('Add New Lead') }}" class="btn btn-sm btn-primary">
         <i class="fa fa-plus text-white"></i>
     </a>
@@ -49,6 +49,10 @@
                             <td>{{ $lead->status }}</td>
                             <td >
                                 <div class="d-flex">
+                                    <a href="{{ route('leads.show', $lead->id) }}" class="btn btn-primary shadow btn-sm sharp me-1 text-white"
+                                        data-title="{{ __('Show Lead') }}">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
                                     <a href="#!" data-size="md" data-url="{{ route('leads.edit', $lead->id) }}"
                                         data-ajax-popup="true" class="btn btn-primary shadow btn-sm sharp me-1 text-white"
                                         data-title="{{ __('Edit User') }}">

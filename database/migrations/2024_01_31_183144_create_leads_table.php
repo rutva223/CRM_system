@@ -11,14 +11,31 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('leads', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->integer('user_id');
-            $table->integer('status')->default(0)->comment('0 for Draft, 1 for Open, 2 for Revised, 3 for Sent');
-            $table->longText('description');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('leads'))
+        {
+            Schema::create('leads', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name');
+                $table->float('amount')->nullable();
+                $table->string('email')->unique();
+                $table->string('subject');
+                $table->integer('user_id');
+                $table->integer('pipeline_id');
+                $table->integer('stage_id');
+                $table->string('sources')->nullable();
+                $table->string('products')->nullable();
+                $table->text('notes')->nullable();
+                $table->string('labels')->nullable();
+                $table->integer('order')->default(0);
+                $table->string('phone',20)->nullable();
+                $table->integer('created_by');
+                $table->integer('is_active')->default(1);
+                $table->integer('is_converted')->default(0);
+                $table->longText('description');
+                $table->date('date')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

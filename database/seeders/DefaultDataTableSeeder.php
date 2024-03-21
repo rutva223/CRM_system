@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\DealStage;
+use App\Models\LeadStage;
 use App\Models\Pipeline;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -31,6 +32,14 @@ class DefaultDataTableSeeder extends Seeder
             'Closed won',
             'Closed lost',
         ];
+        $lead_stages = [
+            "Draft",
+            "Sent",
+            "Open",
+            "Revised",
+            "Declined",
+            "Accepted",
+        ];
         if ($id) {
             $company = User::where('id', $id)->where('type', 'company')->first();
             foreach ($pipelines as $pipeline) {
@@ -57,6 +66,19 @@ class DefaultDataTableSeeder extends Seeder
                 }
 
             }
+            foreach($lead_stages as $lead_stage)
+                {
+                    $leadstage = LeadStage::where('name',$lead_stage)->where('created_by',$company->id)->first();
+
+                    if($leadstage == null){
+                        $leadstage = new LeadStage();
+                        $leadstage->name = $lead_stage;
+                        $leadstage->pipeline_id = $Pipeline->id;
+                        $leadstage->order = 0;
+                        $leadstage->created_by = !empty($company->id) ? $company->id : 2;
+                        $leadstage->save();
+                    }
+                }
         } else {
             $companyies = User::where('type', 'company')->get();
             foreach ($companyies as $company) {
@@ -81,6 +103,19 @@ class DefaultDataTableSeeder extends Seeder
                         $dealstage->order = 0;
                         $dealstage->created_by = !empty($company->id) ? $company->id : 2;
                         $dealstage->save();
+                    }
+
+                }
+                foreach($lead_stages as $lead_stage)
+                {
+                    $leadstage = LeadStage::where('name',$lead_stage)->where('created_by',$company->id)->first();
+                    if($leadstage == null){
+                        $leadstage = new LeadStage();
+                        $leadstage->name = $lead_stage;
+                        $leadstage->pipeline_id = $Pipeline->id;
+                        $leadstage->order = 0;
+                        $leadstage->created_by = !empty($company->id) ? $company->id : 2;
+                        $leadstage->save();
                     }
 
                 }

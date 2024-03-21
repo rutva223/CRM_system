@@ -194,7 +194,7 @@
                                                 <p class="text-white mb-2">Total Users</p>
                                             </div>
                                             <div class="chart-num">
-                                                <h3 class="mb-0 text-white">980</h3>
+                                                <h3 class="mb-0 text-white">{{ count($deal->clients) }}</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -280,7 +280,7 @@
                                                 <p class="text-white mb-2">Total File</p>
                                             </div>
                                             <div class="chart-num">
-                                                <h3 class="mb-0 text-white">980</h3>
+                                                <h3 class="mb-0 text-white">{{ count($deal->files) }}</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -352,19 +352,21 @@
                                                     @foreach ($deal->activities as $activity)
                                                         <tr>
                                                             <td class="whitesp-no p-0">
-                                                                <div class="d-flex py-sm-3 py-1 align-items-center trans-info">
+                                                                <div
+                                                                    class="d-flex py-sm-3 py-1 align-items-center trans-info">
                                                                     <div class="icon-bx border me-3">
                                                                         <i class="fas {{ $activity->logIcon() }}"></i>
                                                                     </div>
                                                                     <div>
                                                                         <h6 class="mb-0">{!! $activity->getUser() !!}</h6>
-                                                                        <p class="mb-0">{{$activity->created_at->diffForHumans()}}</p>
+                                                                        <p class="mb-0">
+                                                                            {{ $activity->created_at->diffForHumans() }}
+                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                             <td>{!! $activity->getUseremail() !!}</td>
-                                                            <td ><span
-                                                                    class="badge light badge-success badge-sm"><svg
+                                                            <td><span class="badge light badge-success badge-sm"><svg
                                                                         width="13" height="13" viewBox="0 0 16 16"
                                                                         fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                         <path
@@ -490,17 +492,17 @@
                             </form>
                         </div>
                     </div>
-
-
+                    {{-- Deal task --}}
                     <div class="filter cm-content-box box-primary">
                         <div class="content-title SlideToolHeader">
-                            <div class="cpa"> Excerpt
+                            <div class="cpa"> Task
                             </div>
                             <div class="d-flex align-items-center">
                                 <div class="mx-3">
-                                    <a href="#" data-size="md" data-url="{{ route('callCreate', $deal->id) }}"
-                                        data-ajax-popup="true" data-bs-toggle="tooltip"
-                                        data-title="{{ __('Add Call') }}" class="btn btn-sm btn-primary">
+                                    <a href="#" data-size="md"
+                                        data-url="{{ route('deals.tasks.create', $deal->id) }}" data-ajax-popup="true"
+                                        data-bs-toggle="tooltip" data-title="{{ __('Add Call') }}"
+                                        class="btn btn-sm btn-primary">
                                         <i class="fa fa-plus text-white"></i>
                                     </a>
                                 </div>
@@ -512,469 +514,468 @@
                         </div>
                         <div class="cm-content-body publish-content form excerpt">
                             <div class="card-body">
-                                <div class="mb-3">
-                                    <label class="form-label">Discussion</label>
-                                    <textarea class="form-control" rows="3"></textarea>
-                                    <div class="form-text">Excerpts are optional hand-crafted summaries of your content
-                                        that can be used in your theme. </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="filter cm-content-box box-primary">
-                        <div class="content-title SlideToolHeader">
-                            <div class="cpa">
-                                Call
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <div class="mx-3">
-                                    <a href="#" data-size="md" data-url="{{ route('callCreate', $deal->id) }}"
-                                        data-ajax-popup="true" data-bs-toggle="tooltip"
-                                        data-title="{{ __('Add Call') }}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-plus text-white"></i>
-                                    </a>
-                                </div>
-                                <div class="tools">
-                                    <a href="javascript:void(0);" class="expand handle btn btn-sm btn-info"><i
-                                            class="fal fa-angle-down"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="cm-content-body form excerpt">
-
-                            <div class="card-body">
                                 <table class="table mb-0 pc-dt-simple" id="deal_call">
                                     <thead>
                                         <tr>
-                                            <th>{{ __('Subject') }}</th>
-                                            <th>{{ __('Call Type') }}</th>
-                                            <th>{{ __('Duration') }}</th>
-                                            <th>{{ __('User') }}</th>
+                                            <th>{{ __('Name') }}</th>
+                                            <th>{{ __('Status') }}</th>
+                                            <th>{{ __('Priority') }}</th>
+                                            <th>{{ __('Date/Time') }}</th>
                                             <th width="14%">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($calls as $call)
+                                        @forelse ($tasks as $task)
                                             <tr>
-                                                <td>{{ $call->subject }}</td>
-                                                <td>{{ ucfirst($call->call_type) }}</td>
-                                                <td>{{ $call->duration }}</td>
-                                                <td>{{ !empty($call->getDealCallUser->name) ? $call->getDealCallUser->name : '' }}
+                                                <td>
+                                                    <h6 class="media-title text-sm form-check-label">
+                                                        {{ $task->name }}
+                                                    </h6>
                                                 </td>
-                                                <td class="text-end d-flex">
-                                                    @can('edit deal call')
-                                                        <a data-size="lg"
-                                                            data-url="{{ URL::to('deals/' . $deal->id . '/call/' . $call->id . '/edit') }}"
-                                                            data-ajax-popup="true" data-title="{{ __('Edit Call') }}"
-                                                            class="btn btn-primary shadow btn-sm sharp me-1 text-white"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            title="{{ __('Edit Call') }}"><i
-                                                                class="ti ti-pencil text-white"></i></a>
-                                                    @endcan
-                                                    @can('delete deal call')
-                                                        {!! Form::open([
-                                                            'method' => 'DELETE',
-                                                            'route' => ['callDestroy', $deal->id, $call->id],
-                                                            'id' => 'delete-form-' . $deal->id,
-                                                        ]) !!}
-                                                        <a href="#!"
-                                                            class="btn btn-danger shadow btn-sm sharp text-white js-sweetalert"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            title="{{ __('Delete Deal') }}">
-                                                            <span class="text-white"> <i class="ti ti-trash"></i></span>
-                                                            {!! Form::close() !!}
+                                                <td>
+                                                    @if ($task->status)
+                                                        <div class="badge rounded p-2 px-3 bg-success mb-1">
+                                                            {{ __(App\Models\DealTask::$status[$task->status]) }}
+                                                        </div>
+                                                    @else
+                                                        <div class="badge rounded p-2 px-3 bg-warning mb-1">
+                                                            {{ __(App\Models\DealTask::$status[$task->status]) }}
+                                                        </div>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    {{ __(App\Models\DealTask::$priorities[$task->priority]) }}
+                                                </td>
+                                                <td>
+                                                    <div class="custom-control custom-switch form-check form-switch ">
+                                                        @can('edit deal task')
+                                                            <input type="checkbox" class="form-check-input task-checkbox"
+                                                                role="switch" id="task_{{ $task->id }}"
+                                                                @if ($task->status) checked="checked" @endcan type="checkbox" value="{{ $task->status }}" data-url="{{ route('deals.tasks.update_status', [$deal->id, $task->id]) }}"/>
+
                                                         @endcan
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <td colspan="5" class="text-center">No Data Found</td>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="filter cm-content-box box-primary">
-                        <div class="content-title SlideToolHeader">
-                            <div class="cpa">
-                                Attechment
-                            </div>
-                            <div class="tools">
-                                <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div class="cm-content-body form excerpt">
-                            <div class="card-body">
-                                <div class="col-md-12 dropzone browse-file" id="dropzonewidget2"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="filter cm-content-box box-primary">
-                        <div class="content-title SlideToolHeader">
-                            <div class="cpa">
-                                Meeting
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <div class="mx-3">
-                                    <a href="#" data-size="md" data-url="{{ route('meetingCreate', $deal->id) }}"
-                                        data-ajax-popup="true" data-bs-toggle="tooltip"
-                                        data-title="{{ __('Add Call') }}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-plus text-white"></i>
-                                    </a>
-                                </div>
-                                <div class="tools">
-                                    <a href="javascript:void(0);" class="expand handle btn btn-sm btn-info"><i
-                                            class="fal fa-angle-down"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="cm-content-body form excerpt">
-
-                            <div class="card-body">
-                                <table class="table mb-0 pc-dt-simple" id="deal_call">
-                                    <thead>
-                                        <tr>
-                                            <th>{{ __('Subject') }}</th>
-                                            <th>{{ __('Meeting Status') }}</th>
-                                            <th>{{ __('Duration') }}</th>
-                                            <th>{{ __('User') }}</th>
-                                            <th width="14%">{{ __('Action') }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($meetings as $meeting)
-                                            <tr>
-                                                <td>{{ $meeting->subject }}</td>
-                                                <td>{{ ucfirst($meeting->status) }}</td>
-                                                <td>{{ $meeting->duration }}</td>
-                                                <td>{{ !empty($meeting->getDealMeetingUser->name) ? $meeting->getDealMeetingUser->name : '' }}
-                                                </td>
-                                                <td class="text-end d-flex">
-                                                    @can('edit deal meeting')
-                                                        <a data-size="lg"
-                                                            data-url="{{ URL::to('deals/' . $deal->id . '/meeting/' . $meeting->id . '/edit') }}"
-                                                            data-ajax-popup="true" data-title="{{ __('Edit Meeting') }}"
-                                                            class="btn btn-primary shadow btn-sm sharp me-1 text-white"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            title="{{ __('Edit Meeting') }}"><i
-                                                                class="ti ti-pencil text-white"></i></a>
-                                                    @endcan
-                                                    @can('delete deal meeting')
-                                                        {!! Form::open([
-                                                            'method' => 'DELETE',
-                                                            'route' => ['meetingDestroy', $deal->id, $meeting->id],
-                                                            'id' => 'delete-form-' . $deal->id,
-                                                        ]) !!}
-                                                        <a href="#!"
-                                                            class="btn btn-danger shadow btn-sm sharp text-white js-sweetalert"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            title="{{ __('Delete Deal') }}">
-                                                            <span class="text-white"> <i class="ti ti-trash"></i></span>
-                                                            {!! Form::close() !!}
-                                                        @endcan
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <td colspan="5" class="text-center">No Data Found</td>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="filter cm-content-box box-primary">
-                        <div class="content-title SlideToolHeader">
-                            <div class="cpa">Author
-
-                            </div>
-                            <div class="tools">
-                                <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div class="cm-content-body form excerpt">
-                            <div class="card-body">
-                                <label class="form-label">User</label>
-                                <select class="form-control default-select h-auto wide">
-                                    <option value="AL">admin@gmail.com</option>
-                                    <option value="WY">India</option>
-                                    <option value="WY">Information</option>
-                                    <option value="WY">New Menu</option>
-                                    <option value="WY">Page Menu</option>
-                                </select>
-
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Deal task --}}
-                    <div class="filter cm-content-box box-primary">
-                        <div class="content-title SlideToolHeader">
-                            <div class="cpa"> Task
-                            </div>
-                            <div class="tools"><a href="javascript:void(0);" class="expand handle"><i
-                                        class="fal fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div class="cm-content-body form excerpt">
-                            <div class="card-body">
-                                <label class="form-label">Page Title</label>
-                                <input type="text" class="form-control mb-3" placeholder="Page title">
-                                <div class="row">
-                                    <div class="col-xl-6 col-sm-6">
-                                        <label class="form-label">Keywords</label>
-                                        <input type="text" class="form-control mb-sm-0 mb-3 "
-                                            placeholder="Enter meta Keywords">
-                                    </div>
-                                    <div class="col-xl-6 col-sm-6">
-                                        <label class="form-label">Descriptions</label>
-                                        <textarea class="form-control" placeholder="Enter meta Keywords" rows="3"></textarea>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-xl-4">
-                    <div class="right-sidebar-sticky">
-                        <div class="filter cm-content-box box-primary">
-                            <div class="content-title SlideToolHeader">
-                                <div class="cpa">
-                                    Sources
-                                </div>
-                                <div class="tools">
-                                    <a href="javascript:void(0);" class="expand handle"><i
-                                            class="fal fa-angle-down"></i></a>
-                                </div>
-                            </div>
-                            <div class="cm-content-body publish-content form excerpt">
-                                <div class="card-body py-3">
-                                    <ul class="list-style-1 block">
-                                        <li>
-                                            <div>
-                                                <label class="form-label mb-0 me-2">
-                                                    <i class="fa-solid fa-key"></i>
-                                                    Status:
-                                                </label>
-                                                <span class="font-w500">Published</span>
-                                                <a href="javascript:void(0);" class="badge badge-primary light ms-3"
-                                                    id="headingOne" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseOne" aria-controls="collapseOne"
-                                                    aria-expanded="true" role="button">Edit</a>
-                                            </div>
-                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                                                data-bs-parent="#accordion-one">
-                                                <div class=" border rounded p-3 mt-3">
-                                                    <div class="mb-2">
-                                                        <label class="form-label w-100">Content Type</label>
-                                                        <select class="form-control default-select">
-                                                            <option selected>Select Status</option>
-                                                            <option value="1">Published</option>
-                                                            <option value="2">Draft</option>
-                                                            <option value="3">Trash</option>
-                                                            <option value="4">Private</option>
-                                                            <option value="5">Pending</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="mt-3">
-                                                        <button class="btn btn-primary btn-sm me-2" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                            aria-expanded="false" aria-controls="collapseOne">
-                                                            Ok
-                                                        </button>
-                                                        <button class="btn btn-danger light btn-sm" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                            aria-expanded="false" aria-controls="collapseOne">
-                                                            Cancel
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <label class="form-label mb-0 me-2">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                    Status:
-                                                </label>
-                                                <span class="font-w500">Public</span>
-                                                <a href="javascript:void(0);" class="badge badge-primary light ms-3"
-                                                    id="headingtwo" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapsetwo" aria-controls="collapsetwo"
-                                                    aria-expanded="true" role="button">Edit</a>
-                                            </div>
-                                            <div id="collapsetwo" class="collapse" aria-labelledby="headingtwo"
-                                                data-bs-parent="#accordion-one">
-                                                <div class="p-3 mt-3 border rounded">
-                                                    <div class="basic-form">
-                                                        <form>
-                                                            <div class="mb-3 mb-0">
-                                                                <div class="radio">
-                                                                    <label class="form-check-label"><input type="radio"
-                                                                            name="optradio" class="form-check-input">
-                                                                        Public</label>
-                                                                </div>
-                                                                <div class="radio">
-                                                                    <label class="form-check-label"><input type="radio"
-                                                                            name="optradio" class="form-check-input">
-                                                                        Password Protected</label>
-                                                                </div>
-                                                                <div class="radio disabled">
-                                                                    <label class="form-check-label"><input type="radio"
-                                                                            name="optradio" class="form-check-input">
-                                                                        Private</label>
-                                                                </div>
+                                                        <label for="task_{{ $task->id }}" class="custom-control-label ml-4 @if ($task->status) strike @endif">
+                                                            <div class="text-xs text-muted">
+                                                                <span
+                                                                    class="text-primary">{{ date('d-M-y h:i A',strtotime($task->date . ' ' . $task->time)) }}</span>
                                                             </div>
-                                                        </form>
-                                                    </div>
-                                                    <div>
-                                                        <button class="btn btn-primary btn-sm me-2" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapsetwo"
-                                                            aria-expanded="false" aria-controls="collapsetwo">
-                                                            Ok
-                                                        </button>
-                                                        <button class="btn btn-danger light btn-sm" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapsetwo"
-                                                            aria-expanded="false" aria-controls="collapsetwo">
-                                                            Cancel
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="border-bottom-0">
-                                            <div>
-                                                <label class="form-label mb-0 me-2">
-                                                    <i class="fa-solid fa-calendar-days"></i>
-                                                    Published
-                                                </label>
-                                                <span class="font-w500">on :24-09-2023 16:22:52</span>
-                                                <a href="javascript:void(0);" class="badge badge-primary light ms-3"
-                                                    id="headingthree" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapsethree" aria-controls="collapsethree"
-                                                    aria-expanded="true" role="button">Edit</a>
-                                            </div>
-                                            <div id="collapsethree" class="collapse" aria-labelledby="headingthree"
-                                                data-bs-parent="#accordion-one">
-                                                <div class="p-3 mt-3 border rounded">
-                                                    <div class="input-hasicon">
-                                                        <input name="datepicker" class="form-control bt-datepicker">
-                                                        <div class="icon"><i class="far fa-calendar"></i></div>
-                                                    </div>
-                                                    <div class="mt-3">
-                                                        <button class="btn btn-primary btn-sm me-2" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapsethree"
-                                                            aria-expanded="false" aria-controls="collapsethree">
-                                                            Ok
-                                                        </button>
-                                                        <button class="btn btn-danger light btn-sm" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapsethree"
-                                                            aria-expanded="false" aria-controls="collapsethree">
-                                                            Cancel
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="card-footer border-top text-end py-3 ">
-                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm">Publish</a>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="text-end d-flex">
+                                                        @can('edit deal task')
+                                                                <a data-size="md"
+                                                                    data-url="{{ route('deals.tasks.edit', [$deal->id, $task->id]) }}"
+                                                                    data-ajax-popup="true" data-title="{{ __('Edit Task') }}"
+                                                                    class="btn btn-sm btn-primary shadow sharp me-1 text-white"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    title="{{ __('Edit Task') }}"><i
+                                                                        class="ti ti-pencil text-white"></i></a>
+                                                        @endcan
+                                                        @can('delete deal task')
+                                                            {!! Form::open([
+                                                                'method' => 'DELETE',
+                                                                'route' => ['deals.tasks.destroy', $deal->id, $task->id],
+                                                                'id' => 'delete-form-' . $task->id,
+                                                            ]) !!}
+                                                            <a href="#!"
+                                                                class="btn btn-sm btn-danger shadow sharp me-1 text-white show_confirm js-sweetalert"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="{{ __('Delete Task') }}">
+                                                                <span class="text-white"> <i
+                                                                        class="ti ti-trash"></i></span></a>
+                                                            {!! Form::close() !!}
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                                @empty
+                                                    <td colspan="5" class="text-center">No Data Found</td>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="filter cm-content-box box-primary">
-                            <div class="content-title SlideToolHeader">
-                                <div class="cpa">
-                                    Emails
+                            <div class="filter cm-content-box box-primary">
+                                <div class="content-title SlideToolHeader">
+                                    <div class="cpa">
+                                        Call
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="mx-3">
+                                            <a href="#" data-size="md" data-url="{{ route('callCreate', $deal->id) }}"
+                                                data-ajax-popup="true" data-bs-toggle="tooltip"
+                                                data-title="{{ __('Add Call') }}" class="btn btn-sm btn-primary">
+                                                <i class="fa fa-plus text-white"></i>
+                                            </a>
+                                        </div>
+                                        <div class="tools">
+                                            <a href="javascript:void(0);" class="expand handle btn btn-sm btn-info"><i
+                                                    class="fal fa-angle-down"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="d-flex align-items-center">
-                                    <div class="mx-3">
-                                        <a href="#" data-size="md"
-                                            data-url="{{ route('emailCreate', $deal->id) }}" data-ajax-popup="true"
-                                            data-bs-toggle="tooltip" data-title="{{ __('Email Create') }}"
-                                            class="btn btn-sm btn-primary">
-                                            <i class="fa fa-plus text-white"></i>
-                                        </a>
+
+                                <div class="cm-content-body form excerpt">
+
+                                    <div class="card-body">
+                                        <table class="table mb-0 pc-dt-simple" id="deal_call">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ __('Subject') }}</th>
+                                                    <th>{{ __('Call Type') }}</th>
+                                                    <th>{{ __('Duration') }}</th>
+                                                    <th>{{ __('User') }}</th>
+                                                    <th width="14%">{{ __('Action') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse($calls as $call)
+                                                    <tr>
+                                                        <td>{{ $call->subject }}</td>
+                                                        <td>{{ ucfirst($call->call_type) }}</td>
+                                                        <td>{{ $call->duration }}</td>
+                                                        <td>{{ !empty($call->getDealCallUser->name) ? $call->getDealCallUser->name : '' }}
+                                                        </td>
+                                                        <td class="text-end d-flex">
+                                                            @can('edit deal call')
+                                                                <a data-size="lg"
+                                                                    data-url="{{ URL::to('deals/' . $deal->id . '/call/' . $call->id . '/edit') }}"
+                                                                    data-ajax-popup="true" data-title="{{ __('Edit Call') }}"
+                                                                    class="btn btn-primary shadow btn-sm sharp me-1 text-white"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    title="{{ __('Edit Call') }}"><i
+                                                                        class="ti ti-pencil text-white"></i></a>
+                                                            @endcan
+                                                            @can('delete deal call')
+                                                                {!! Form::open([
+                                                                    'method' => 'DELETE',
+                                                                    'route' => ['callDestroy', $deal->id, $call->id],
+                                                                    'id' => 'delete-form-' . $deal->id,
+                                                                ]) !!}
+                                                                <a href="#!"
+                                                                    class="btn btn-danger shadow btn-sm sharp text-white js-sweetalert"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    title="{{ __('Delete Deal') }}">
+                                                                    <span class="text-white"> <i class="ti ti-trash"></i></span>
+                                                                    {!! Form::close() !!}
+                                                                @endcan
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <td colspan="5" class="text-center">No Data Found</td>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter cm-content-box box-primary">
+                                <div class="content-title SlideToolHeader">
+                                    <div class="cpa">
+                                        Meeting
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="mx-3">
+                                            <a href="#" data-size="md" data-url="{{ route('meetingCreate', $deal->id) }}"
+                                                data-ajax-popup="true" data-bs-toggle="tooltip"
+                                                data-title="{{ __('Add Call') }}" class="btn btn-sm btn-primary">
+                                                <i class="fa fa-plus text-white"></i>
+                                            </a>
+                                        </div>
+                                        <div class="tools">
+                                            <a href="javascript:void(0);" class="expand handle btn btn-sm btn-info"><i
+                                                    class="fal fa-angle-down"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="cm-content-body form excerpt">
+
+                                    <div class="card-body">
+                                        <table class="table mb-0 pc-dt-simple" id="deal_call">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ __('Subject') }}</th>
+                                                    <th>{{ __('Meeting Status') }}</th>
+                                                    <th>{{ __('Duration') }}</th>
+                                                    <th>{{ __('User') }}</th>
+                                                    <th width="14%">{{ __('Action') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse($meetings as $meeting)
+                                                    <tr>
+                                                        <td>{{ $meeting->subject }}</td>
+                                                        <td>{{ ucfirst($meeting->status) }}</td>
+                                                        <td>{{ $meeting->duration }}</td>
+                                                        <td>{{ !empty($meeting->getDealMeetingUser->name) ? $meeting->getDealMeetingUser->name : '' }}
+                                                        </td>
+                                                        <td class="text-end d-flex">
+                                                            @can('edit deal meeting')
+                                                                <a data-size="lg"
+                                                                    data-url="{{ URL::to('deals/' . $deal->id . '/meeting/' . $meeting->id . '/edit') }}"
+                                                                    data-ajax-popup="true" data-title="{{ __('Edit Meeting') }}"
+                                                                    class="btn btn-primary shadow btn-sm sharp me-1 text-white"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    title="{{ __('Edit Meeting') }}"><i
+                                                                        class="ti ti-pencil text-white"></i></a>
+                                                            @endcan
+                                                            @can('delete deal meeting')
+                                                                {!! Form::open([
+                                                                    'method' => 'DELETE',
+                                                                    'route' => ['meetingDestroy', $deal->id, $meeting->id],
+                                                                    'id' => 'delete-form-' . $deal->id,
+                                                                ]) !!}
+                                                                <a href="#!"
+                                                                    class="btn btn-danger shadow btn-sm sharp text-white js-sweetalert"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    title="{{ __('Delete Deal') }}">
+                                                                    <span class="text-white"> <i class="ti ti-trash"></i></span>
+                                                                    {!! Form::close() !!}
+                                                                @endcan
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <td colspan="5" class="text-center">No Data Found</td>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter cm-content-box box-primary">
+                                <div class="content-title SlideToolHeader">
+                                    <div class="cpa">
+                                        Attechment
                                     </div>
                                     <div class="tools">
-                                        <a href="javascript:void(0);" class="expand handle btn btn-sm btn-info"><i
-                                                class="fal fa-angle-down"></i></a>
+                                        <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
+                                    </div>
+                                </div>
+                                <div class="cm-content-body form excerpt">
+                                    <div class="card-body">
+                                        <div class="col-md-12 dropzone browse-file" id="dropzonewidget2"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="cm-content-body publish-content form excerpt  event-agenda  h-auto">
 
-                                <div class="card-body loadmore-content dlab-scroll height500  recent-activity-wrapper p-3 pt-0"
-                                    id="RecentActivityContent">
-                                    @foreach ($emails as $email)
-                                        <div class="d-flex align-items-center event">
-                                            <div
-                                                class="icon-bx icon-bx-lg  me-3 d-flex flex-column justify-content-center">
-                                                <img alt="user-image" class=" rounded-circle img_users_fix_size"
-                                                    avatar="{{ $email->subject }}">
+
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="right-sidebar-sticky">
+                                <div class="filter cm-content-box box-primary">
+                                    <div class="content-title SlideToolHeader">
+                                        <div class="cpa">
+                                            Sources
+                                        </div>
+                                        <div class="tools">
+                                            <a href="javascript:void(0);" class="expand handle"><i
+                                                    class="fal fa-angle-down"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="cm-content-body publish-content form excerpt">
+                                        <div class="card-body py-3">
+                                            <ul class="list-style-1 block">
+                                                <li>
+                                                    <div>
+                                                        <label class="form-label mb-0 me-2">
+                                                            <i class="fa-solid fa-key"></i>
+                                                            Status:
+                                                        </label>
+                                                        <span class="font-w500">Published</span>
+                                                        <a href="javascript:void(0);" class="badge badge-primary light ms-3"
+                                                            id="headingOne" data-bs-toggle="collapse"
+                                                            data-bs-target="#collapseOne" aria-controls="collapseOne"
+                                                            aria-expanded="true" role="button">Edit</a>
+                                                    </div>
+                                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                                        data-bs-parent="#accordion-one">
+                                                        <div class=" border rounded p-3 mt-3">
+                                                            <div class="mb-2">
+                                                                <label class="form-label w-100">Content Type</label>
+                                                                <select class="form-control default-select">
+                                                                    <option selected>Select Status</option>
+                                                                    <option value="1">Published</option>
+                                                                    <option value="2">Draft</option>
+                                                                    <option value="3">Trash</option>
+                                                                    <option value="4">Private</option>
+                                                                    <option value="5">Pending</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mt-3">
+                                                                <button class="btn btn-primary btn-sm me-2" type="button"
+                                                                    data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                                                    aria-expanded="false" aria-controls="collapseOne">
+                                                                    Ok
+                                                                </button>
+                                                                <button class="btn btn-danger light btn-sm" type="button"
+                                                                    data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                                                    aria-expanded="false" aria-controls="collapseOne">
+                                                                    Cancel
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div>
+                                                        <label class="form-label mb-0 me-2">
+                                                            <i class="fa-solid fa-eye"></i>
+                                                            Status:
+                                                        </label>
+                                                        <span class="font-w500">Public</span>
+                                                        <a href="javascript:void(0);" class="badge badge-primary light ms-3"
+                                                            id="headingtwo" data-bs-toggle="collapse"
+                                                            data-bs-target="#collapsetwo" aria-controls="collapsetwo"
+                                                            aria-expanded="true" role="button">Edit</a>
+                                                    </div>
+                                                    <div id="collapsetwo" class="collapse" aria-labelledby="headingtwo"
+                                                        data-bs-parent="#accordion-one">
+                                                        <div class="p-3 mt-3 border rounded">
+                                                            <div class="basic-form">
+                                                                <form>
+                                                                    <div class="mb-3 mb-0">
+                                                                        <div class="radio">
+                                                                            <label class="form-check-label"><input type="radio"
+                                                                                    name="optradio" class="form-check-input">
+                                                                                Public</label>
+                                                                        </div>
+                                                                        <div class="radio">
+                                                                            <label class="form-check-label"><input type="radio"
+                                                                                    name="optradio" class="form-check-input">
+                                                                                Password Protected</label>
+                                                                        </div>
+                                                                        <div class="radio disabled">
+                                                                            <label class="form-check-label"><input type="radio"
+                                                                                    name="optradio" class="form-check-input">
+                                                                                Private</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div>
+                                                                <button class="btn btn-primary btn-sm me-2" type="button"
+                                                                    data-bs-toggle="collapse" data-bs-target="#collapsetwo"
+                                                                    aria-expanded="false" aria-controls="collapsetwo">
+                                                                    Ok
+                                                                </button>
+                                                                <button class="btn btn-danger light btn-sm" type="button"
+                                                                    data-bs-toggle="collapse" data-bs-target="#collapsetwo"
+                                                                    aria-expanded="false" aria-controls="collapsetwo">
+                                                                    Cancel
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="border-bottom-0">
+                                                    <div>
+                                                        <label class="form-label mb-0 me-2">
+                                                            <i class="fa-solid fa-calendar-days"></i>
+                                                            Published
+                                                        </label>
+                                                        <span class="font-w500">on :24-09-2023 16:22:52</span>
+                                                        <a href="javascript:void(0);" class="badge badge-primary light ms-3"
+                                                            id="headingthree" data-bs-toggle="collapse"
+                                                            data-bs-target="#collapsethree" aria-controls="collapsethree"
+                                                            aria-expanded="true" role="button">Edit</a>
+                                                    </div>
+                                                    <div id="collapsethree" class="collapse" aria-labelledby="headingthree"
+                                                        data-bs-parent="#accordion-one">
+                                                        <div class="p-3 mt-3 border rounded">
+                                                            <div class="input-hasicon">
+                                                                <input name="datepicker" class="form-control bt-datepicker">
+                                                                <div class="icon"><i class="far fa-calendar"></i></div>
+                                                            </div>
+                                                            <div class="mt-3">
+                                                                <button class="btn btn-primary btn-sm me-2" type="button"
+                                                                    data-bs-toggle="collapse" data-bs-target="#collapsethree"
+                                                                    aria-expanded="false" aria-controls="collapsethree">
+                                                                    Ok
+                                                                </button>
+                                                                <button class="btn btn-danger light btn-sm" type="button"
+                                                                    data-bs-toggle="collapse" data-bs-target="#collapsethree"
+                                                                    aria-expanded="false" aria-controls="collapsethree">
+                                                                    Cancel
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-footer border-top text-end py-3 ">
+                                            <a href="javascript:void(0);" class="btn btn-primary btn-sm">Publish</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="filter cm-content-box box-primary">
+                                    <div class="content-title SlideToolHeader">
+                                        <div class="cpa">
+                                            Emails
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="mx-3">
+                                                <a href="#" data-size="md"
+                                                    data-url="{{ route('emailCreate', $deal->id) }}" data-ajax-popup="true"
+                                                    data-bs-toggle="tooltip" data-title="{{ __('Email Create') }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-plus text-white"></i>
+                                                </a>
                                             </div>
-                                            <div class="event-info">
-                                                <h6 class="mb-0">{{ $email->subject }} <span
-                                                        class="text-primary">{{ $email->created_at->diffForHumans() }}</span>
-                                                </h6>
-                                                <p class="mb-0">{{ $email->to }}</p>
+                                            <div class="tools">
+                                                <a href="javascript:void(0);" class="expand handle btn btn-sm btn-info"><i
+                                                        class="fal fa-angle-down"></i></a>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    </div>
+                                    <div class="cm-content-body publish-content form excerpt  event-agenda  h-auto">
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter cm-content-box box-primary">
-                            <div class="content-title SlideToolHeader">
-                                <div class="cpa">
-                                    Tag
-                                </div>
-                                <div class="tools">
-                                    <a href="javascript:void(0);" class="expand handle"><i
-                                            class="fal fa-angle-down"></i></a>
-                                </div>
-                            </div>
-                            <div class="cm-content-body  form excerpt">
-                                <div class="card-body">
-                                    <select id="multi-value-select" multiple="multiple">
-                                        <option selected="selected">orange</option>
-                                        <option>white</option>
-                                        <option selected="selected">purple</option>
-                                    </select>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="filter cm-content-box box-primary">
-                            <div class="content-title SlideToolHeader">
-                                <div class="cpa">
-                                    Featured Image
-                                </div>
-                                <div class="tools">
-                                    <a href="javascript:void(0);" class="expand handle"><i
-                                            class="fal fa-angle-down"></i></a>
-                                </div>
-                            </div>
-                            <div class="cm-content-body publish-content form excerpt">
-                                <div class="card-body">
-                                    <div class="avatar-upload d-flex align-items-center">
-                                        <div class=" position-relative ">
-                                            <div class="avatar-preview">
-                                                <div id="imagePreview"
-                                                    style="background-image: url(images/no-img-avatar.png);">
+                                        <div class="card-body loadmore-content dlab-scroll height500  recent-activity-wrapper p-3 pt-0"
+                                            id="RecentActivityContent">
+                                            @foreach ($emails as $email)
+                                                <div class="d-flex align-items-center event">
+                                                    <div
+                                                        class="icon-bx icon-bx-lg  me-3 d-flex flex-column justify-content-center">
+                                                        <img alt="user-image" class=" rounded-circle img_users_fix_size"
+                                                            avatar="{{ $email->subject }}">
+                                                    </div>
+                                                    <div class="event-info">
+                                                        <h6 class="mb-0">{{ $email->subject }} <span
+                                                                class="text-primary">{{ $email->created_at->diffForHumans() }}</span>
+                                                        </h6>
+                                                        <p class="mb-0">{{ $email->to }}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="change-btn d-flex align-items-center flex-wrap">
-                                                <input type='file' class="form-control d-none" id="imageUpload"
-                                                    accept=".png, .jpg, .jpeg">
-                                                <label for="imageUpload" class="btn btn-primary light btn-sm ms-0">Select
-                                                    Image</label>
-                                            </div>
+                                            @endforeach
+
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="filter cm-content-box box-primary">
+                                    <div class="content-title SlideToolHeader">
+                                        <div class="cpa">
+                                            Lable
+                                        </div>
+                                        <div class="tool">
+                                            <a class="btn btn-sm btn-primary btn-icon " data-size="md" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="{{ __('Labels') }}" data-ajax-popup="true" data-size="md" data-title="{{ __('Label') }}"
+                                            data-url="{{ URL::to('deals/' . $deal->id . '/labels') }}"><i class="ti ti-tag text-white"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="cm-content-body  form excerpt">
+                                        <div class="card-body">
+                                            @php($labels = $deal->labels())
+                                            @if ($labels)
+                                                @foreach ($labels as $label)
+                                                    <p
+                                                        class="badge light badge-{{ $label->color }} badge-lg ">{{ $label->name }}</p>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -982,107 +983,37 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    </div>
-@endsection
-@push('after-scripts')
-    <script src="{{ asset('assets/js/dashboard/cms.js') }}"></script>
+            </div>
+        @endsection
+        @push('after-scripts')
+            <script src="{{ asset('assets/js/dashboard/cms.js') }}"></script>
 
-    <script>
-        var swiper = new Swiper('.ticketing-Swiper', {
-            speed: 1500,
-            slidesPerView: 4,
-            spaceBetween: 40,
-            parallax: true,
-            loop: false,
-            autoplay: {
-                Delay: 1000,
-            },
-            breakpoints: {
+            <script>
+                @can('edit deal task')
+                    $(document).on("click", ".task-checkbox", function() {
+                        var chbox = $(this);
+                        var lbl = chbox.parent().parent().find('label');
 
-                300: {
-                    slidesPerView: 1,
-                    spaceBetween: 30,
-                },
-                576: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
-                },
-                991: {
-                    slidesPerView: 3,
-                    spaceBetween: 30,
-                },
-                1200: {
-                    slidesPerView: 3,
-                    spaceBetween: 30,
-                },
-                1600: {
-                    slidesPerView: 4,
-                    spaceBetween: 30,
-                },
-            },
-        });
-        @if (Auth::user()->type != 'client' || in_array('Client View Files', $permission))
-            Dropzone.autoDiscover = false;
-            myDropzone2 = new Dropzone("#dropzonewidget2", {
-                maxFiles: 20,
-                maxFilesize: 20,
-                parallelUploads: 1,
-                acceptedFiles: ".jpeg,.jpg,.png,.pdf,.doc,.txt",
-                url: "{{ route('deals.file.upload', $deal->id) }}",
-                success: function(file, response) {
-                    if (response.is_success) {
-                        dropzoneBtn(file, response);
-                    } else {
-                        myDropzone2.removeFile(file);
-                        toastrs('Error', response.error, 'error');
-                    }
-                },
-                error: function(file, response) {
-                    myDropzone2.removeFile(file);
-                    if (response.error) {
-                        toastrs('Error', response.error, 'error');
-                    } else {
-                        toastrs('Error', response, 'error');
-                    }
-                }
-            });
-            myDropzone2.on("sending", function(file, xhr, formData) {
-                formData.append("_token", $('meta[name="csrf-token"]').attr('content'));
-                formData.append("deal_id", {{ $deal->id }});
-            });
-
-            function dropzoneBtn(file, response) {
-                var download = document.createElement('a');
-                download.setAttribute('href', response.download);
-                download.setAttribute('class', "btn btn-sm btn-primary m-1");
-                download.setAttribute('data-toggle', "tooltip");
-                download.setAttribute('download', file.name);
-                download.setAttribute('data-original-title', "{{ __('Download') }}");
-                download.innerHTML = "<i class='ti ti-download'></i>";
-
-                var del = document.createElement('a');
-                del.setAttribute('href', response.delete);
-                del.setAttribute('class', "btn btn-sm btn-danger mx-1");
-                del.setAttribute('data-toggle', "tooltip");
-                del.setAttribute('data-original-title', "{{ __('Delete') }}");
-                del.innerHTML = "<i class='ti ti-trash'></i>";
-
-                del.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (confirm("Are you sure ?")) {
-                        var btn = $(this);
                         $.ajax({
-                            url: btn.attr('href'),
+                            url: chbox.attr('data-url'),
                             data: {
-                                _token: $('meta[name="csrf-token"]').attr('content')
+                                _token: $('meta[name="csrf-token"]').attr('content'),
+                                status: chbox.val()
                             },
-                            type: 'DELETE',
+                            type: 'PUT',
                             success: function(response) {
                                 if (response.is_success) {
-                                    btn.closest('.dz-image-preview').remove();
+                                    chbox.val(response.status);
+                                    if (response.status) {
+                                        lbl.addClass('strike');
+                                        lbl.find('.badge').removeClass('bg-warning').addClass('bg-success');
+                                    } else {
+                                        lbl.removeClass('strike');
+                                        lbl.find('.badge').removeClass('bg-success').addClass('bg-warning');
+                                    }
+                                    lbl.find('.badge').html(response.status_label);
+
+                                    toastrs('Success', response.success, 'success');
                                 } else {
                                     toastrs('Error', response.error, 'error');
                                 }
@@ -1096,37 +1027,145 @@
                                 }
                             }
                         })
+                    });
+                @endcan
+                var swiper = new Swiper('.ticketing-Swiper', {
+                    speed: 1500,
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                    parallax: true,
+                    loop: false,
+                    autoplay: {
+                        Delay: 1000,
+                    },
+                    breakpoints: {
+
+                        300: {
+                            slidesPerView: 1,
+                            spaceBetween: 30,
+                        },
+                        576: {
+                            slidesPerView: 2,
+                            spaceBetween: 30,
+                        },
+                        991: {
+                            slidesPerView: 3,
+                            spaceBetween: 30,
+                        },
+                        1200: {
+                            slidesPerView: 3,
+                            spaceBetween: 30,
+                        },
+                        1600: {
+                            slidesPerView: 4,
+                            spaceBetween: 30,
+                        },
+                    },
+                });
+                @if (Auth::user()->type != 'client' || in_array('Client View Files', $permission))
+                    Dropzone.autoDiscover = false;
+                    myDropzone2 = new Dropzone("#dropzonewidget2", {
+                        maxFiles: 20,
+                        maxFilesize: 20,
+                        parallelUploads: 1,
+                        acceptedFiles: ".jpeg,.jpg,.png,.pdf,.doc,.txt",
+                        url: "{{ route('deals.file.upload', $deal->id) }}",
+                        success: function(file, response) {
+                            if (response.is_success) {
+                                dropzoneBtn(file, response);
+                            } else {
+                                myDropzone2.removeFile(file);
+                                toastrs('Error', response.error, 'error');
+                            }
+                        },
+                        error: function(file, response) {
+                            myDropzone2.removeFile(file);
+                            if (response.error) {
+                                toastrs('Error', response.error, 'error');
+                            } else {
+                                toastrs('Error', response, 'error');
+                            }
+                        }
+                    });
+                    myDropzone2.on("sending", function(file, xhr, formData) {
+                        formData.append("_token", $('meta[name="csrf-token"]').attr('content'));
+                        formData.append("deal_id", {{ $deal->id }});
+                    });
+
+                    function dropzoneBtn(file, response) {
+                        var download = document.createElement('a');
+                        download.setAttribute('href', response.download);
+                        download.setAttribute('class', "btn btn-sm btn-primary m-1");
+                        download.setAttribute('data-toggle', "tooltip");
+                        download.setAttribute('download', file.name);
+                        download.setAttribute('data-original-title', "{{ __('Download') }}");
+                        download.innerHTML = "<i class='ti ti-download'></i>";
+
+                        var del = document.createElement('a');
+                        del.setAttribute('href', response.delete);
+                        del.setAttribute('class', "btn btn-sm btn-danger mx-1");
+                        del.setAttribute('data-toggle', "tooltip");
+                        del.setAttribute('data-original-title', "{{ __('Delete') }}");
+                        del.innerHTML = "<i class='ti ti-trash'></i>";
+
+                        del.addEventListener("click", function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            if (confirm("Are you sure ?")) {
+                                var btn = $(this);
+                                $.ajax({
+                                    url: btn.attr('href'),
+                                    data: {
+                                        _token: $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    type: 'DELETE',
+                                    success: function(response) {
+                                        if (response.is_success) {
+                                            btn.closest('.dz-image-preview').remove();
+                                        } else {
+                                            toastrs('Error', response.error, 'error');
+                                        }
+                                    },
+                                    error: function(response) {
+                                        response = response.responseJSON;
+                                        if (response.is_success) {
+                                            toastrs('Error', response.error, 'error');
+                                        } else {
+                                            toastrs('Error', response, 'error');
+                                        }
+                                    }
+                                })
+                            }
+                        });
+
+                        var html = document.createElement('div');
+                        html.appendChild(download);
+                        @if (Auth::user()->type != 'client')
+                            @can('edit deal')
+                                html.appendChild(del);
+                            @endcan
+                        @endif
+
+                        file.previewTemplate.appendChild(html);
                     }
-                });
+                    @foreach ($deal->files as $file)
 
-                var html = document.createElement('div');
-                html.appendChild(download);
-                @if (Auth::user()->type != 'client')
-                    @can('edit deal')
-                        html.appendChild(del);
-                    @endcan
+                        // Create the mock file:
+                        var mockFile2 = {
+                            name: "{{ $file->file_name }}",
+                            size: "{{ get_size(get_file($file->file_path)) }}"
+                        };
+                        // Call the default addedfile event handler
+                        myDropzone2.emit("addedfile", mockFile2);
+                        // And optionally show the thumbnail of the file:
+                        myDropzone2.emit("thumbnail", mockFile2, "{{ get_file($file->file_path) }}");
+                        myDropzone2.emit("complete", mockFile2);
+
+                        dropzoneBtn(mockFile2, {
+                            download: "{{ get_file($file->file_path) }}",
+                            delete: "{{ route('fileDelete', [$deal->id, $file->id]) }}"
+                        });
+                    @endforeach
                 @endif
-
-                file.previewTemplate.appendChild(html);
-            }
-            @foreach ($deal->files as $file)
-
-                // Create the mock file:
-                var mockFile2 = {
-                    name: "{{ $file->file_name }}",
-                    size: "{{ get_size(get_file($file->file_path)) }}"
-                };
-                // Call the default addedfile event handler
-                myDropzone2.emit("addedfile", mockFile2);
-                // And optionally show the thumbnail of the file:
-                myDropzone2.emit("thumbnail", mockFile2, "{{ get_file($file->file_path) }}");
-                myDropzone2.emit("complete", mockFile2);
-
-                dropzoneBtn(mockFile2, {
-                    download: "{{ get_file($file->file_path) }}",
-                    delete: "{{ route('fileDelete', [$deal->id, $file->id]) }}"
-                });
-            @endforeach
-        @endif
-    </script>
-@endpush
+            </script>
+        @endpush
