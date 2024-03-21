@@ -12,39 +12,53 @@
     </a>
 @endsection
 @push('css')
-
-
 @endpush
 @section('content')
-<div class="col-xl-12">
-   <div class="row">
-        @forelse ($contacts as $c)
-            <div class="col-xl-3 col-md-6">
-                <div class="card contact_list">
-                    <div class="card-body">
-                        <div class="user-content">
-                            <div class="user-info">
-                                <img src="{{ asset($c->avatar ? 'assets/images/avatar/' . $c->avatar : 'assets/images/avatar/1.png')}}" class="avatar avatar-lg me-3" alt="">
-                                <div class="user-details">
-                                    <h5 class="mb-0">{{ $c->name }}</h5>
-                                    <p class="mb-0 text-primary">+{{ $c->phone_no }}</p>
-                                    <p class="mb-0">{{ $c->email }}</p>
+    <div class="col-xl-12">
+        <div class="row">
+            @forelse ($contacts as $c)
+                <div class="col-md-3 mb-4">
+                    <div class="card text-center card-2">
+                        <div class="card-header border-0 pb-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                {{-- <h6 class="mb-0">
+                                        <div class="badge bg-primary p-2 px-3 rounded">
+                                            HR
+                                        </div>
+                                    </h6> --}}
+                            </div>
+                            <div class="dropdown custom-dropdown ms-2">
+                                <div class="btn sharp btn-primary tp-btn sharp-sm" data-bs-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="12" cy="5" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="19" r="2"></circle></g></svg>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a href="{{ route('contacts.edit', $c->id) }}" class="dropdown-item">
+                                        <i class="ti ti-pencil"></i>
+                                        <span>{{ __('Edit') }}</span>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="contact-button">
-                                <a href="{{ route('contacts.edit', $c->id) }}" class="btn-link btn sharp tp-btn btn-primary" aria-expanded="false">
-                                        <i class="fa fa-edit"></i>
-                                </a>
+                        </div>
+
+                        <div class="card-body full-card">
+                            <div class="img-fluid rounded-circle card-avatar">
+                                <img src="{{ asset($c->avatar ? 'assets/images/avatar/' . $c->avatar : 'assets/images/avatar/1.png') }}"
+                                    class="img-user wid-80 round-img rounded-circle" alt="img">
+                            </div>
+                            <h4 class=" mt-3">{{ $c->name }}</h4>
+                            <a href="mailto:{{ $c->email }}"><small class="text-primary">{{ $c->email }}</small></a>
+                            <div class="text-center" data-bs-toggle="tooltip" title=""
+                                data-bs-original-title="Last Login">
+                                {{ $c->created_at }}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @empty
-            @include('layouts.nodatafound')
-        @endforelse
-   </div>
-</div>
+            @empty
+                @include('layouts.nodatafound')
+            @endforelse
+        </div>
+    </div>
 @endsection
 
 @push('after-scripts')

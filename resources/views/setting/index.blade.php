@@ -139,7 +139,7 @@
                                         </div>
                                     </div>
                                     <input type="button" value="{{__('Cancel')}}" class="btn btn-light" id="cancelButton1" data-bs-dismiss="modal">
-                                    <input type="submit" value="{{__('Submit')}}" class="btn btn-primary" id="createButton" disabled>
+                                    <input type="submit" value="{{__('Submit')}}" class="btn btn-primary">
                                     {{Form::close()}}
                                 </div>
                             </div>

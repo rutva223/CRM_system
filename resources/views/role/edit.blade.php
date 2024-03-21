@@ -30,7 +30,7 @@
                         </thead>
                         <tbody>
                             @php
-                                $modules =['dashboard','user','roles','plan','leads','contacts','setting'];
+                                $modules =['user','roles','plan','leads','contacts','setting'];
                             @endphp
                             @foreach($modules as $module)
                                 <tr>

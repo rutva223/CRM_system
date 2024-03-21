@@ -41,7 +41,11 @@
                         <div class="p-5">
                             <div class="author-profile">
                                 <div class="author-media">
-                                    <img src="{{ asset('assets/images/user.jpg') }}" alt="">
+                                    @if ($user->avatar != null)
+                                        <img src="{{ asset('/avatars/' . $user->avatar) }}">
+                                    @else
+                                        <img src="{{ asset('/assets/images/avatar/1.png') }}">
+                                    @endif
                                     <div class="upload-link" title="" data-toggle="tooltip" data-placement="right"
                                         data-original-title="update">
                                         <input type="file" class="update-flie" name="image">
@@ -84,7 +88,6 @@
                     <div class="card-body">
                         <div class="basic-form">
                             <div class="row">
-
                                 <div class="col-md-6 mb-3">
                                     <label for="f_name" class="text-label form-label required">First Name</label>
                                     <div class="input-group">
@@ -257,10 +260,10 @@
                 </div>
             </div>
         </div>
-            <div class="text-end">
-                <button type="button" class="btn btn-danger light">Cancel</button>
-                <button type="submit" class="btn me-2 btn-primary" id="createButton" disabled>Submit</button>
-            </div>
+        <div class="text-end">
+            <button type="button" class="btn btn-danger light">Cancel</button>
+            <button type="submit" class="btn me-2 btn-primary" id="createButton" disabled>Submit</button>
+        </div>
 
     </div>
     {{ Form::close() }}

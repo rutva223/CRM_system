@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Plan;
 use App\Models\User;
 use Carbon\Carbon;
@@ -18,14 +19,15 @@ class PlanController extends Controller
      */
     public function index()
     {
-        if((Auth::user()->can('manage plan')))
-        {
+        if ((Auth::user()->can('manage plan'))) {
             $plans = Plan::get();
-            return view('plan.index',compact('plans'));
+            $orders = Order::select('orders.*', 'users.name as user_name')
+                ->join('users', 'orders.user_id', '=', 'users.id')
+                ->get();
 
-        }   else  {
+            return view('plan.index', compact('plans', 'orders'));
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
-
         }
     }
 
@@ -34,11 +36,9 @@ class PlanController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->can('create plan'))
-        {
+        if (Auth::user()->can('create plan')) {
             return view('plan.create');
-
-        }else{
+        } else {
             return response()->json(['error' => __('Permission denied.')], 401);
         }
     }
@@ -48,8 +48,7 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::user()->can('create plan'))
-        {
+        if (Auth::user()->can('create plan')) {
             $validatorArray = [
                 'name' => 'required|max:120',
                 'price' => 'required',
@@ -60,10 +59,10 @@ class PlanController extends Controller
                 'description' => 'required',
             ];
             $validator = Validator::make(
-                $request->all(), $validatorArray
+                $request->all(),
+                $validatorArray
             );
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 return redirect()->back()->with('error', $validator->errors()->first());
             }
 
@@ -77,12 +76,9 @@ class PlanController extends Controller
             $plan->description = $request->description;
             $plan->save();
             return redirect()->back()->with('success', __('Plan create successfully!'));
-
-        }else{
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
-
         }
-
     }
 
     /**
@@ -98,11 +94,9 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        if (Auth::user()->can('edit plan'))
-        {
-            return view('plan.edit',compact('plan'));
-
-        }else{
+        if (Auth::user()->can('edit plan')) {
+            return view('plan.edit', compact('plan'));
+        } else {
             return response()->json(['error' => __('Permission denied.')], 401);
         }
     }
@@ -112,8 +106,7 @@ class PlanController extends Controller
      */
     public function update(Request $request, Plan $plan)
     {
-        if(Auth::user()->can('edit plan'))
-        {
+        if (Auth::user()->can('edit plan')) {
             $validatorArray = [
                 'name' => 'required|max:120',
                 'price' => 'required',
@@ -124,10 +117,10 @@ class PlanController extends Controller
                 'description' => 'required',
             ];
             $validator = Validator::make(
-                $request->all(), $validatorArray
+                $request->all(),
+                $validatorArray
             );
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 return redirect()->back()->with('error', $validator->errors()->first());
             }
             $plan->name = $request->name;
@@ -139,9 +132,8 @@ class PlanController extends Controller
             $plan->description = $request->description;
             $plan->save();
             return redirect()->back()->with('success', __('Plan updated successfully!'));
-        }else{
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
-
         }
     }
 
@@ -153,17 +145,15 @@ class PlanController extends Controller
         //
     }
 
-    public function PlanSubscripe($id) {
-        try{
+    public function PlanSubscripe($id)
+    {
+        try {
             $plan_id = \Illuminate\Support\Facades\Crypt::decrypt($id);
             $plan    = Plan::find($plan_id);
-            if($plan)
-            {
+            if ($plan) {
                 // $admin_payment_setting = Utility::payment_settings();
                 return view('plan.payment', compact('plan'));
-            }
-            else
-            {
+            } else {
                 return redirect()->back()->with('error', __('Plan is deleted.'));
             }
         } catch (\Throwable $th) {
