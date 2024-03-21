@@ -61,6 +61,7 @@ class PermissionTableSeeder extends Seeder
             );
         }
 
+
         $admin_permission = [
             'manage user',
             'create user',
@@ -70,7 +71,7 @@ class PermissionTableSeeder extends Seeder
             'manage reset password',
             'manage user login',
             'manage user logs history',
-            'manage setting',
+            // 'manage setting',
             'manage setting logo',
             'manage setting theme',
             'manage setting storage',
@@ -111,6 +112,17 @@ class PermissionTableSeeder extends Seeder
             'edit leads',
             'create leads',
             'delete leads',
+            'create lead call',
+            'edit lead call',
+            'delete lead call',
+            'create lead meeting',
+            'edit lead meeting',
+            'delete lead meeting',
+            'create lead task',
+            'edit lead task',
+            'delete lead task',
+            'show lead task',
+            'lead email create',
             'report deal',
             'manage deal',
             'create deal',
@@ -158,6 +170,22 @@ class PermissionTableSeeder extends Seeder
             'edit dealcontact',
             'create dealcontact',
             'delete dealcontact',
+            'manage branch',
+            'create branch',
+            'edit branch',
+            'delete branch',
+            'manage department',
+            'create department',
+            'edit department',
+            'delete department',
+            'manage designation',
+            'create designation',
+            'edit designation',
+            'delete designation',
+            'manage product',
+            'edit product',
+            'create product',
+            'delete product',
 
         ];
 
@@ -215,8 +243,8 @@ class PermissionTableSeeder extends Seeder
             $company->type = 'company';
             // $company->avatar = 'uploads/users-avatar/avatar.png';
             $company->theme_setting = 'light';
-            $company->plan = 1;
-            $company->plan_expire_date = 2030-02-29;
+            // $company->plan = 1;
+            // $company->plan_expire_date = 2030-02-29;
             $company->lang = 'en';
             $company->created_by = $admin->id;
             $company->save();
@@ -228,6 +256,17 @@ class PermissionTableSeeder extends Seeder
         if($company)
         {
             $company->assignRole($company_role);
+            $company->assignPlan(1);
+        }
+        $client_role = Role::where('name','client')->where('guard_name','web')->exists();
+        if(!$client_role)
+        {
+            $client_role        = Role::create(
+                [
+                    'name' => 'client',
+                    'created_by' => $company->id,
+                ]
+            );
         }
     }
 }

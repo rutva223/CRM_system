@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Plan;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -80,6 +81,41 @@ function UploadImageFolder($folder_name, $file_name)
     return $filename;
 }
 
+// if (! function_exists('company_setting')) {
+//     function company_setting($key,$user_id= null,$workspace= null){
+//         if(empty($user_id)){
+//             $user_id =  Auth::user()->id;
+//         }
+//         $user = User::find($user_id);
+
+//         if($user->type == 'super admin')
+//         {
+//             return admin_setting($key);
+//         }
+
+//         $workspace_id = $user->active_workspace;
+
+//         if(!in_array($user->type,['company','super admin'])){
+//             $workspace_id = $user->workspace_id;
+//             $user = User::find($user->created_by);
+//         }
+//         if(!empty($workspace)){
+//             $workspace_id = $workspace;
+//         }
+
+//         $userContext = new Context(['user_id' => $user->id,'workspace_id'=>$workspace_id]);
+//         $setting = settings()->context($userContext)->get($key);
+//         return $setting;
+//     }
+// }
+// if (! function_exists('admin_setting')) {
+//     function admin_setting($key){
+//         $user = User::where('type','super admin')->first();
+//         $userContext = new Setting(['user_id' => $user->id]);
+//         $setting = settings()->context($userContext)->get($key);
+//         return $setting;
+//     }
+// }
 if (!function_exists('upload_file')) {
     function upload_file($request, $key_name, $name, $path, $custom_validation = [])
     {

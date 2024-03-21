@@ -76,6 +76,7 @@ class DealTaskController extends Controller
                         'time' => date('H:i:s', strtotime($request->date . ' ' . $request->time)),
                         'priority' => $request->priority,
                         'status' => $request->status,
+                        'created_by' => creatorId(),
 
                     ]
                 );

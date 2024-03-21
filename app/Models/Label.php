@@ -12,7 +12,6 @@ class Label extends Model
         'name',
         'color',
         'pipeline_id',
-        'workspace_id',
         'created_by',
     ];
 

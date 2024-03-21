@@ -5,11 +5,6 @@
 {{ Form::open(array('route' => ['deals.tasks.store',$deal->id])) }}
 @endif
 <div class="modal-body">
-    <div class="text-end">
-        @if (module_is_active('AIAssistant'))
-            @include('aiassistant::ai.generate_ai_btn',['template_module' => 'deal task','module'=>'Lead'])
-        @endif
-    </div>
     <div class="row">
         <div class="col-12 form-group">
             {{ Form::label('name', __('Name'),['class'=>'col-form-label']) }}
@@ -22,7 +17,7 @@
         <div class="col-6 form-group">
             {{ Form::label('time', __('Time'),['class'=>'col-form-label']) }}
             <div class="input-group timepicker">
-                <input class="form-control timepicker" required="required" name="time" type="time" id="time">
+                <input class="form-control timepicker" required="required" name="time" type="time" id="time" value="{{ $task->time ?? '' }}">
             </div>
         </div>
         <div class="col-6 form-group">
@@ -41,11 +36,6 @@
                 @endforeach
             </select>
         </div>
-        @if(empty($task))
-            @if (module_is_active('Calender') && company_setting('google_calendar_enable') == 'on')
-                @include('calender::setting.synchronize')
-            @endif
-        @endif
     </div>
 </div>
 <div class="modal-footer">

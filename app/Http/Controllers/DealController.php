@@ -13,6 +13,7 @@ use App\Models\DealEmail;
 use App\Models\DealFile;
 use App\Models\DealMeeting;
 use App\Models\DealType;
+use App\Models\Label;
 use App\Models\Source;
 use App\Models\User;
 use App\Models\UserDeal;
@@ -947,6 +948,51 @@ class DealController extends Controller
                 ],
                 401
             );
+        }
+    }
+
+
+    // Deal Lable
+    public function labels($id)
+    {
+        if (Auth::user()->can('edit deal')) {
+            $deal = Deal::find($id);
+            if ($deal->created_by == creatorId()) {
+                $labels   = Label::where('pipeline_id', '=', $deal->pipeline_id)->get();
+                $selected = $deal->labels();
+                if ($selected) {
+                    $selected = $selected->pluck('name', 'id')->toArray();
+                } else {
+                    $selected = [];
+                }
+
+                return view('deal.labels', compact('deal', 'labels', 'selected'));
+            } else {
+                return response()->json(['error' => __('Permission Denied.')], 401);
+            }
+        } else {
+            return response()->json(['error' => __('Permission Denied.')], 401);
+        }
+    }
+
+    public function labelStore($id, Request $request)
+    {
+        if (Auth::user()->can('edit deal')) {
+            $deal = Deal::find($id);
+            if ($deal->created_by == creatorId()) {
+                if ($request->labels) {
+                    $deal->labels = implode(',', $request->labels);
+                } else {
+                    $deal->labels = $request->labels;
+                }
+                $deal->save();
+
+                return redirect()->back()->with('success', __('Labels successfully updated!'));
+            } else {
+                return redirect()->back()->with('error', __('Permission Denied.'));
+            }
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied.'));
         }
     }
 }
