@@ -40922,7 +40922,7 @@ a.btn.dlab-load-more {
 }
 
 .cm-content-box .content-title {
-    /* padding: 1rem 1.5rem; */
+    padding: 1rem 1.5rem ;
     margin-bottom: 0;
     display: flex;
     cursor: pointer;

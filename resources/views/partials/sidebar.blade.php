@@ -23,26 +23,27 @@
     </a>
 </li>
 @endcan
-<li class="{{ (Request::route()->getName() == 'deal-stages.index' || Request::route()->getName() == 'labels.index' || Request::route()->getName() == 'dealtypes.index' || Request::route()->getName() == 'pipelines.index') ? ' active mm-active' : '' }}" >
-    <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-        <i class="fa fa-store"></i>
-        <span class="nav-text">Sales</span>
-    </a>
-    <ul aria-expanded="false">
-        @can('manage deal')
-            <li><a href="{{ route('deals.index') }}">Deal</a></li>
-        @endcan
-        @can('manage leads')
-            <li><a href="{{ route('leads.index') }}">Lead</a></li>
-        @endcan
-        {{-- @can('manage leads') --}}
-            <li class="{{ (Request::route()->getName() == 'deal-stages.index' || Request::route()->getName() == 'labels.index' || Request::route()->getName() == 'dealtypes.index' || Request::route()->getName() == 'pipelines.index') ? ' active mm-active' : '' }}">
-                <a href="{{ route('labels.index') }}" class="{{ (Request::route()->getName() == 'deal-stages.index' || Request::route()->getName() == 'labels.index' || Request::route()->getName() == 'dealtypes.index' || Request::route()->getName() == 'pipelines.index') ? 'mm-active' : '' }}">Deal/Lead Setting</a>
-            </li>
-        {{-- @endcan --}}
-    </ul>
-</li>
-
+@can('manage deal')
+    <li class="{{ (Request::route()->getName() == 'deal-stages.index' || Request::route()->getName() == 'labels.index' || Request::route()->getName() == 'dealtypes.index' || Request::route()->getName() == 'pipelines.index') ? ' active mm-active' : '' }}" >
+        <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+            <i class="fa fa-store"></i>
+            <span class="nav-text">Sales</span>
+        </a>
+        <ul aria-expanded="false">
+            @can('manage deal')
+                <li><a href="{{ route('deals.index') }}">Deal</a></li>
+            @endcan
+            @can('manage leads')
+                <li><a href="{{ route('leads.index') }}">Lead</a></li>
+            @endcan
+            {{-- @can('manage leads') --}}
+                <li class="{{ (Request::route()->getName() == 'deal-stages.index' || Request::route()->getName() == 'labels.index' || Request::route()->getName() == 'dealtypes.index' || Request::route()->getName() == 'pipelines.index') ? ' active mm-active' : '' }}">
+                    <a href="{{ route('labels.index') }}" class="{{ (Request::route()->getName() == 'deal-stages.index' || Request::route()->getName() == 'labels.index' || Request::route()->getName() == 'dealtypes.index' || Request::route()->getName() == 'pipelines.index') ? 'mm-active' : '' }}">Deal/Lead Setting</a>
+                </li>
+            {{-- @endcan --}}
+        </ul>
+    </li>
+@endif
 {{-- @if(Auth::user()->type == 'super admin')
     @can('manage coupon')
         <li class="{{ request()->is('coupons') ? 'active' : '' }}">
