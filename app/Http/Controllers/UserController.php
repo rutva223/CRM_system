@@ -124,13 +124,17 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        if (Auth::user()->can('edit user')) {
-            $user = User::find($id);
-            $user_id = Session::get('user_id') ?? Auth::user()->id;
-            $roles = Role::where('created_by', $user_id)->pluck('name', 'id');
+        try {
+            if (Auth::user()->can('edit user')) {
+                $user = User::find($id);
+                $user_id = Session::get('user_id') ?? Auth::user()->id;
+                $roles = Role::where('created_by', $user_id)->pluck('name', 'id');
 
-            return view('user.edit', compact('user', 'roles'));
-        } else {
+                return view('user.edit', compact('user', 'roles'));
+            } else {
+                return redirect()->back()->with('error', __('Permission denied.'));
+            }
+        } catch (\Throwable $th) {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
@@ -140,28 +144,32 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (Auth::user()->can('edit user')) {
-            $validator = Validator::make(
-                $request->all(),
-                [
-                    'name' => 'required',
-                    'email' => 'required|email|unique:users,email,' . $id,
-                ]
-            );
-            if ($validator->fails()) {
-                $messages = $validator->getMessageBag();
+        try {
+            if (Auth::user()->can('edit user')) {
+                $validator = Validator::make(
+                    $request->all(),
+                    [
+                        'name' => 'required',
+                        'email' => 'required|email|unique:users,email,' . $id,
+                    ]
+                );
+                if ($validator->fails()) {
+                    $messages = $validator->getMessageBag();
 
-                return redirect()->back()->with('error', $messages->first());
+                    return redirect()->back()->with('error', $messages->first());
+                }
+
+                $user          = User::find($id);
+                $user['name'] = $request->name;
+                $user['email'] = $request->email;
+                $user->assignRole($request->input('role'));
+                $user->save();
+
+                return redirect()->route('users.index')->with('success', 'User updated successfully');
+            } else {
+                return redirect()->back()->with('error', __('Permission denied.'));
             }
-
-            $user          = User::find($id);
-            $user['name'] = $request->name;
-            $user['email'] = $request->email;
-            $user->assignRole($request->input('role'));
-            $user->save();
-
-            return redirect()->route('users.index')->with('success', 'User updated successfully');
-        } else {
+        } catch (\Throwable $th) {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }

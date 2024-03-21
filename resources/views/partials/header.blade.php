@@ -148,7 +148,7 @@
                                 </svg>
                                 <span class="ms-2">{{ __('Profile') }}</span>
                             </a>
-                            @if (\Auth::user()->type == 'super admin')
+                            @can('manage setting')
                                 <a href="{{ route('setting.index') }}" class="dropdown-item ai-icon ">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                         width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
@@ -163,9 +163,9 @@
                                                 fill="var(--primary)" />
                                         </g>
                                     </svg>
-                                    <span class="ms-2">Settings</span>
+                                    <span class="ms-2">{{ __('Settings')}}</span>
                                 </a>
-                            @endif
+                            @endcan
                             <form method="POST" action="{{ route('logout') }}" id="form_logout">
                                 <a href="route('logout')"
                                     onclick="event.preventDefault(); this.closest('form').submit();"

@@ -135,4 +135,36 @@
             </div>
         @endforeach
     </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"><i class="fa-solid fa-file-lines me-1"></i>Order History</h4>
+        </div>
+        <div class="card-body pb-4">
+            <div class="table-responsive">
+                <table class="display" id="example" >
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Order ID</th>
+                            <th>User Name</th>
+                            <th>Plan Name</th>
+                            <th>Payment Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($orders as $index => $order)
+                            <tr>
+                                <td>{{ ++$index }}</td>
+                                <td>{{ $order->order_id }}</td>
+                                <td>{{ $order->user_name }}</td>
+                                <td>{{ $order->plan_name }}</td>
+                                <td>{{ $order->payment_type }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -19,8 +19,8 @@ return new class extends Migration
                 $table->string('subject');
                 $table->string('duration', 20);
                 $table->integer('user_id');
-                $table->text('description')->nullable();
-                $table->text('status')->default('pending');
+                $table->longText('description')->nullable();
+                $table->string('status')->default('pending');
                 $table->foreign('deal_id')->references('id')->on('deals')->onDelete('cascade');
                 $table->timestamps();
             });

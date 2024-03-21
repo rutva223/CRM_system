@@ -84,7 +84,7 @@ class User extends Authenticatable
         // }
         $plan = Plan::find($planID);
         $duration = $plan->duration;
-        $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::user()->id ?? 2);
         if(!empty($duration))
         {
             if($duration == 'Monthly')
@@ -102,8 +102,7 @@ class User extends Authenticatable
             else{
                 $user->plan_expire_date = null;
             }
-        }else
-        {
+        } else {
             $user->plan_expire_date = null;
         }
 
@@ -191,7 +190,6 @@ class User extends Authenticatable
         }
 
         $user->plan = $plan->id;
-        // $user->total_user = $plan->max_user;
         $user->save();
     }
 

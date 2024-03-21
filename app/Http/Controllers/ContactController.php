@@ -21,8 +21,9 @@ class ContactController extends Controller
     public function index()
     {
         if('manage contacts') {
-            $contacts = Contact::orderBy('id', 'desc')
-                        ->get();
+            $contacts = Contact::join('users', 'contacts.user_id', '=', 'users.id')
+                ->orderBy('contacts.id', 'desc')
+                ->get();
 
             return view('contact.index',compact('contacts'));
         } else {
