@@ -4,6 +4,7 @@ use App\Models\Plan;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
@@ -81,41 +82,73 @@ function UploadImageFolder($folder_name, $file_name)
     return $filename;
 }
 
-// if (! function_exists('company_setting')) {
-//     function company_setting($key,$user_id= null,$workspace= null){
-//         if(empty($user_id)){
-//             $user_id =  Auth::user()->id;
-//         }
-//         $user = User::find($user_id);
+if (!function_exists('admin_setting')) {
+    function admin_setting($key)
+    {
+        if ($key) {
+            $admin_settings = getAdminAllSetting();
+            $setting = (array_key_exists($key, $admin_settings)) ? $admin_settings[$key] : null;
+            return $setting;
+        }
+    }
+}
 
-//         if($user->type == 'super admin')
-//         {
-//             return admin_setting($key);
-//         }
+if (!function_exists('getAdminAllSetting')) {
+    function getAdminAllSetting()
+    {
+        // Laravel cache
+        return Cache::rememberForever('admin_settings', function () {
+            $super_admin = User::where('type', 'super admin')->first();
+            $settings = [];
+            if ($super_admin) {
+                $settings = Setting::where('created_by', $super_admin->id)->pluck('value', 'name')->toArray();
+            }
 
-//         $workspace_id = $user->active_workspace;
+            return $settings;
+        });
+    }
+}
 
-//         if(!in_array($user->type,['company','super admin'])){
-//             $workspace_id = $user->workspace_id;
-//             $user = User::find($user->created_by);
-//         }
-//         if(!empty($workspace)){
-//             $workspace_id = $workspace;
-//         }
+if (!function_exists('getCompanyAllSetting')) {
+    function getCompanyAllSetting($user_id = null)
+    {
+        if (!empty($user_id)) {
+            $user = User::find($user_id);
+        } else {
+            $user =  auth()->user();
+        }
 
-//         $userContext = new Context(['user_id' => $user->id,'workspace_id'=>$workspace_id]);
-//         $setting = settings()->context($userContext)->get($key);
-//         return $setting;
-//     }
-// }
-// if (! function_exists('admin_setting')) {
-//     function admin_setting($key){
-//         $user = User::where('type','super admin')->first();
-//         $userContext = new Setting(['user_id' => $user->id]);
-//         $setting = settings()->context($userContext)->get($key);
-//         return $setting;
-//     }
-// }
+        // // Check if the user is not 'company' or 'super admin' and find the creator
+        if (!in_array($user->type, ['company', 'super admin'])) {
+            $user = User::find($user->created_by);
+        }
+
+        if (!empty($user)) {
+            $key = 'company_settings_'. $user->id;
+            return Cache::rememberForever($key, function () use ($user) {
+                $settings = [];
+                $settings = Setting::where('created_by', $user->id)->pluck('value', 'name')->toArray();
+                return $settings;
+            });
+        }
+
+        return [];
+    }
+}
+
+if (!function_exists('company_setting')) {
+    function company_setting($key, $user_id = null, $workspace = null)
+    {
+        if ($key) {
+            $company_settings = getCompanyAllSetting($user_id, $workspace);
+            $setting = null;
+            if (!empty($company_settings)) {
+                $setting = (array_key_exists($key, $company_settings)) ? $company_settings[$key] : null;
+            }
+            return $setting;
+        }
+    }
+}
 if (!function_exists('upload_file')) {
     function upload_file($request, $key_name, $name, $path, $custom_validation = [])
     {

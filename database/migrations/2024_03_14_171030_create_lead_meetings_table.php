@@ -20,7 +20,7 @@ return new class extends Migration
                 $table->string('duration', 20);
                 $table->integer('user_id');
                 $table->text('description')->nullable();
-                $table->text('status')->default('pending');
+                $table->string('status')->default('pending');
                 $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
                 $table->timestamps();
             });
