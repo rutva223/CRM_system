@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\Department;
+use App\Models\Designation;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,9 +50,13 @@ class BranchController extends Controller
     {
         if(Auth::user()->can('branch create'))
         {
-            $validator = \Validator::make(
+            $validator = Validator::make(
                 $request->all(), [
                                    'name' => 'required',
+                                   'email' => 'required',
+                                   'phone' => 'required',
+                                   'address' => 'required',
+                                   'status' => 'required',
                                ]
             );
             if($validator->fails())
@@ -60,9 +66,13 @@ class BranchController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
-            $branch             = new Branch();
-            $branch->name       = $request->name;
-            $branch->created_by = creatorId();
+            $branch                 = new Branch();
+            $branch->name           = $request->name;
+            $branch->email          = $request->email;
+            $branch->phone          = $request->phone;
+            $branch->address        = $request->address;
+            $branch->status         = $request->status;
+            $branch->created_by     = creatorId();
             $branch->save();
 
 
@@ -115,7 +125,11 @@ class BranchController extends Controller
             {
                 $validator = Validator::make(
                     $request->all(), [
-                                       'name' => 'required',
+                        'name' => 'required',
+                        'email' => 'required',
+                        'phone' => 'required',
+                        'address' => 'required',
+                        'status' => 'required',
                                    ]
                 );
                 if($validator->fails())
@@ -125,7 +139,11 @@ class BranchController extends Controller
                     return redirect()->back()->with('error', $messages->first());
                 }
 
-                $branch->name = $request->name;
+                $branch->name           = $request->name;
+                $branch->email          = $request->email;
+                $branch->phone          = $request->phone;
+                $branch->address        = $request->address;
+                $branch->status         = $request->status;
                 $branch->save();
 
 
@@ -157,7 +175,6 @@ class BranchController extends Controller
                     Department::where('branch_id',$branch->id)->delete();
                     Designation::where('branch_id',$branch->id)->delete();
 
-                    event(new DestroyBranch($branch));
 
                     $branch->delete();
                 }
